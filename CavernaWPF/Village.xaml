@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ItemsControl 
+	x:Class="CavernaWPF.Village" 
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+	<ItemsControl.Resources>
+		<ControlTemplate
+			x:Key="Mytemplate">
+			<Image
+				Source="C:\Users\Miguel\Desktop\Caverna\MeadowField.png"></Image>
+		</ControlTemplate>
+	</ItemsControl.Resources>
+	<ItemsControl.ItemsPanel>
+		<ItemsPanelTemplate>
+			<Canvas
+				Grid.Column="0"
+				Grid.Row="0">
+				<Canvas.Background>
+					<ImageBrush
+						ImageSource="C:\Users\Miguel\Desktop\Caverna\Village.png" />
+				</Canvas.Background>
+			</Canvas>
+		</ItemsPanelTemplate>
+	</ItemsControl.ItemsPanel>
+	<ItemsControl.ItemTemplate>
+		<DataTemplate>
+			<Thumb
+				Width="50"
+				Height="50"
+				DragCompleted="Thumb_DragCompleted"
+				DragDelta="Thumb_DragDelta"
+				Template="{StaticResource Mytemplate}"></Thumb>
+		</DataTemplate>
+	</ItemsControl.ItemTemplate>
+	<ItemsControl.ItemContainerStyle>
+		<Style>
+			<Setter
+				Property="Canvas.Left"
+				Value="{Binding X}" />
+			<Setter
+				Property="Canvas.Top"
+				Value="{Binding Y}" />
+		</Style>
+	</ItemsControl.ItemContainerStyle>
+</ItemsControl>
