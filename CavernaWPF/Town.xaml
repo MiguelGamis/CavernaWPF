@@ -50,7 +50,7 @@
 								<Image
 									Source="{Binding Img}">
 									<Image.RenderTransform>
-										<RotateTransform Angle="{Binding Rot}"></RotateTransform>
+										<RotateTransform Angle="{Binding Rot}" CenterX="70" CenterY="35"></RotateTransform>
 									</Image.RenderTransform>
 								</Image>
 							</ControlTemplate>

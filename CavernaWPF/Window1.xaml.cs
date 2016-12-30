@@ -24,10 +24,28 @@ namespace CavernaWPF
 	/// </summary>
 	public partial class Window1 : Window
 	{
-		private ObservableCollection<Dwarf> dwarfs = new ObservableCollection<Dwarf>();
-		
 		public Window1()
-		{		
+		{	
+			ActionBoardContext.Instance.Intitialize();
+			StackPanel rootPanel = new StackPanel() { Orientation = Orientation.Vertical };
+			rootPanel.Height = this.Height;
+			rootPanel.Width = this.Width;
+		
+			Grid.SetRow(ActionBoardContext.Instance.control, 0);
+			rootPanel.Children.Add(ActionBoardContext.Instance.control);
+			
+			StackPanel playerboards = new StackPanel() { Orientation = Orientation.Horizontal };
+			
+			int numPlayers = 2;
+			for(int i = 0; i < numPlayers; i++)
+			{
+				Town t = new Town();
+				Grid.SetRow(t, 1);
+				playerboards.Children.Add(t);
+			}
+			rootPanel.Children.Add(playerboards);
+			
+			this.Content = rootPanel;
 			InitializeComponent();		
 		}
 	}

@@ -70,7 +70,7 @@
       <SubType>Code</SubType>
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Dog.cs" />
+    <Compile Include="BoardTile.cs" />
     <Compile Include="Dwarf.cs" />
     <Compile Include="CDwarf.xaml.cs">
       <DependentUpon>CDwarf.xaml</DependentUpon>
@@ -80,10 +80,17 @@
     <Compile Include="Properties\WPFAssemblyInfo.cs" />
     <Compile Include="Layable\Tile.cs" />
     <Compile Include="Layable\TwinTile.cs" />
+    <Compile Include="Resources\FarmAnimal.cs" />
+    <Compile Include="Resources\Dog.cs" />
+    <Compile Include="Resources\Resource.cs" />
+    <Compile Include="Resources\Sowable.cs" />
+    <Compile Include="Resources\Stable.cs" />
+    <Compile Include="Resources\Tradable.cs" />
     <Compile Include="Town.xaml.cs">
       <DependentUpon>Town.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="TownContext.cs" />
     <Compile Include="Village.xaml.cs">
       <DependentUpon>Village.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -102,6 +109,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Layable" />
+    <Folder Include="Resources" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

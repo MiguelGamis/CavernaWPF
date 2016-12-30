@@ -16,11 +16,25 @@ namespace CavernaWPF
 	/// </summary>
 	public class ActionCard
 	{
+		private string name;
 		private bool accumulating;
-		private List<Action> actions = new List<Action>();
+		public List<Action> actions;
 		
 		public ActionCard()
 		{
+			actions = new List<Action>();
+		}
+		
+		public string Name
+		{
+			get { return name; }
+			set { name = value; }
+		}
+		
+		public bool Accumulating
+		{
+			get;
+			set;
 		}
 		
 		public bool IsAccumulating()

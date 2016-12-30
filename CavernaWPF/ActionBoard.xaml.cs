@@ -26,8 +26,6 @@ namespace CavernaWPF
 		public ActionBoard()
 		{
 			InitializeComponent();
-			
-			//this.DataContext = ActionBoardContext.Instance;
 		}
 		
 		private void Thumb_DragDelta(object sender, System.Windows.Controls.Primitives.DragDeltaEventArgs e)

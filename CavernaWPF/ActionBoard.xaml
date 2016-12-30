@@ -18,7 +18,7 @@
 	</UserControl.Resources>
 	<Grid
 		Background="{StaticResource myBrush}">
-		<ItemsControl
+		<ItemsControl ItemsSource="{Binding Dwarfs}"
 			x:Name="town" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 			<ItemsControl.ItemsPanel>
 				<ItemsPanelTemplate>
@@ -49,16 +49,6 @@
 					</Thumb>
 				</DataTemplate>
 			</ItemsControl.ItemTemplate>
-			<ItemsControl.ItemContainerStyle>
-				<Style>
-					<Setter
-						Property="Canvas.Left"
-						Value="{Binding X}" />
-					<Setter
-						Property="Canvas.Top"
-						Value="{Binding Y}" />
-				</Style>
-			</ItemsControl.ItemContainerStyle>
 		</ItemsControl>
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition Width="0"></ColumnDefinition>

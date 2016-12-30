@@ -26,9 +26,43 @@ namespace CavernaWPF
 		
 		private ObservableCollection<ActionCard> actioncards;
 		
+		private ObservableCollection<Dwarf> dwarfs;
+		
+		public ActionBoard control;
+		
+		public ObservableCollection<ActionCard> ActionCards
+		{
+			get { return actioncards; }
+			set { actioncards = value; }
+		}
+		
+		public ObservableCollection<Dwarf> Dwarfs
+		{
+			get { return dwarfs; }
+			set { dwarfs = value; }
+		}
+		
 		private ActionBoardContext()
 		{
-			object f = actioncards[0];
+			actioncards = new ObservableCollection<ActionCard>();
+			dwarfs = new ObservableCollection<Dwarf>();
+			
+			ActionCard ac = new ActionCard();
+			ac.Name = "Drift Mining";
+			ac.Accumulating = true;
+			ac.actions.Add(new Action(() => { 
+			                          	Console.WriteLine("Hey"); 
+			                          }));
+			
+			Dwarf d = new Dwarf();
+			dwarfs.Add(d);
+		}
+		
+		public void Intitialize()
+		{
+			ActionBoard ab = new ActionBoard();
+			control = ab;
+			ab.DataContext = this;
 		}
 	}
 }
