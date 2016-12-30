@@ -39,9 +39,9 @@ namespace CavernaWPF
 			int numPlayers = 2;
 			for(int i = 0; i < numPlayers; i++)
 			{
-				Town t = new Town();
-				Grid.SetRow(t, 1);
-				playerboards.Children.Add(t);
+				TownContext tc = new TownContext();
+				Grid.SetRow(tc.control, 1);
+				playerboards.Children.Add(tc.control);
 			}
 			rootPanel.Children.Add(playerboards);
 			

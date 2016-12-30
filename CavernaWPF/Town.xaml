@@ -17,7 +17,7 @@
 	<Grid
 		Background="{StaticResource myBrush}">
 		<ItemsControl
-			x:Name="town" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+			x:Name="canvas" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" ItemsSource="{Binding Tiles, Mode=TwoWay}">
 			<ItemsControl.Resources>
 				<ControlTemplate
 					x:Key="Mytemplate">

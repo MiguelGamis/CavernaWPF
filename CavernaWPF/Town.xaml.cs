@@ -28,20 +28,7 @@ namespace CavernaWPF
 	{
 		public Town()
 		{
-			Tiles = new ObservableCollection<Tile>();
-			Tile t = new Tile();
-			Tiles.Add(t);
-			
 			InitializeComponent();
-
-			town.ItemsSource = Tiles;
-		}
-		
-		private ObservableCollection<Tile> tiles = new ObservableCollection<Tile>();
-		
-		public ObservableCollection<Tile> Tiles{ 
-			get{ return tiles; }
-			set{ tiles = value; }
 		}
 
 	    private void Thumb_DragDelta(object sender, System.Windows.Controls.Primitives.DragDeltaEventArgs e)
