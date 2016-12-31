@@ -19,7 +19,8 @@ namespace CavernaWPF
 		private int level;
 		private double x;
     	private double y;
-		
+		public Player player;
+    	
 		public Dwarf()
 		{
 			

@@ -5,21 +5,27 @@
 	x:Class="CavernaWPF.ActionBoard"
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-	<UserControl.Resources>
-		<VisualBrush
-			x:Key="myBrush">
-			<VisualBrush.Visual>
-				<Grid>
-					<Image
-						Source="C:\Users\Miguel\Desktop\Caverna\ActionBoardForFour.png" />
-				</Grid>
-			</VisualBrush.Visual>
-		</VisualBrush>
-	</UserControl.Resources>
-	<Grid
-		Background="{StaticResource myBrush}">
+	<Grid>
+		<Grid
+			x:Name="board">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="*"></ColumnDefinition>
+				<ColumnDefinition Width="*"></ColumnDefinition>
+				<ColumnDefinition Width="*"></ColumnDefinition>
+				<ColumnDefinition Width="*"></ColumnDefinition>
+				<ColumnDefinition Width="*"></ColumnDefinition>
+				<ColumnDefinition Width="*"></ColumnDefinition>
+				<ColumnDefinition Width="*"></ColumnDefinition>
+				<ColumnDefinition Width="*"></ColumnDefinition>
+			</Grid.ColumnDefinitions>
+			<Grid.RowDefinitions>
+				<RowDefinition Height="*"></RowDefinition>
+				<RowDefinition Height="*"></RowDefinition>
+				<RowDefinition Height="*"></RowDefinition>
+			</Grid.RowDefinitions>
+		</Grid>
 		<ItemsControl ItemsSource="{Binding Dwarfs}"
-			x:Name="town" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+			xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 			<ItemsControl.ItemsPanel>
 				<ItemsPanelTemplate>
 					<Canvas
@@ -27,7 +33,7 @@
 						Grid.Row="0">
 						<Canvas.Background>
 							<ImageBrush
-								ImageSource="C:\Users\Miguel\Desktop\Caverna\ActionBoardFor4.png" />
+								ImageSource="C:\Users\Miguel\Desktop\Caverna\ActionBoardForFour.png" />
 						</Canvas.Background>
 					</Canvas>
 				</ItemsPanelTemplate>
@@ -49,23 +55,16 @@
 					</Thumb>
 				</DataTemplate>
 			</ItemsControl.ItemTemplate>
+			<ItemsControl.ItemContainerStyle>
+				<Style>
+					<Setter
+						Property="Canvas.Left"
+						Value="{Binding X}" />
+					<Setter
+						Property="Canvas.Top"
+						Value="{Binding Y}" />
+				</Style>
+			</ItemsControl.ItemContainerStyle>
 		</ItemsControl>
-		<Grid.ColumnDefinitions>
-			<ColumnDefinition Width="0"></ColumnDefinition>
-			<ColumnDefinition Width="*"></ColumnDefinition>
-			<ColumnDefinition Width="*"></ColumnDefinition>
-			<ColumnDefinition Width="*"></ColumnDefinition>
-			<ColumnDefinition Width="*"></ColumnDefinition>
-			<ColumnDefinition Width="*"></ColumnDefinition>
-			<ColumnDefinition Width="*"></ColumnDefinition>
-			<ColumnDefinition Width="*"></ColumnDefinition>
-			<ColumnDefinition Width="*"></ColumnDefinition>
-		</Grid.ColumnDefinitions>
-		<Grid.RowDefinitions>
-			<RowDefinition Height="0"></RowDefinition>
-			<RowDefinition Height="*"></RowDefinition>
-			<RowDefinition Height="*"></RowDefinition>
-			<RowDefinition Height="*"></RowDefinition>
-		</Grid.RowDefinitions>
 	</Grid>
 </UserControl>

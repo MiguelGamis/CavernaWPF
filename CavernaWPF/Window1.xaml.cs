@@ -34,19 +34,39 @@ namespace CavernaWPF
 			Grid.SetRow(ActionBoardContext.Instance.control, 0);
 			rootPanel.Children.Add(ActionBoardContext.Instance.control);
 			
-			StackPanel playerboards = new StackPanel() { Orientation = Orientation.Horizontal };
+			StackPanel playerPanels = new StackPanel() { Orientation = Orientation.Horizontal };
+			
+			//----------------
+			Dwarf testDwarf = null;
+			//----------------
 			
 			int numPlayers = 2;
 			for(int i = 0; i < numPlayers; i++)
 			{
+				Player p = new Player();
+				
+				StackPanel playerPanel = new StackPanel() { Orientation = Orientation.Vertical };
 				TownContext tc = new TownContext();
-				Grid.SetRow(tc.control, 1);
-				playerboards.Children.Add(tc.control);
+				
+				p.town = tc;
+				Dwarf dwarf1 = new Dwarf() { player = p }; Dwarf dwarf2 = new Dwarf() { player = p };
+				p.Dwarfs.Add(dwarf1); p.Dwarfs.Add(dwarf2);
+				
+				playerPanel.Children.Add(tc.control);
+				playerPanel.Children.Add(tc.tab);
+				
+				Grid.SetRow(playerPanel, 1);
+				playerPanels.Children.Add(playerPanel);
+				
+				if(testDwarf == null)
+					testDwarf = dwarf1;
 			}
-			rootPanel.Children.Add(playerboards);
+			rootPanel.Children.Add(playerPanels);
 			
 			this.Content = rootPanel;
-			InitializeComponent();		
+			InitializeComponent();
+			
+			ActionBoardContext.Instance.PromptDwarf(testDwarf);
 		}
 	}
 }

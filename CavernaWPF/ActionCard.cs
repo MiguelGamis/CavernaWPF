@@ -18,11 +18,11 @@ namespace CavernaWPF
 	{
 		private string name;
 		private bool accumulating;
-		public List<Action> actions;
+		public List<Action<Player>> actions;
 		
 		public ActionCard()
 		{
-			actions = new List<Action>();
+			actions = new List<Action<Player>>();
 		}
 		
 		public string Name
