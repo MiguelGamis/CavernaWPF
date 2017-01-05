@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 C:\Users\Miguel\Documents\SharpDevelop Projects\CavernaWPF\CavernaWPF\App.xaml
-6-1264602731
+10208348363
 
-26107540540
+32-327881881
 11770923591
-ActionBoard.xaml;CDwarf.xaml;ResourcesTab.xaml;Town.xaml;Village.xaml;Window1.xaml;
+ActionBoard.xaml;ActionCardControls\ActionCardCheckBox.xaml;ActionCardControls\ActionCardWindow.xaml;CDwarf.xaml;DwarfQueue.xaml;ResourcesTab.xaml;Town.xaml;Village.xaml;Window1.xaml;Window2.xaml;
 
 False
 

@@ -72,8 +72,11 @@ namespace CavernaWPF
 			}
 			ActionBoardContext abc = (this.DataContext as ActionBoardContext);
 			ActionCard ac = abc.ActionCards[0];
-			Action<Player> a = ac.actions[0];
-			a.Invoke(n.player);
+			Action<Player> action = ac.PlayerAction;
+			if(action != null)
+			{
+				action.Invoke(n.player);
+			}
 	    }
 	}
 }

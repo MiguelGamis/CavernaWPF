@@ -19,7 +19,11 @@ namespace CavernaWPF
 		private int level;
 		private double x;
     	private double y;
-		public Player player;
+		public Player player
+		{
+			get; 
+			set;
+		}
     	
 		public Dwarf()
 		{
@@ -30,6 +34,16 @@ namespace CavernaWPF
 		{
 			level += exp;
 		}
+		
+		public int Level
+	    {
+	        get { return level; }
+	        set
+	        {
+	            level = value;
+	            if (PropertyChanged != null) PropertyChanged(this, new PropertyChangedEventArgs("Level"));
+	        }
+	    }
 		
 		public double Y
 	    {

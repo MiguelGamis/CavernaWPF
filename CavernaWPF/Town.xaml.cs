@@ -80,14 +80,7 @@ namespace CavernaWPF
 	   	private void Rotate(object sender, MouseButtonEventArgs e)
 	    {
 	        object dc = ((FrameworkElement)sender).DataContext;
-	        if(dc is TwinTile)
-	        {
-	        	TwinTile tt = dc as TwinTile;
-	        	tt.Rotate();
-	        	tt.X = 0;
- 	        	tt.Y = 0;
-	        }
-	        else if(dc is Tile)
+	        if(dc is Tile)
 	        {
 	        	Tile t = dc as Tile;
 	        	t.Rotate();

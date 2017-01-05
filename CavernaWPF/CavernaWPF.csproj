@@ -66,15 +66,29 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="ActionCard.cs" />
-    <Compile Include="ActionCardActions.cs" />
+    <Compile Include="ActionCardControls\ActionCardCheckBox.xaml.cs">
+      <DependentUpon>ActionCardCheckBox.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ActionCardControls\ActionCardOption.cs" />
+    <Compile Include="ActionCardControls\ActionCardWindow.xaml.cs">
+      <DependentUpon>ActionCardWindow.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ActionCardControls\ActionCardWindowContext.cs" />
     <Compile Include="App.xaml.cs">
       <SubType>Code</SubType>
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="BoardTile.cs" />
+    <Compile Include="ColorToDwarfConverter.cs" />
     <Compile Include="Dwarf.cs" />
     <Compile Include="CDwarf.xaml.cs">
       <DependentUpon>CDwarf.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DwarfQueue.xaml.cs">
+      <DependentUpon>DwarfQueue.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Player.cs" />
@@ -82,11 +96,11 @@
     <Compile Include="Properties\WPFAssemblyInfo.cs" />
     <Compile Include="Layable\Tile.cs" />
     <Compile Include="Layable\TwinTile.cs" />
+    <Compile Include="ResourceAccumulator.cs" />
     <Compile Include="ResourcesTab.xaml.cs">
       <DependentUpon>ResourcesTab.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="ResourcesTabContext.cs" />
     <Compile Include="Resources\FarmAnimal.cs" />
     <Compile Include="Resources\Dog.cs" />
     <Compile Include="Resources\Resource.cs" />
@@ -107,17 +121,26 @@
       <SubType>Code</SubType>
       <DependentUpon>Window1.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Window2.xaml.cs">
+      <DependentUpon>Window2.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Page Include="ActionBoard.xaml" />
+    <Page Include="ActionCardControls\ActionCardCheckBox.xaml" />
+    <Page Include="ActionCardControls\ActionCardWindow.xaml" />
     <Page Include="CDwarf.xaml" />
+    <Page Include="DwarfQueue.xaml" />
     <Page Include="ResourcesTab.xaml" />
     <Page Include="Town.xaml" />
     <Page Include="Village.xaml" />
     <Page Include="Window1.xaml" />
+    <Page Include="Window2.xaml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Layable" />
+    <Folder Include="ActionCardControls" />
     <Folder Include="Resources" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

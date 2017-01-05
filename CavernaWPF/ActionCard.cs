@@ -8,6 +8,10 @@
  */
 using System;
 using System.Collections.Generic;
+using CavernaWPF.Layable;
+using CavernaWPF.ActionCardControls;
+using System.Windows;
+using System.Windows.Controls;
 
 namespace CavernaWPF
 {
@@ -17,12 +21,12 @@ namespace CavernaWPF
 	public class ActionCard
 	{
 		private string name;
-		private bool accumulating;
-		public List<Action<Player>> actions;
+		public Action<Player> PlayerAction;
+		public List<ResourceAccumulator> Accumulators = new List<ResourceAccumulator>();
+		
 		
 		public ActionCard()
 		{
-			actions = new List<Action<Player>>();
 		}
 		
 		public string Name
@@ -31,20 +35,49 @@ namespace CavernaWPF
 			set { name = value; }
 		}
 		
-		public bool Accumulating
+		public void Accumulate()
 		{
-			get;
-			set;
+			foreach(ResourceAccumulator ra in Accumulators)
+			{
+				if(ra.Amount > 0)
+					ra.Amount += ra.Accumulation;
+				else
+					ra.Amount = ra.StartingAmount;
+			}
 		}
 		
-		public bool IsAccumulating()
+		//----------------------------------------------------------------------------------//
+		
+		public void DriftMining(Player p)
 		{
-			return accumulating;
+			ActionCardWindowContext acwc = new ActionCardWindowContext();
+			acwc.Options.Add(new ActionCardOption(){ Selected = true, Text = "Collect Resources"});
+			acwc.Options.Add(new ActionCardOption(){ Selected = true, Text = "Place Cave-Tunnel Tile"});
+			acwc.Control.ShowDialog();
+			
+			if((bool) acwc.Control.DialogResult)
+			{
+				foreach(ResourceAccumulator ra in Accumulators)
+				{
+					p.town.Resources[ra.ResourceType].Amount += ra.Amount;
+				}
+				
+				p.town.Tiles.Add(new Tile(Tile.Type.CaveTunnel));
+				
+				ActionBoardContext.Instance.readyForNextDwarf = true;
+			}
 		}
 		
-		public bool IsMultiAction()
+		public void Excavation(Player p)
 		{
-			return actions.Count > 1;
+			foreach(ResourceAccumulator ra in Accumulators)
+			{
+				p.town.Resources[ra.ResourceType].Amount += ra.Amount;
+			}
+			
+			p.town.Tiles.Add(new Tile(Tile.Type.CaveTunnel));
+			
+			ActionBoardContext.Instance.readyForNextDwarf = true;
 		}
 	}
 }

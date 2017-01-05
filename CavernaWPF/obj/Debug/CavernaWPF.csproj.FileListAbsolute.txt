@@ -19,3 +19,12 @@ C:\Users\Miguel\Documents\SharpDevelop Projects\CavernaWPF\CavernaWPF\obj\Debug\
 C:\Users\Miguel\Documents\SharpDevelop Projects\CavernaWPF\CavernaWPF\obj\Debug\ActionBoard.g.cs
 C:\Users\Miguel\Documents\SharpDevelop Projects\CavernaWPF\CavernaWPF\obj\Debug\ResourcesTab.baml
 C:\Users\Miguel\Documents\SharpDevelop Projects\CavernaWPF\CavernaWPF\obj\Debug\ResourcesTab.g.cs
+C:\Users\Miguel\Documents\SharpDevelop Projects\CavernaWPF\CavernaWPF\obj\Debug\Window2.baml
+C:\Users\Miguel\Documents\SharpDevelop Projects\CavernaWPF\CavernaWPF\obj\Debug\Window2.g.cs
+C:\Users\Miguel\Documents\SharpDevelop Projects\CavernaWPF\CavernaWPF\obj\Debug\DwarfQueue.baml
+C:\Users\Miguel\Documents\SharpDevelop Projects\CavernaWPF\CavernaWPF\obj\Debug\DwarfQueue.g.cs
+C:\Users\Miguel\Documents\SharpDevelop Projects\CavernaWPF\CavernaWPF\obj\Debug\GeneratedInternalTypeHelper.g.cs
+C:\Users\Miguel\Documents\SharpDevelop Projects\CavernaWPF\CavernaWPF\obj\Debug\ActionCardControls\ActionCardWindow.baml
+C:\Users\Miguel\Documents\SharpDevelop Projects\CavernaWPF\CavernaWPF\obj\Debug\ActionCardControls\ActionCardWindow.g.cs
+C:\Users\Miguel\Documents\SharpDevelop Projects\CavernaWPF\CavernaWPF\obj\Debug\ActionCardControls\ActionCardCheckBox.baml
+C:\Users\Miguel\Documents\SharpDevelop Projects\CavernaWPF\CavernaWPF\obj\Debug\ActionCardControls\ActionCardCheckBox.g.cs

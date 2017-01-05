@@ -16,6 +16,7 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Collections.ObjectModel;
+using CavernaWPF.Layable;
 
 namespace CavernaWPF
 {
@@ -36,37 +37,48 @@ namespace CavernaWPF
 			
 			StackPanel playerPanels = new StackPanel() { Orientation = Orientation.Horizontal };
 			
-			//----------------
-			Dwarf testDwarf = null;
-			//----------------
-			
 			int numPlayers = 2;
 			for(int i = 0; i < numPlayers; i++)
 			{
-				Player p = new Player();
+				Player p = new Player(); p.Color = "Yellow"; 
+				ActionBoardContext.Instance.players.Add(p);
 				
 				StackPanel playerPanel = new StackPanel() { Orientation = Orientation.Vertical };
-				TownContext tc = new TownContext();
 				
+				TownContext tc = new TownContext();
 				p.town = tc;
+				
 				Dwarf dwarf1 = new Dwarf() { player = p }; Dwarf dwarf2 = new Dwarf() { player = p };
 				p.Dwarfs.Add(dwarf1); p.Dwarfs.Add(dwarf2);
 				
 				playerPanel.Children.Add(tc.control);
 				playerPanel.Children.Add(tc.tab);
 				
-				Grid.SetRow(playerPanel, 1);
-				playerPanels.Children.Add(playerPanel);
+				DwarfQueue dwarfLineUp = new DwarfQueue();
+				dwarfLineUp.ItemsSource = p.Dwarfs;
+				playerPanel.Children.Add(dwarfLineUp);
 				
-				if(testDwarf == null)
-					testDwarf = dwarf1;
+				playerPanels.Children.Add(playerPanel);
 			}
+			Grid.SetRow(playerPanels, 1);
 			rootPanel.Children.Add(playerPanels);
+			
+			startButton.Click += new RoutedEventHandler(StartGame);
+			
+			Grid.SetRow(startButton,2);
+			rootPanel.Children.Add(startButton);
 			
 			this.Content = rootPanel;
 			InitializeComponent();
 			
-			ActionBoardContext.Instance.PromptDwarf(testDwarf);
+			ActionBoardContext.Instance.StartGame();
+		}
+		
+		Button startButton = new Button() { Height = 30, Width = 60};
+		
+		private void StartGame(object sender, RoutedEventArgs e)
+		{
+			ActionBoardContext.Instance.NextTurn();
 		}
 	}
 }

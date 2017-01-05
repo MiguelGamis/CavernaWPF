@@ -8,16 +8,19 @@
  */
 using System;
 using System.ComponentModel;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using CavernaWPF.Resources;
 using CavernaWPF.Layable;
+using System.Windows;
 
 namespace CavernaWPF
 {
 	/// <summary>
 	/// Description of ActionBoard.
 	/// </summary>
-	public sealed class ActionBoardContext : INotifyPropertyChanged
+	public sealed class ActionBoardContext : INotifyPropertyChanged, INotifyCollectionChanged
 	{
 		private static ActionBoardContext instance = new ActionBoardContext();
 		
@@ -44,26 +47,42 @@ namespace CavernaWPF
 		public ObservableCollection<Dwarf> Dwarfs
 		{
 			get { return dwarfs; }
-			set { dwarfs = value; 
-				if (PropertyChanged != null) PropertyChanged(this, new PropertyChangedEventArgs("Dwarfs"));
-			}
+			set { dwarfs = value; }
 		}
+		
+		public void AddDwarf(Dwarf dwarf)
+	    {
+				this.dwarfs.Add(dwarf);
+				this.OnNotifyCollectionChanged(
+			        new NotifyCollectionChangedEventArgs(
+			          NotifyCollectionChangedAction.Add, dwarf));
+	    }
+		
+		public List<Player> players = new List<Player>();
 		
 		private ActionBoardContext()
 		{
 			actioncards = new ObservableCollection<ActionCard>();
 			dwarfs = new ObservableCollection<Dwarf>();
 			
-			ActionCard ac = new ActionCard();
-			ac.Name = "Drift Mining";
-			ac.Accumulating = true;
-			ac.actions.Add(new Action<Player>((p) =>
+			ActionCard ac1 = new ActionCard();
+			ac1.Name = "Drift Mining";
+			ac1.Accumulators.Add(new ResourceAccumulator(){ResourceType = Resource.Type.Stone, StartingAmount = 1, Accumulation = 1});
+			ac1.PlayerAction = new Action<Player>((p) =>
 			                          {
-			                                  	p.town.Resources[1].Amount++;
-			                                  	Tile cavetunnel = new Tile();
-			                                  	p.town.Tiles.Add(cavetunnel);
-			                          }));
-			actioncards.Add(ac);
+			                          	ac1.DriftMining(p);
+			                          });
+			
+			ActionCard ac2 = new ActionCard();
+			ac2.Name = "Excavation";
+			ac2.Accumulators = new List<ResourceAccumulator>() { new ResourceAccumulator(){ResourceType = Resource.Type.Stone, StartingAmount = 1, Accumulation = 1} };
+			ac2.PlayerAction = new Action<Player>((p) =>
+			                          {
+			                          	ac2.Excavation(p);
+			                          });
+			
+			actioncards.Add(ac1);
+			actioncards.Add(ac2);
 		}
 		
 		public void Intitialize()
@@ -75,14 +94,133 @@ namespace CavernaWPF
 		
 		public void Replenish()
 		{
-			
+			foreach(ActionCard actioncard in actioncards)
+			{
+				actioncard.Accumulate();
+			}
 		}
 		
 		public void PromptDwarf(Dwarf d)
 		{
 			Dwarfs.Add(d);
 		}
+
+		public void StartGame()
+		{
+			Replenish();
+			
+			PrepareActionCards();
+			
+			CurrentTurn = StartPlayerIndex;
+			
+			Dwarf dwarf = null;
+			
+//			LinkedList<Player> playersPlaying = new LinkedList<Player>();
+			
+			foreach(Player p in players)
+			{
+				playersPlaying.AddLast(new LinkedListNode<Player>(p));
+			}
+			
+//			LinkedListNode<Player> pl = playersPlaying.First;
+			
+//			while(pl != null)
+//			{
+//				if(pl.Value.Dwarfs.Count > 0)
+//				{
+//					int last = pl.Value.Dwarfs.Count - 1;
+//					AddDwarf(pl.Value.Dwarfs[last]);
+//					pl.Value.Dwarfs.RemoveAt(last);
+//					pl = pl.Next;
+//					if(pl == null)
+//						pl = playersPlaying.First;
+//				}
+//				else
+//				{
+//					LinkedListNode<Player> tmp = pl;
+//					playersPlaying.Remove(pl);
+//					pl = tmp.Next;
+//					if(pl == null)
+//						pl = playersPlaying.First;
+//				}
+//			}
+			
+			currentPlayer = playersPlaying.First;
+		}
+		
+		LinkedList<Player> playersPlaying = new LinkedList<Player>();
+		
+		LinkedListNode<Player> currentPlayer;
+		
+		public bool readyForNextDwarf = true;
+		
+		public void NextTurn()
+		{	
+			if(readyForNextDwarf)
+			{
+				bool roundOver = false;
+				
+				Dwarf nextDwarf = null;
+				
+				currentPlayer = currentPlayer.Next;
+				
+				do
+				{
+					if(playersPlaying.Count == 0)
+					{
+						roundOver = true;
+						return;
+					}
+					if(currentPlayer == null)
+						currentPlayer = playersPlaying.First;
+					else if(currentPlayer.Value.Dwarfs.Count > 0)
+						nextDwarf = currentPlayer.Value.GetNextDwarf();
+					else
+					{
+						LinkedListNode<Player> tmp = currentPlayer;
+						playersPlaying.Remove(currentPlayer);
+						currentPlayer = tmp.Next;
+						if(currentPlayer == null)
+							currentPlayer = playersPlaying.First;
+					}
+				}
+				while(nextDwarf == null);
+				
+				if(roundOver)
+				{
+					
+				}
+				else
+				{
+					readyForNextDwarf = false;
+					AddDwarf(nextDwarf);
+				}
+				
+			}
+		}
+		
+		private void PrepareActionCards()
+		{
+			
+		}
+		
+		private int StartPlayerIndex = 0;
+		
+		private int CurrentTurn = 0;
 		
 		public event PropertyChangedEventHandler PropertyChanged;
+		
+	    #region INotifyCollectionChanged
+	    private void OnNotifyCollectionChanged(NotifyCollectionChangedEventArgs args)
+	    {
+			if (this.CollectionChanged != null)
+			{
+			    this.CollectionChanged(this, args);
+			    Window window = new Window();
+			    window.ShowDialog();
+			}
+	    }
+	    public event NotifyCollectionChangedEventHandler CollectionChanged;
+	    #endregion INotifyCollectionChanged
 	}
 }

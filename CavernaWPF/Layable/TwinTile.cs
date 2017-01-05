@@ -14,13 +14,13 @@ namespace CavernaWPF.Layable
 	/// <summary>
 	/// Description of TwinTile.
 	/// </summary>
-	public class TwinTile : Tile, INotifyPropertyChanged
+	public class TwinTile : /*Tile,*/ INotifyPropertyChanged
 	{
 		public enum Rotation {None = 0, Once = 1, Twice = 2, Thrice = 3};
 		
 		private int rot;
 		
-		public TwinTile()
+		public TwinTile(Tile.Type type)
 		{
 		}
 		

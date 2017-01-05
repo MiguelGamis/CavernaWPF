@@ -56,20 +56,18 @@ namespace CavernaWPF
 		
 		//public ResourcesTabContext ResourcesTabContext = new ResourcesTabContext();
 		
-		private ObservableCollection<ResourceTab> resources = new ObservableCollection<ResourceTab>(){
-			new ResourceTab(){ ResourceType = Resource.Type.Wood, Amount = 0 },
-			new ResourceTab(){ ResourceType = Resource.Type.Stone, Amount = 0 },
-			new ResourceTab(){ ResourceType = Resource.Type.Ore, Amount = 0 },
-			new ResourceTab(){ ResourceType = Resource.Type.Ruby, Amount = 0 },
-			new ResourceTab(){ ResourceType = Resource.Type.Gold, Amount = 0 },
-			new ResourceTab(){ ResourceType = Resource.Type.Food, Amount = 0 }
+		private Dictionary<Resource.Type, ResourceTab> resources = new Dictionary<Resource.Type, ResourceTab>(){
+			{ Resource.Type.Wood, new ResourceTab(){ ResourceType = Resource.Type.Wood, Amount = 0 } },
+			{ Resource.Type.Stone, new ResourceTab(){ ResourceType = Resource.Type.Stone, Amount = 0 } },
+			{ Resource.Type.Ore, new ResourceTab(){ ResourceType = Resource.Type.Ore, Amount = 0 } },
+			{ Resource.Type.Ruby, new ResourceTab(){ ResourceType = Resource.Type.Ruby, Amount = 0 } },
+			{ Resource.Type.Gold, new ResourceTab(){ ResourceType = Resource.Type.Stone, Amount = 0 } },
+			{ Resource.Type.Food, new ResourceTab(){ ResourceType = Resource.Type.Stone, Amount = 0 } }
 		};
 		
-		public ObservableCollection<ResourceTab> Resources{ 
-			get{ return resources; }
-			set{ resources = value; 
-			 	if (PropertyChanged != null) PropertyChanged(this, new PropertyChangedEventArgs("Resources"));
-			}
+		public Dictionary<Resource.Type, ResourceTab> Resources{ 
+			get { return resources; }
+			set { resources = value; }
 		}
 		
 		public event PropertyChangedEventHandler PropertyChanged;

@@ -16,14 +16,28 @@ namespace CavernaWPF.Layable
 	/// </summary>
 	public class Tile : INotifyPropertyChanged
 	{
-		private enum Type {Meadow, Field, Cave, Tunnel, DeepTunnel, RubyMine, MeadowField, CaveCave, CaveTunnel, OreMine};
+		public enum Type {Meadow, Field, Cave, Tunnel, DeepTunnel, RubyMine, MeadowField, CaveCave, CaveTunnel, OreMine};
 		private double x;
     	private double y;
     	private string img;
 		
-		public Tile()
+		public Tile(Tile.Type type)
 		{
-			img = "C:\\Users\\Miguel\\Desktop\\Caverna\\MeadowField.png";
+			switch(type)
+			{
+				case Type.CaveTunnel: Img = "C:\\Users\\Miguel\\Desktop\\Caverna\\CaveTunnel.png";
+								break;
+				case Type.CaveCave: Img = "C:\\Users\\Miguel\\Desktop\\Caverna\\CaveCave.png";
+								break;
+				case Type.MeadowField: Img = "C:\\Users\\Miguel\\Desktop\\Caverna\\MeadowField.png";
+								break;								
+				case Type.OreMine: Img = "C:\\Users\\Miguel\\Desktop\\Caverna\\OreMine.png";
+								break;
+				case Type.RubyMine: Img = "C:\\Users\\Miguel\\Desktop\\Caverna\\RubyMine.png";
+								break;
+				default: Img = "C:\\Users\\Miguel\\Desktop\\Caverna\\Meadow.png";
+						break;
+			}
 		}
 		
 		public double Y
