@@ -57,27 +57,76 @@ namespace CavernaWPF
 			
 			if((bool) acwc.Control.DialogResult)
 			{
-				foreach(ResourceAccumulator ra in Accumulators)
+				if(acwc.Options[0].Selected)
 				{
-					p.town.Resources[ra.ResourceType].Amount += ra.Amount;
+					foreach(ResourceAccumulator ra in Accumulators)
+					{
+						p.town.Resources[ra.ResourceType].Amount += ra.Amount;
+						ra.Amount = 0;
+					}
 				}
 				
-				p.town.Tiles.Add(new Tile(Tile.Type.CaveTunnel));
-				
-				ActionBoardContext.Instance.readyForNextDwarf = true;
+				if(acwc.Options[1].Selected)
+				{
+					p.town.Tiles.Add(new Tile(Tile.Type.CaveTunnel));
+					
+					ActionBoardContext.Instance.readyForNextDwarf = true;
+				}
 			}
 		}
 		
 		public void Excavation(Player p)
 		{
-			foreach(ResourceAccumulator ra in Accumulators)
+			ActionCardWindowContext acwc = new ActionCardWindowContext();
+			acwc.Options.Add(new ActionCardOption(){ Selected = true, Text = "Collect Resources"});
+			acwc.Options.Add(new ActionCardOption(){ Selected = true, Text = "Place Cave-Tunnel Tile"});
+			acwc.Control.ShowDialog();
+			
+			if((bool) acwc.Control.DialogResult)
 			{
-				p.town.Resources[ra.ResourceType].Amount += ra.Amount;
+				if(acwc.Options[0].Selected)
+				{
+					foreach(ResourceAccumulator ra in Accumulators)
+					{
+						p.town.Resources[ra.ResourceType].Amount += ra.Amount;
+						ra.Amount = 0;
+					}
+				}
+				
+				if(acwc.Options[1].Selected)
+				{
+					p.town.Tiles.Add(new Tile(Tile.Type.CaveTunnel));
+					
+					ActionBoardContext.Instance.readyForNextDwarf = true;
+				}
 			}
+		}
+		
+		public void Logging(Player p)
+		{
+			ActionCardWindowContext acwc = new ActionCardWindowContext();
+			acwc.Options.Add(new ActionCardOption(){ Selected = true, Text = "Collect Resources"});
+			acwc.Options.Add(new ActionCardOption(){ Selected = true, Text = "Go on 1 Expedition"});
+			acwc.Control.ShowDialog();
 			
-			p.town.Tiles.Add(new Tile(Tile.Type.CaveTunnel));
-			
-			ActionBoardContext.Instance.readyForNextDwarf = true;
+			if((bool) acwc.Control.DialogResult)
+			{
+				if(acwc.Options[0].Selected)
+				{
+					foreach(ResourceAccumulator ra in Accumulators)
+					{
+						p.town.Resources[ra.ResourceType].Amount += ra.Amount;
+						ra.Amount = 0;
+					}
+				}
+				
+				if(acwc.Options[1].Selected)
+				{
+					Expedition exp = new Expedition();
+					exp.Control.ShowDialog();
+					List<String> test = exp.Loot;
+				}
+			}
 		}
 	}
 }

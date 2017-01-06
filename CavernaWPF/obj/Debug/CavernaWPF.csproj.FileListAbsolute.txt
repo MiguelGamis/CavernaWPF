@@ -28,3 +28,5 @@ C:\Users\Miguel\Documents\SharpDevelop Projects\CavernaWPF\CavernaWPF\obj\Debug\
 C:\Users\Miguel\Documents\SharpDevelop Projects\CavernaWPF\CavernaWPF\obj\Debug\ActionCardControls\ActionCardWindow.g.cs
 C:\Users\Miguel\Documents\SharpDevelop Projects\CavernaWPF\CavernaWPF\obj\Debug\ActionCardControls\ActionCardCheckBox.baml
 C:\Users\Miguel\Documents\SharpDevelop Projects\CavernaWPF\CavernaWPF\obj\Debug\ActionCardControls\ActionCardCheckBox.g.cs
+C:\Users\Miguel\Documents\SharpDevelop Projects\CavernaWPF\CavernaWPF\obj\Debug\ActionCardControls\ExpeditionWindow.baml
+C:\Users\Miguel\Documents\SharpDevelop Projects\CavernaWPF\CavernaWPF\obj\Debug\ActionCardControls\ExpeditionWindow.g.cs

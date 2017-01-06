@@ -76,6 +76,11 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="ActionCardControls\ActionCardWindowContext.cs" />
+    <Compile Include="ActionCardControls\Expedition.cs" />
+    <Compile Include="ActionCardControls\ExpeditionWindow.xaml.cs">
+      <DependentUpon>ExpeditionWindow.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="App.xaml.cs">
       <SubType>Code</SubType>
       <DependentUpon>App.xaml</DependentUpon>
@@ -130,6 +135,7 @@
     <Page Include="ActionBoard.xaml" />
     <Page Include="ActionCardControls\ActionCardCheckBox.xaml" />
     <Page Include="ActionCardControls\ActionCardWindow.xaml" />
+    <Page Include="ActionCardControls\ExpeditionWindow.xaml" />
     <Page Include="CDwarf.xaml" />
     <Page Include="DwarfQueue.xaml" />
     <Page Include="ResourcesTab.xaml" />

@@ -72,6 +72,7 @@ namespace CavernaWPF
 			                          {
 			                          	ac1.DriftMining(p);
 			                          });
+			actioncards.Add(ac1);
 			
 			ActionCard ac2 = new ActionCard();
 			ac2.Name = "Excavation";
@@ -80,9 +81,16 @@ namespace CavernaWPF
 			                          {
 			                          	ac2.Excavation(p);
 			                          });
-			
-			actioncards.Add(ac1);
 			actioncards.Add(ac2);
+			
+			ActionCard ac3 = new ActionCard();
+			ac3.Name = "Excavation";
+			ac3.Accumulators = new List<ResourceAccumulator>() { new ResourceAccumulator(){ResourceType = Resource.Type.Wood, StartingAmount = 3, Accumulation = 1} };
+			ac3.PlayerAction = new Action<Player>((p) =>
+			                          {
+			                          	ac3.Logging(p);
+			                          });
+			actioncards.Add(ac3);
 		}
 		
 		public void Intitialize()

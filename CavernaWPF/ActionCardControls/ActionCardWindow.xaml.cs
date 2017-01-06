@@ -15,6 +15,7 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Linq;
 
 namespace CavernaWPF.ActionCardControls
 {
@@ -30,8 +31,11 @@ namespace CavernaWPF.ActionCardControls
 		
 		public void OKButton_Click(object sender, RoutedEventArgs args)
 		{
-			DialogResult = true;
-			Close();
+			if((this.DataContext as ActionCardWindowContext).Options.Any(option => option.Selected == true))
+			{
+				DialogResult = true;
+				Close();
+			}
 		}
 		
 		public void CancelButton_Click(object sender, RoutedEventArgs args)
