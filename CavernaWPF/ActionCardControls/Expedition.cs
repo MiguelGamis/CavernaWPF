@@ -16,10 +16,13 @@ namespace CavernaWPF.ActionCardControls
 	/// </summary>
 	public class Expedition
 	{
-		public ExpeditionWindow Control = new ExpeditionWindow();
+		public ExpeditionWindow Control;
 		public List<String> Loot = new List<String>();
-		public Expedition()
+		public int Level;
+		public int Max;
+		public Expedition(int level, int max)
 		{
+			Control = new ExpeditionWindow(level, max);
 			Control.DataContext = this;
 		}
 	}

@@ -62,7 +62,13 @@ namespace CavernaWPF
 			{ Resource.Type.Ore, new ResourceTab(){ ResourceType = Resource.Type.Ore, Amount = 0 } },
 			{ Resource.Type.Ruby, new ResourceTab(){ ResourceType = Resource.Type.Ruby, Amount = 0 } },
 			{ Resource.Type.Gold, new ResourceTab(){ ResourceType = Resource.Type.Stone, Amount = 0 } },
-			{ Resource.Type.Food, new ResourceTab(){ ResourceType = Resource.Type.Stone, Amount = 0 } }
+			{ Resource.Type.Food, new ResourceTab(){ ResourceType = Resource.Type.Food, Amount = 0 } },
+			{ Resource.Type.Grain, new ResourceTab(){ ResourceType = Resource.Type.Grain, Amount = 0 } },
+			{ Resource.Type.Vegetable, new ResourceTab(){ ResourceType = Resource.Type.Vegetable, Amount = 0 } },
+			{ Resource.Type.Sheep, new ResourceTab(){ ResourceType = Resource.Type.Sheep, Amount = 0 } },
+			{ Resource.Type.Donkey, new ResourceTab(){ ResourceType = Resource.Type.Donkey, Amount = 0 } },
+			{ Resource.Type.Boar, new ResourceTab(){ ResourceType = Resource.Type.Boar, Amount = 0 } },
+			{ Resource.Type.Cow, new ResourceTab(){ ResourceType =Resource.Type.Cow, Amount = 0 } }
 		};
 		
 		public Dictionary<Resource.Type, ResourceTab> Resources{ 

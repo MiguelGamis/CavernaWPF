@@ -68,27 +68,27 @@ namespace CavernaWPF
 			ActionCard ac1 = new ActionCard();
 			ac1.Name = "Drift Mining";
 			ac1.Accumulators.Add(new ResourceAccumulator(){ResourceType = Resource.Type.Stone, StartingAmount = 1, Accumulation = 1});
-			ac1.PlayerAction = new Action<Player>((p) =>
+			ac1.PlayerAction = new Action<Dwarf>((d) =>
 			                          {
-			                          	ac1.DriftMining(p);
+			                          	ac1.DriftMining(d);
 			                          });
 			actioncards.Add(ac1);
 			
 			ActionCard ac2 = new ActionCard();
 			ac2.Name = "Excavation";
 			ac2.Accumulators = new List<ResourceAccumulator>() { new ResourceAccumulator(){ResourceType = Resource.Type.Stone, StartingAmount = 1, Accumulation = 1} };
-			ac2.PlayerAction = new Action<Player>((p) =>
+			ac2.PlayerAction = new Action<Dwarf>((d) =>
 			                          {
-			                          	ac2.Excavation(p);
+			                          	ac2.Excavation(d);
 			                          });
 			actioncards.Add(ac2);
 			
 			ActionCard ac3 = new ActionCard();
 			ac3.Name = "Excavation";
 			ac3.Accumulators = new List<ResourceAccumulator>() { new ResourceAccumulator(){ResourceType = Resource.Type.Wood, StartingAmount = 3, Accumulation = 1} };
-			ac3.PlayerAction = new Action<Player>((p) =>
+			ac3.PlayerAction = new Action<Dwarf>((d) =>
 			                          {
-			                          	ac3.Logging(p);
+			                          	ac3.Logging(d);
 			                          });
 			actioncards.Add(ac3);
 		}

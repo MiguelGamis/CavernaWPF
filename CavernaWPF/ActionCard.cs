@@ -9,6 +9,7 @@
 using System;
 using System.Collections.Generic;
 using CavernaWPF.Layable;
+using CavernaWPF.Resources;
 using CavernaWPF.ActionCardControls;
 using System.Windows;
 using System.Windows.Controls;
@@ -21,7 +22,7 @@ namespace CavernaWPF
 	public class ActionCard
 	{
 		private string name;
-		public Action<Player> PlayerAction;
+		public Action<Dwarf> PlayerAction;
 		public List<ResourceAccumulator> Accumulators = new List<ResourceAccumulator>();
 		
 		
@@ -48,7 +49,7 @@ namespace CavernaWPF
 		
 		//----------------------------------------------------------------------------------//
 		
-		public void DriftMining(Player p)
+		public void DriftMining(Dwarf d)
 		{
 			ActionCardWindowContext acwc = new ActionCardWindowContext();
 			acwc.Options.Add(new ActionCardOption(){ Selected = true, Text = "Collect Resources"});
@@ -61,21 +62,21 @@ namespace CavernaWPF
 				{
 					foreach(ResourceAccumulator ra in Accumulators)
 					{
-						p.town.Resources[ra.ResourceType].Amount += ra.Amount;
+						d.player.town.Resources[ra.ResourceType].Amount += ra.Amount;
 						ra.Amount = 0;
 					}
 				}
 				
 				if(acwc.Options[1].Selected)
 				{
-					p.town.Tiles.Add(new Tile(Tile.Type.CaveTunnel));
+					d.player.town.Tiles.Add(new Tile(Tile.Type.CaveTunnel));
 					
 					ActionBoardContext.Instance.readyForNextDwarf = true;
 				}
 			}
 		}
 		
-		public void Excavation(Player p)
+		public void Excavation(Dwarf d)
 		{
 			ActionCardWindowContext acwc = new ActionCardWindowContext();
 			acwc.Options.Add(new ActionCardOption(){ Selected = true, Text = "Collect Resources"});
@@ -88,21 +89,21 @@ namespace CavernaWPF
 				{
 					foreach(ResourceAccumulator ra in Accumulators)
 					{
-						p.town.Resources[ra.ResourceType].Amount += ra.Amount;
+						d.player.town.Resources[ra.ResourceType].Amount += ra.Amount;
 						ra.Amount = 0;
 					}
 				}
 				
 				if(acwc.Options[1].Selected)
 				{
-					p.town.Tiles.Add(new Tile(Tile.Type.CaveTunnel));
+					d.player.town.Tiles.Add(new Tile(Tile.Type.CaveTunnel));
 					
 					ActionBoardContext.Instance.readyForNextDwarf = true;
 				}
 			}
 		}
 		
-		public void Logging(Player p)
+		public void Logging(Dwarf d)
 		{
 			ActionCardWindowContext acwc = new ActionCardWindowContext();
 			acwc.Options.Add(new ActionCardOption(){ Selected = true, Text = "Collect Resources"});
@@ -115,16 +116,87 @@ namespace CavernaWPF
 				{
 					foreach(ResourceAccumulator ra in Accumulators)
 					{
-						p.town.Resources[ra.ResourceType].Amount += ra.Amount;
+						d.player.town.Resources[ra.ResourceType].Amount += ra.Amount;
 						ra.Amount = 0;
 					}
 				}
 				
 				if(acwc.Options[1].Selected)
 				{
-					Expedition exp = new Expedition();
+					Expedition exp = new Expedition(5, 1);
 					exp.Control.ShowDialog();
-					List<String> test = exp.Loot;
+					List<String> loot = exp.Loot;
+					
+					foreach(String str in loot)
+					{
+						switch(str)
+						{
+							case "Wood":
+								d.player.town.Resources[Resource.Type.Wood].Amount++;
+								break;
+							case "Dog":
+								break;
+							case "Grain":
+								d.player.town.Resources[Resource.Type.Grain].Amount++;
+								break;
+							case "Sheep":
+								
+								break;
+							case "Stone":
+								d.player.town.Resources[Resource.Type.Stone].Amount++;
+								break;
+							case "Donkey":
+								
+								break;
+							case "Vegetable":
+								d.player.town.Resources[Resource.Type.Vegetable].Amount++;
+								break;
+							case "Ores":
+								d.player.town.Resources[Resource.Type.Ore].Amount += 2;
+								break;
+							case "Boar":
+								
+								break;
+							case "Gold":
+								d.player.town.Resources[Resource.Type.Gold].Amount += 2;
+								break;
+							case "FurnishCavern":
+								
+								break;
+							case "Stable":
+								
+								break;
+							case "Tunnel":
+								
+								break;
+							case "Fence1":
+								
+								break;
+							case "Cow":
+								
+								break;
+							case "Meadow":
+								d.player.town.Tiles.Add(new Tile(Tile.Type.Meadow));
+								break;
+							case "FurnishDwelling":
+								
+								break;
+							case "Field":
+								d.player.town.Tiles.Add(new Tile(Tile.Type.Field));
+								break;
+							case "Sow":
+								
+								break;
+							case "Cavern":
+								d.player.town.Tiles.Add(new Tile(Tile.Type.Cave));
+								break;
+							case "Breed":
+								
+								break;
+							default:
+								break;
+						}
+					}
 				}
 			}
 		}

@@ -25,15 +25,29 @@ namespace CavernaWPF.ActionCardControls
 	/// </summary>
 	public partial class ExpeditionWindow : Window
 	{
-		public IEnumerable<ToggleButton> loot;
+		private IEnumerable<ToggleButton> loot;
 		
-		public ExpeditionWindow()
+		public ExpeditionWindow(int level, int max)
 		{
 			InitializeComponent();
+			this.level = level;
+			this.max = max;
 			loot = FindVisualChildren<ToggleButton>(this);
+			loot = loot.Where(l => l.Parent is Grid ? Int32.Parse((l.Parent as Grid).Name.TrimStart("Level".ToCharArray())) <= level : false );
+			Loaded += Loaded_Method;
 		}
 		
-		private int max = 3;
+		private void Loaded_Method(object sender, RoutedEventArgs e)
+		{
+			foreach(ToggleButton tb in loot)
+			{
+				tb.IsEnabled = true;
+			}
+		}
+		
+		private int level;
+		
+		private int max;
 		
 		private int totalChecked = 0;
 		
@@ -41,8 +55,8 @@ namespace CavernaWPF.ActionCardControls
 		{
 				ToggleButton ctrl = (sender as ToggleButton);
 				string ctrlName = ctrl.Name;
-				string prntName = (ctrl.Parent as Grid).Name;
-				bool isRadio = prntName.StartsWith("Level");
+				Grid parentGrid = (ctrl.Parent as Grid);
+				bool isRadio = parentGrid.Children.Count > 1;
 				if(isRadio)
 				{
 					foreach(UIElement child in (ctrl.Parent as Grid).Children)
@@ -62,7 +76,7 @@ namespace CavernaWPF.ActionCardControls
 					foreach(ToggleButton tb in loot.Where(tb => tb.IsChecked == false))
 					{	
 						Grid grdprnt = (tb.Parent as Grid);
-						if(grdprnt.Name.StartsWith("Level"))
+						if(grdprnt.Children.Count > 1)
 						{
 							if(grdprnt.Children.OfType<ToggleButton>().Any(child => child.IsChecked == true))
 								continue;
@@ -106,7 +120,8 @@ namespace CavernaWPF.ActionCardControls
 		
 		public void OKButton_Click(object sender, RoutedEventArgs args)
 		{
-			if(loot.Count(tb => tb.IsChecked == true) == max)
+			int numChecked = loot.Count(tb => tb.IsChecked == true);
+			if(numChecked == max || numChecked == level)
 			{
 				(this.DataContext as Expedition).Loot =  loot.Where(l => l.IsChecked == true).Select(l => l.Name).ToList();
 				DialogResult = true;

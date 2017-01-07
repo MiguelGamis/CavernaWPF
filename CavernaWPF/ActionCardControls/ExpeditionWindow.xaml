@@ -36,7 +36,8 @@
 				VerticalAlignment="Top"
 				Margin="0,0,0,0"
 				Width="40"
-				Height="34" />
+				Height="34" 
+				IsEnabled="False"/>
 			<ToggleButton
 				x:Name="Dog"
 				Opacity="0"
@@ -49,7 +50,8 @@
 				VerticalAlignment="Top"
 				Margin="74,0,0,0"
 				Width="50"
-				Height="34" />
+				Height="34" 
+				IsEnabled="False"/>
 		</Grid>
 		<Grid
 			x:Name="Level2"
@@ -70,7 +72,8 @@
 				VerticalAlignment="Top"
 				Margin="0,0,0,0"
 				Width="40"
-				Height="34" />
+				Height="34" 
+				IsEnabled="False"/>
 			<ToggleButton
 				x:Name="Sheep"
 				Opacity="0"
@@ -83,7 +86,8 @@
 				VerticalAlignment="Top"
 				Margin="74,0,0,0"
 				Width="50"
-				Height="34" />
+				Height="34" 
+				IsEnabled="False"/>
 		</Grid>
 		<Grid
 			x:Name="Level3"
@@ -104,7 +108,8 @@
 				VerticalAlignment="Top"
 				Margin="0,0,0,0"
 				Width="40"
-				Height="34" />
+				Height="34" 
+				IsEnabled="False"/>
 			<ToggleButton
 				x:Name="Donkey"
 				Opacity="0"
@@ -117,7 +122,8 @@
 				VerticalAlignment="Top"
 				Margin="74,0,0,0"
 				Width="50"
-				Height="34" />
+				Height="34" 
+				IsEnabled="False"/>
 		</Grid>
 		<Grid
 			x:Name="Level4"
@@ -138,7 +144,8 @@
 				VerticalAlignment="Top"
 				Margin="0,0,0,0"
 				Width="40"
-				Height="34" />
+				Height="34" 
+				IsEnabled="False"/>
 			<ToggleButton
 				x:Name="Ores"
 				Opacity="0"
@@ -151,61 +158,90 @@
 				Width="50"
 				Height="34"
 				Margin="74,0,0,0"
-				Grid.Column="0" />
+				Grid.Column="0" 
+				IsEnabled="False"/>
 			<Grid.ColumnDefinitions></Grid.ColumnDefinitions>
 		</Grid>
-		<ToggleButton
-			x:Name="Boar"
-			Opacity="0"
-			Cursor="Hand"
-			Checked="Check_Event"
-			Unchecked="Uncheck_Event"
+		<Grid x:Name="Level5"
 			Grid.Column="0"
 			Grid.Row="0"
-			HorizontalAlignment="Left"
-			VerticalAlignment="Top"
-			Margin="49,200,0,0"
-			Width="43"
-			Height="37" />
-		<ToggleButton
-			x:Name="FurnishCavern"
-			Opacity="0"
-			Cursor="Hand"
-			Checked="Check_Event"
-			Unchecked="Uncheck_Event"
+			HorizontalAlignment="Stretch"
+			VerticalAlignment="Stretch"
+			Margin="49,200,0,0">
+			<ToggleButton
+				x:Name="Boar"
+				Opacity="0"
+				Cursor="Hand"
+				Checked="Check_Event"
+				Unchecked="Uncheck_Event"
+				Grid.Column="0"
+				Grid.Row="0"
+				HorizontalAlignment="Left"
+				VerticalAlignment="Top"
+				Width="43"
+				Height="37" 
+				IsEnabled="False"/>
+		</Grid>
+		<Grid x:Name="Level6"
 			Grid.Column="0"
 			Grid.Row="0"
-			HorizontalAlignment="Left"
-			VerticalAlignment="Top"
-			Margin="49,237,0,0"
-			Width="43"
-			Height="37" />
-		<ToggleButton
-			x:Name="Go"
-			Opacity="0"
-			Cursor="Hand"
-			Checked="Check_Event"
-			Unchecked="Uncheck_Event"
+			HorizontalAlignment="Stretch"
+			VerticalAlignment="Stretch"
+			Margin="49,237,0,0">
+			<ToggleButton
+				x:Name="FurnishCavern"
+				Opacity="0"
+				Cursor="Hand"
+				Checked="Check_Event"
+				Unchecked="Uncheck_Event"
+				Grid.Column="0"
+				Grid.Row="0"
+				HorizontalAlignment="Left"
+				VerticalAlignment="Top"
+				Width="43"
+				Height="37" 
+				IsEnabled="False"/>
+		</Grid>
+		<Grid x:Name="Level7"
 			Grid.Column="0"
 			Grid.Row="0"
-			HorizontalAlignment="Left"
-			VerticalAlignment="Top"
-			Margin="149,200,0,0"
-			Width="43"
-			Height="37" />
-		<ToggleButton
-			x:Name="Stable"
-			Opacity="0"
-			Cursor="Hand"
-			Checked="Check_Event"
-			Unchecked="Uncheck_Event"
+			HorizontalAlignment="Stretch"
+			VerticalAlignment="Stretch"
+			Margin="149,200,0,0">
+			<ToggleButton
+				x:Name="Go"
+				Opacity="0"
+				Cursor="Hand"
+				Checked="Check_Event"
+				Unchecked="Uncheck_Event"
+				Grid.Column="0"
+				Grid.Row="0"
+				HorizontalAlignment="Left"
+				VerticalAlignment="Top"
+				Width="43"
+				Height="37" 
+				IsEnabled="False"/>
+		</Grid>
+		<Grid x:Name="Level8"
 			Grid.Column="0"
 			Grid.Row="0"
-			HorizontalAlignment="Left"
-			VerticalAlignment="Top"
-			Margin="149,237,0,0"
-			Width="43"
-			Height="37" />
+			HorizontalAlignment="Stretch"
+			VerticalAlignment="Stretch"
+			Margin="149,237,0,0">
+			<ToggleButton
+				x:Name="Stable"
+				Opacity="0"
+				Cursor="Hand"
+				Checked="Check_Event"
+				Unchecked="Uncheck_Event"
+				Grid.Column="0"
+				Grid.Row="0"
+				HorizontalAlignment="Left"
+				VerticalAlignment="Top"
+				Width="43"
+				Height="37" 
+				IsEnabled="False"/>
+		</Grid>
 		<Grid
 			x:Name="Level9"
 			Grid.Column="0"
@@ -225,7 +261,8 @@
 				VerticalAlignment="Top"
 				Margin="0,0,0,0"
 				Width="40"
-				Height="34" />
+				Height="34" 
+				IsEnabled="False"/>
 			<ToggleButton
 				x:Name="Fence1"
 				Opacity="0"
@@ -238,7 +275,8 @@
 				Width="50"
 				Height="34"
 				VerticalAlignment="Bottom"
-				Margin="74,0,0,2" />
+				Margin="74,0,0,2" 
+				IsEnabled="False"/>
 		</Grid>
 		<Grid
 			x:Name="Level10"
@@ -259,7 +297,8 @@
 				VerticalAlignment="Top"
 				Margin="0,0,0,0"
 				Width="40"
-				Height="34" />
+				Height="34" 
+				IsEnabled="False"/>
 			<ToggleButton
 				x:Name="Fence2"
 				Opacity="0"
@@ -272,7 +311,8 @@
 				Width="50"
 				Height="34"
 				VerticalAlignment="Bottom"
-				Margin="74,0,0,2" />
+				Margin="74,0,0,2" 
+				IsEnabled="False"/>
 		</Grid>
 		<Grid
 			x:Name="Level12"
@@ -282,7 +322,7 @@
 			VerticalAlignment="Stretch"
 			Margin="263,185,25,76">
 			<ToggleButton
-				x:Name="Wood_Copy6"
+				x:Name="Field"
 				Opacity="0"
 				Cursor="Hand"
 				Checked="Check_Event"
@@ -293,7 +333,8 @@
 				VerticalAlignment="Top"
 				Margin="0,0,0,0"
 				Width="40"
-				Height="34" />
+				Height="34" 
+				IsEnabled="False"/>
 			<ToggleButton
 				x:Name="Sow"
 				Opacity="0"
@@ -306,7 +347,8 @@
 				Width="50"
 				Height="34"
 				VerticalAlignment="Bottom"
-				Margin="74,0,0,2" />
+				Margin="74,0,0,2" 
+				IsEnabled="False"/>
 		</Grid>
 		<Grid
 			x:Name="Level14"
@@ -316,7 +358,7 @@
 			VerticalAlignment="Stretch"
 			Margin="263,246,25,15">
 			<ToggleButton
-				x:Name="Wood_Copy10"
+				x:Name="Cavern"
 				Opacity="0"
 				Cursor="Hand"
 				Checked="Check_Event"
@@ -327,7 +369,8 @@
 				VerticalAlignment="Top"
 				Margin="0,0,0,0"
 				Width="40"
-				Height="34" />
+				Height="34" 
+				IsEnabled="False"/>
 			<ToggleButton
 				x:Name="Breed"
 				Opacity="0"
@@ -340,7 +383,8 @@
 				Width="50"
 				Height="34"
 				VerticalAlignment="Bottom"
-				Margin="74,0,0,2" />
+				Margin="74,0,0,2" 
+				IsEnabled="False"/>
 		</Grid>
 		<Grid
 			x:Name="Level11"
@@ -361,7 +405,8 @@
 				VerticalAlignment="Top"
 				Margin="0,0,0,0"
 				Width="40"
-				Height="34" />
+				Height="34" 
+				IsEnabled="False"/>
 			<ToggleButton
 				x:Name="FurnishDwelling"
 				Opacity="0"
@@ -374,7 +419,8 @@
 				Width="50"
 				Height="34"
 				VerticalAlignment="Bottom"
-				Margin="74,0,0,2" />
+				Margin="74,0,0,2" 
+				IsEnabled="False"/>
 		</Grid>
 	</Grid>
 		<Grid Grid.Row="1" HorizontalAlignment="Right">

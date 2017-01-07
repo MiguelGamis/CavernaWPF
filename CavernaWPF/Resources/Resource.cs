@@ -15,7 +15,9 @@ namespace CavernaWPF.Resources
 	/// </summary>
 	public class Resource : Tradable
 	{	
-		public enum Type {Wood, Stone, Ore, Ruby, Food, Gold};
+		public enum Type {Wood, Stone, Ore, Ruby, Food, Gold,
+						Grain, Vegetable,
+						Sheep, Donkey, Boar, Cow};
 		
 		public Resource()
 		{
