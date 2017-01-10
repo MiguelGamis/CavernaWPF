@@ -37,6 +37,7 @@ namespace CavernaWPF
 	    
 	    private void Thumb_DragCompleted(object sender, System.Windows.Controls.Primitives.DragCompletedEventArgs e)
 	    {
+	    	//Snap dwarf to closest action card location
 			Dwarf n = (Dwarf)((FrameworkElement)sender).DataContext;
 			double w = ((FrameworkElement)sender).Width;
 			double h = ((FrameworkElement)sender).Height;
@@ -70,8 +71,13 @@ namespace CavernaWPF
 					break;
 				}
 			}
+			
+			//Activate the correct action card
 			ActionBoardContext abc = (this.DataContext as ActionBoardContext);
-			ActionCard ac = abc.ActionCards[0];
+			
+			int actionCardIndex = col*3 + row;
+			
+			ActionCard ac = abc.ActionCards[actionCardIndex].actionCard;
 			Action<Dwarf> action = ac.PlayerAction;
 			if(action != null)
 			{

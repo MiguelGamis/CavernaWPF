@@ -49,7 +49,7 @@ namespace CavernaWPF
 		
 		//----------------------------------------------------------------------------------//
 		
-		public void DriftMining(Dwarf d)
+		public void Driftmining(Dwarf d)
 		{
 			ActionCardWindowContext acwc = new ActionCardWindowContext();
 			acwc.Options.Add(new ActionCardOption(){ Selected = true, Text = "Collect Resources"});
@@ -70,7 +70,6 @@ namespace CavernaWPF
 				if(acwc.Options[1].Selected)
 				{
 					d.player.town.Tiles.Add(new Tile(Tile.Type.CaveTunnel));
-					d.player.town.Tiles.Add(new FarmAnimal(FarmAnimal.Type.Sheep));
 					
 					ActionBoardContext.Instance.readyForNextDwarf = true;
 				}
@@ -200,6 +199,83 @@ namespace CavernaWPF
 					}
 				}
 			}
+		}
+			
+		public void Woodgathering(Dwarf d)
+		{
+			ActionCardWindowContext acwc = new ActionCardWindowContext();
+			acwc.Options.Add(new ActionCardOption(){ Selected = true, Text = "Collect Resources"});
+			acwc.Control.ShowDialog();
+		}
+		
+		public void Supplies(Dwarf d)
+		{
+			ActionCardWindowContext acwc = new ActionCardWindowContext();
+			acwc.Options.Add(new ActionCardOption(){ Selected = true, Text = "Collect Resources"});
+			acwc.Control.ShowDialog();
+			
+			if((bool) acwc.Control.DialogResult)
+			{
+				if(acwc.Options[0].Selected)
+				{
+					d.player.town.Resources[Resource.Type.Wood].Amount++;
+					d.player.town.Resources[Resource.Type.Stone].Amount++;
+					d.player.town.Resources[Resource.Type.Ore].Amount++;
+					d.player.town.Resources[Resource.Type.Food].Amount++;
+					d.player.town.Resources[Resource.Type.Gold].Amount+=2;
+				}
+			}
+		}
+		
+		public void Clearing(Dwarf d)
+		{
+			ActionCardWindowContext acwc = new ActionCardWindowContext();
+			acwc.Options.Add(new ActionCardOption(){ Selected = true, Text = "Collect Resources"});
+			acwc.Options.Add(new ActionCardOption(){ Selected = true, Text = "Place Meadow-Field Tile"});
+			acwc.Control.ShowDialog();
+		}
+		
+		public void Startingplayer(Dwarf d)
+		{
+			
+		}
+		
+		public void Oremining(Dwarf d)
+		{
+			ActionCardWindowContext acwc = new ActionCardWindowContext();
+			acwc.Options.Add(new ActionCardOption(){ Selected = true, Text = "Collect Resources"});
+			acwc.Control.ShowDialog();
+		}
+		
+		public void Sustenance(Dwarf d)
+		{
+			ActionCardWindowContext acwc = new ActionCardWindowContext();
+			acwc.Options.Add(new ActionCardOption(){ Selected = true, Text = "Collect Resources"});
+			acwc.Options.Add(new ActionCardOption(){ Selected = true, Text = "Place Meadow-Field Tile"});
+			acwc.Control.ShowDialog();
+		}
+		
+		public void Rubymining(Dwarf d)
+		{
+			ActionCardWindowContext acwc = new ActionCardWindowContext();
+			acwc.Options.Add(new ActionCardOption(){ Selected = true, Text = "Collect Resources"});
+			acwc.Control.ShowDialog();
+		}
+		
+		public void Housework(Dwarf d)
+		{
+			ActionCardWindowContext acwc = new ActionCardWindowContext();
+			acwc.Options.Add(new ActionCardOption(){ Selected = true, Text = "Collect Dog"});
+			acwc.Options.Add(new ActionCardOption(){ Selected = true, Text = "Furnish a cavern"});
+			acwc.Control.ShowDialog();
+		}
+		
+		public void Slashandburn(Dwarf d)
+		{
+			ActionCardWindowContext acwc = new ActionCardWindowContext();
+			acwc.Options.Add(new ActionCardOption(){ Selected = true, Text = "Place Meadow-Field Tile"});
+			acwc.Options.Add(new ActionCardOption(){ Selected = true, Text = "Place Meadow-Field Tile and sow crops"});
+			acwc.Control.ShowDialog();
 		}
 	}
 }

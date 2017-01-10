@@ -81,7 +81,7 @@ namespace CavernaWPF
 			{ Resource.Type.Stone, new ResourceTab(){ ResourceType = Resource.Type.Stone, Amount = 0 } },
 			{ Resource.Type.Ore, new ResourceTab(){ ResourceType = Resource.Type.Ore, Amount = 0 } },
 			{ Resource.Type.Ruby, new ResourceTab(){ ResourceType = Resource.Type.Ruby, Amount = 0 } },
-			{ Resource.Type.Gold, new ResourceTab(){ ResourceType = Resource.Type.Stone, Amount = 0 } },
+			{ Resource.Type.Gold, new ResourceTab(){ ResourceType = Resource.Type.Gold, Amount = 0 } },
 			{ Resource.Type.Food, new ResourceTab(){ ResourceType = Resource.Type.Food, Amount = 0 } },
 			{ Resource.Type.Grain, new ResourceTab(){ ResourceType = Resource.Type.Grain, Amount = 0 } },
 			{ Resource.Type.Vegetable, new ResourceTab(){ ResourceType = Resource.Type.Vegetable, Amount = 0 } },
