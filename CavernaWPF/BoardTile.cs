@@ -9,6 +9,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using CavernaWPF.Layables;
 using CavernaWPF.Resources;
 
 namespace CavernaWPF
@@ -18,7 +19,7 @@ namespace CavernaWPF
 	/// </summary>
 	public class BoardTile
 	{
-		public enum Type {Forest, Field, Meadow, Cavern, Fenced, Furnished};
+		public enum Type {Forest, Field, Meadow, Rock, Cave, Tunnel, DeepTunnel, Fenced, Furnished, Dwelling};
 		
 		public Type state;
 		
@@ -31,6 +32,10 @@ namespace CavernaWPF
 		public List<Dog> dogs;
 		
 		public bool hasStable;
+		
+		public Resource.Type bonusResource;
+		
+		public int bonusResourceAmount;
 		
 		public BoardTile()
 		{

@@ -8,7 +8,7 @@
  */
 using System;
 using System.Collections.Generic;
-using CavernaWPF.Layable;
+using CavernaWPF.Layables;
 using CavernaWPF.Resources;
 using CavernaWPF.ActionCardControls;
 using System.Windows;
@@ -70,6 +70,7 @@ namespace CavernaWPF
 				if(acwc.Options[1].Selected)
 				{
 					d.player.town.Tiles.Add(new Tile(Tile.Type.CaveTunnel));
+					d.player.town.Tiles.Add(new FarmAnimal(FarmAnimal.Type.Sheep));
 					
 					ActionBoardContext.Instance.readyForNextDwarf = true;
 				}

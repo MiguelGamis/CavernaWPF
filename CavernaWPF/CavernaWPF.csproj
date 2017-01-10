@@ -86,7 +86,8 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="BoardTile.cs" />
-    <Compile Include="ColorToDwarfConverter.cs" />
+    <Compile Include="Converters\ColorToDwarfConverter.cs" />
+    <Compile Include="Converters\ImageSizeConverter.cs" />
     <Compile Include="Dwarf.cs" />
     <Compile Include="CDwarf.xaml.cs">
       <DependentUpon>CDwarf.xaml</DependentUpon>
@@ -96,17 +97,23 @@
       <DependentUpon>DwarfQueue.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="FurnishedBoardTile.cs" />
+    <Compile Include="FurnishingWindow.xaml.cs">
+      <DependentUpon>FurnishingWindow.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Layables\FarmAnimal.cs" />
+    <Compile Include="Layables\Layable.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\WPFAssemblyInfo.cs" />
-    <Compile Include="Layable\Tile.cs" />
-    <Compile Include="Layable\TwinTile.cs" />
+    <Compile Include="Layables\Tile.cs" />
+    <Compile Include="Layables\TwinTile.cs" />
     <Compile Include="ResourceAccumulator.cs" />
     <Compile Include="ResourcesTab.xaml.cs">
       <DependentUpon>ResourcesTab.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Resources\FarmAnimal.cs" />
     <Compile Include="Resources\Dog.cs" />
     <Compile Include="Resources\Resource.cs" />
     <Compile Include="Resources\Sowable.cs" />
@@ -118,6 +125,11 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="TownContext.cs" />
+    <Compile Include="TradeManager.cs" />
+    <Compile Include="TradeWindow.xaml.cs">
+      <DependentUpon>TradeWindow.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Village.xaml.cs">
       <DependentUpon>Village.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -138,15 +150,18 @@
     <Page Include="ActionCardControls\ExpeditionWindow.xaml" />
     <Page Include="CDwarf.xaml" />
     <Page Include="DwarfQueue.xaml" />
+    <Page Include="FurnishingWindow.xaml" />
     <Page Include="ResourcesTab.xaml" />
     <Page Include="Town.xaml" />
+    <Page Include="TradeWindow.xaml" />
     <Page Include="Village.xaml" />
     <Page Include="Window1.xaml" />
     <Page Include="Window2.xaml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Layable" />
+    <Folder Include="Layables" />
     <Folder Include="ActionCardControls" />
+    <Folder Include="Converters" />
     <Folder Include="Resources" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

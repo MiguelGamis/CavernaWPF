@@ -12,7 +12,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using CavernaWPF.Resources;
-using CavernaWPF.Layable;
+using CavernaWPF.Layables;
 using System.Windows;
 
 namespace CavernaWPF
@@ -35,6 +35,8 @@ namespace CavernaWPF
 		private ObservableCollection<Dwarf> dwarfs;
 		
 		public ActionBoard control;
+		
+		public FurnishingWindow furnishingWindow;
 		
 		public ObservableCollection<ActionCard> ActionCards
 		{
@@ -91,12 +93,23 @@ namespace CavernaWPF
 			                          	ac3.Logging(d);
 			                          });
 			actioncards.Add(ac3);
+			
+			ActionCard ac4 = new ActionCard();
+			ac3.Name = "Ruby Mining";
+			ac3.Accumulators = new List<ResourceAccumulator>() { new ResourceAccumulator(){ResourceType = Resource.Type.Wood, StartingAmount = 3, Accumulation = 1} };
+			ac3.PlayerAction = new Action<Dwarf>((d) =>
+			                          {
+			                          	ac3.Logging(d);
+			                          });
+			actioncards.Add(ac4);
 		}
 		
 		public void Intitialize()
 		{
 			ActionBoard ab = new ActionBoard();
 			control = ab;
+			FurnishingWindow fw = new FurnishingWindow();
+			furnishingWindow = fw;
 			ab.DataContext = this;
 		}
 		

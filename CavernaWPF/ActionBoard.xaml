@@ -41,8 +41,6 @@
 			<ItemsControl.ItemTemplate>
 				<DataTemplate>
 					<Thumb
-						Height="70"
-						Width="140"
 						DragCompleted="Thumb_DragCompleted"
 						DragDelta="Thumb_DragDelta">
 						<Thumb.Template>

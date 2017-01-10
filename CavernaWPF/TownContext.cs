@@ -11,7 +11,7 @@ using System.ComponentModel;
 using System.Collections.ObjectModel;
 using System.Collections.Generic;
 using System.Collections.Specialized;
-using CavernaWPF.Layable;
+using CavernaWPF.Layables;
 using CavernaWPF.Resources;
 
 namespace CavernaWPF
@@ -28,22 +28,42 @@ namespace CavernaWPF
 			
 			tab = new ResourcesTab();
 			tab.DataContext = this;
+			
+			for(int row = 1; row < 5; row++)
+			{
+				for(int col = 1; col < 4; col++)
+				{
+					boardtiles[col,row] = new BoardTile() { state = BoardTile.Type.Forest };
+				}
+				for(int col = 4; col < 7; col++)
+				{
+					boardtiles[col,row] = new BoardTile() { state = BoardTile.Type.Rock };
+				}
+			}
+			
+			boardtiles[3,1].bonusResource = Resource.Type.Boar; boardtiles[3,1].bonusResourceAmount = 1;
+			boardtiles[1,3].bonusResource = Resource.Type.Boar; boardtiles[1,3].bonusResourceAmount = 1;
+			boardtiles[2,4].bonusResource = Resource.Type.Food; boardtiles[2,4].bonusResourceAmount = 1;
+			boardtiles[5,4].bonusResource = Resource.Type.Food; boardtiles[5,4].bonusResourceAmount = 1;
+			boardtiles[6,1].bonusResource = Resource.Type.Food; boardtiles[6,1].bonusResourceAmount = 2;
+			
+			boardtiles[4,4].state = BoardTile.Type.Dwelling;
+			boardtiles[4,3].state = BoardTile.Type.Cave;
 		}
 		
 		public Town control;
 		public ResourcesTab tab;
 		
-		private ObservableCollection<Tile> tiles = new ObservableCollection<Tile>();
+		private ObservableCollection<object> tiles = new ObservableCollection<object>();
 		
-		public ObservableCollection<Tile> Tiles{ 
+		public ObservableCollection<object> Tiles{ 
 			get{ return tiles; }
 			set{ tiles = value; 
 			 	if (PropertyChanged != null) PropertyChanged(this, new PropertyChangedEventArgs("Tiles"));
 			}
 		}
 		
-		public BoardTile[,] forest = new BoardTile[3,4];
-		public BoardTile[,] cave = new BoardTile[3,4];
+		public BoardTile[,] boardtiles = new BoardTile[8,6];
 		
 //		public Dictionary<Resource.Type, int> resources = new Dictionary<Resource.Type, int>() { 
 //			{Resource.Type.Food, 0}, 

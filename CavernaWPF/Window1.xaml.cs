@@ -16,7 +16,7 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Collections.ObjectModel;
-using CavernaWPF.Layable;
+using CavernaWPF.Layables;
 
 namespace CavernaWPF
 {
@@ -33,7 +33,10 @@ namespace CavernaWPF
 			rootPanel.Width = this.Width;
 		
 			Grid.SetRow(ActionBoardContext.Instance.control, 0);
-			rootPanel.Children.Add(ActionBoardContext.Instance.control);
+			StackPanel publicPanel = new StackPanel() { Orientation = Orientation.Horizontal };
+			publicPanel.Children.Add(ActionBoardContext.Instance.control);
+			publicPanel.Children.Add(ActionBoardContext.Instance.furnishingWindow);
+			rootPanel.Children.Add(publicPanel);
 			
 			StackPanel playerPanels = new StackPanel() { Orientation = Orientation.Horizontal };
 			
@@ -52,7 +55,11 @@ namespace CavernaWPF
 				p.Dwarfs.Add(dwarf1); p.Dwarfs.Add(dwarf2);
 				
 				playerPanel.Children.Add(tc.control);
-				playerPanel.Children.Add(tc.tab);
+				StackPanel resourcesPanel = new StackPanel() {Orientation = Orientation.Horizontal};
+				resourcesPanel.Children.Add(tc.tab); 
+				Button tradeButton = new Button() { Height = 30, Width = 60, Content = "Trade"}; tradeButton.Click += new RoutedEventHandler(Trade);
+				resourcesPanel.Children.Add(tradeButton);
+				playerPanel.Children.Add(resourcesPanel);
 				
 				DwarfQueue dwarfLineUp = new DwarfQueue();
 				dwarfLineUp.ItemsSource = p.Dwarfs;
@@ -74,11 +81,17 @@ namespace CavernaWPF
 			ActionBoardContext.Instance.StartGame();
 		}
 		
-		Button startButton = new Button() { Height = 30, Width = 60};
+		Button startButton = new Button() { Height = 30, Width = 60, Content = "Proceed"};
 		
 		private void StartGame(object sender, RoutedEventArgs e)
 		{
 			ActionBoardContext.Instance.NextTurn();
+		}
+		
+		private void Trade(object sender, RoutedEventArgs e)
+		{
+			TradeManager tm = new TradeManager();
+			tm.control.ShowDialog();
 		}
 	}
 }

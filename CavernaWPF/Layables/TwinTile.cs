@@ -9,7 +9,7 @@
 using System;
 using System.ComponentModel;
 
-namespace CavernaWPF.Layable
+namespace CavernaWPF.Layables
 {
 	/// <summary>
 	/// Description of TwinTile.
