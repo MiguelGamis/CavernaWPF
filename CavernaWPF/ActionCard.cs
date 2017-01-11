@@ -25,7 +25,6 @@ namespace CavernaWPF
 		public Action<Dwarf> PlayerAction;
 		public List<ResourceAccumulator> Accumulators = new List<ResourceAccumulator>();
 		
-		
 		public ActionCard()
 		{
 		}
@@ -260,6 +259,18 @@ namespace CavernaWPF
 			ActionCardWindowContext acwc = new ActionCardWindowContext();
 			acwc.Options.Add(new ActionCardOption(){ Selected = true, Text = "Collect Resources"});
 			acwc.Control.ShowDialog();
+			
+			if((bool) acwc.Control.DialogResult)
+			{
+				if(acwc.Options[0].Selected)
+				{
+					foreach(ResourceAccumulator ra in Accumulators)
+					{
+						d.player.town.Resources[ra.ResourceType].Amount += ra.Amount;
+						ra.Amount = 0;
+					}
+				}
+			}
 		}
 		
 		public void Housework(Dwarf d)

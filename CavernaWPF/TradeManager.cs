@@ -18,63 +18,52 @@ namespace CavernaWPF
 	/// </summary>
 	public class TradeManager : INotifyPropertyChanged
 	{
-		private Dictionary<List<ResourceTab>,List<List<ResourceTab>>> exchanges = new Dictionary<List<ResourceTab>,List<List<ResourceTab>>>()
+		public Player player;
+		
+		private Dictionary<List<ResourceTab>,List<ResourceTab>> exchanges = new Dictionary<List<ResourceTab>,List<ResourceTab>>()
 		{
-			{ new List<ResourceTab>() { new ResourceTab() {ResourceType = Resource.Type.Ruby, Amount = 1}}, new List<List<ResourceTab>>()
-				{
-					new List<ResourceTab>() { new ResourceTab() {ResourceType = Resource.Type.Wood, Amount = 1} },
-					new List<ResourceTab>() { new ResourceTab() {ResourceType = Resource.Type.Stone, Amount = 1} },
-					new List<ResourceTab>() { new ResourceTab() {ResourceType = Resource.Type.Ore, Amount = 1} },
-					new List<ResourceTab>() { new ResourceTab() {ResourceType = Resource.Type.Food, Amount = 2} },
-					new List<ResourceTab>() { new ResourceTab() {ResourceType = Resource.Type.Grain, Amount = 1} },
-					new List<ResourceTab>() { new ResourceTab() {ResourceType = Resource.Type.Vegetable, Amount = 1} },
-					new List<ResourceTab>() { new ResourceTab() {ResourceType = Resource.Type.Sheep, Amount = 1} },
-					new List<ResourceTab>() { new ResourceTab() {ResourceType = Resource.Type.Donkey, Amount = 1} },
-					new List<ResourceTab>() { new ResourceTab() {ResourceType = Resource.Type.Boar, Amount = 1} }
-				}
+			{ new List<ResourceTab>() { new ResourceTab() {ResourceType = Resource.Type.Ruby, Amount = 1}}, 
+				new List<ResourceTab>() { new ResourceTab() {ResourceType = Resource.Type.Wood, Amount = 1} }
+			},
+			{ new List<ResourceTab>() { new ResourceTab() {ResourceType = Resource.Type.Ruby, Amount = 1}}, 
+				new List<ResourceTab>() { new ResourceTab() {ResourceType = Resource.Type.Stone, Amount = 1} }
+			},
+			{ new List<ResourceTab>() { new ResourceTab() {ResourceType = Resource.Type.Ruby, Amount = 1}}, 
+				new List<ResourceTab>() { new ResourceTab() {ResourceType = Resource.Type.Ore, Amount = 1} }
+			},
+			{ new List<ResourceTab>() { new ResourceTab() {ResourceType = Resource.Type.Ruby, Amount = 1}}, 
+				new List<ResourceTab>() { new ResourceTab() {ResourceType = Resource.Type.Food, Amount = 2} }
+			},
+			{ new List<ResourceTab>() { new ResourceTab() {ResourceType = Resource.Type.Ruby, Amount = 1}}, 
+				new List<ResourceTab>() { new ResourceTab() {ResourceType = Resource.Type.Sheep, Amount = 1} }
+			},
+			{ new List<ResourceTab>() { new ResourceTab() {ResourceType = Resource.Type.Ruby, Amount = 1}}, 
+				new List<ResourceTab>() { new ResourceTab() {ResourceType = Resource.Type.Donkey, Amount = 1} }
+			},
+			{ new List<ResourceTab>() { new ResourceTab() {ResourceType = Resource.Type.Ruby, Amount = 1}}, 
+				new List<ResourceTab>() { new ResourceTab() {ResourceType = Resource.Type.Boar, Amount = 1} }
 			},
 			{ new List<ResourceTab>() { new ResourceTab() {ResourceType = Resource.Type.Ruby, Amount = 1},
 										new ResourceTab() {ResourceType = Resource.Type.Food, Amount = 1}}, 
-				new List<List<ResourceTab>>()
-				{
-					new List<ResourceTab>() { new ResourceTab() {ResourceType = Resource.Type.Cow, Amount = 1} }
-				}
+				new List<ResourceTab>() { new ResourceTab() {ResourceType = Resource.Type.Cow, Amount = 1} }
 			},
 			{ new List<ResourceTab>() { new ResourceTab() {ResourceType = Resource.Type.Sheep, Amount = 1}}, 
-				new List<List<ResourceTab>>()
-				{
-					new List<ResourceTab>() { new ResourceTab() {ResourceType = Resource.Type.Food, Amount = 1} }
-				}
+				new List<ResourceTab>() { new ResourceTab() {ResourceType = Resource.Type.Food, Amount = 1} }
 			},
 			{ new List<ResourceTab>() { new ResourceTab() {ResourceType = Resource.Type.Donkey, Amount = 1}}, 
-				new List<List<ResourceTab>>()
-				{
-					new List<ResourceTab>() { new ResourceTab() {ResourceType = Resource.Type.Food, Amount = 1} }
-				}
+				new List<ResourceTab>() { new ResourceTab() {ResourceType = Resource.Type.Food, Amount = 1} }
 			},
 			{ new List<ResourceTab>() { new ResourceTab() {ResourceType = Resource.Type.Donkey, Amount = 1}}, 
-				new List<List<ResourceTab>>()
-				{
-					new List<ResourceTab>() { new ResourceTab() {ResourceType = Resource.Type.Food, Amount = 1} }
-				}
+				new List<ResourceTab>() { new ResourceTab() {ResourceType = Resource.Type.Food, Amount = 1} }
 			},
 			{ new List<ResourceTab>() { new ResourceTab() {ResourceType = Resource.Type.Donkey, Amount = 2}}, 
-				new List<List<ResourceTab>>()
-				{
-					new List<ResourceTab>() { new ResourceTab() {ResourceType = Resource.Type.Food, Amount = 3} }
-				}
+				new List<ResourceTab>() { new ResourceTab() {ResourceType = Resource.Type.Food, Amount = 3} }
 			},
 			{ new List<ResourceTab>() { new ResourceTab() {ResourceType = Resource.Type.Boar, Amount = 1}}, 
-				new List<List<ResourceTab>>()
-				{
-					new List<ResourceTab>() { new ResourceTab() {ResourceType = Resource.Type.Food, Amount = 2} }
-				}
+				new List<ResourceTab>() { new ResourceTab() {ResourceType = Resource.Type.Food, Amount = 2} }
 			},
 			{ new List<ResourceTab>() { new ResourceTab() {ResourceType = Resource.Type.Cow, Amount = 1}}, 
-				new List<List<ResourceTab>>()
-				{
-					new List<ResourceTab>() { new ResourceTab() {ResourceType = Resource.Type.Food, Amount = 2} }
-				}
+				new List<ResourceTab>() { new ResourceTab() {ResourceType = Resource.Type.Food, Amount = 2} }
 			},
 		};
 		
@@ -82,7 +71,7 @@ namespace CavernaWPF
 //						Grain, Vegetable,
 //						Sheep, Donkey, Boar, Cow
 		
-		public Dictionary<List<ResourceTab>,List<List<ResourceTab>>> Exchanges {
+		public Dictionary<List<ResourceTab>,List<ResourceTab>> Exchanges {
 			get {return exchanges;}
 			set {
 				exchanges = value;
@@ -97,6 +86,12 @@ namespace CavernaWPF
 			TradeWindow tw = new TradeWindow();
 			control = tw;
 			tw.DataContext = this;
+		}
+		
+		public void PlayerTrading(Player p)
+		{
+			player = p;
+			control.ShowDialog();
 		}
 		
 		public event PropertyChangedEventHandler PropertyChanged;

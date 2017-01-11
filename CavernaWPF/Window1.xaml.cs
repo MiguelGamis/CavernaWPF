@@ -57,7 +57,7 @@ namespace CavernaWPF
 				playerPanel.Children.Add(tc.control);
 				StackPanel resourcesPanel = new StackPanel() {Orientation = Orientation.Horizontal};
 				resourcesPanel.Children.Add(tc.tab); 
-				Button tradeButton = new Button() { Height = 30, Width = 60, Content = "Trade"}; tradeButton.Click += new RoutedEventHandler(Trade);
+				Button tradeButton = new Button() { Height = 30, Width = 60, Content = "Trade", Tag = p}; tradeButton.Click += new RoutedEventHandler(Trade);
 				resourcesPanel.Children.Add(tradeButton);
 				playerPanel.Children.Add(resourcesPanel);
 				
@@ -91,7 +91,8 @@ namespace CavernaWPF
 		private void Trade(object sender, RoutedEventArgs e)
 		{
 			TradeManager tm = new TradeManager();
-			tm.control.ShowDialog();
+			tm.PlayerTrading((sender as Button).Tag as Player);
+			//tm.control.ShowDialog();
 		}
 	}
 }
