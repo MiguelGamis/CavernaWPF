@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 C:\Users\Miguel\Documents\SharpDevelop Projects\CavernaWPF\CavernaWPF\App.xaml
-13169584875
+15413332988
 
-41-1910268894
+471414234767
 11770923591
-ActionBoard.xaml;ActionCardControls\ActionCardCheckBox.xaml;ActionCardControls\ActionCardWindow.xaml;ActionCardControls\ExpeditionWindow.xaml;CDwarf.xaml;DwarfQueue.xaml;FurnishingWindow.xaml;ResourcesTab.xaml;Town.xaml;TradeWindow.xaml;Village.xaml;Window1.xaml;Window2.xaml;
+ActionBoard.xaml;ActionCardControls\ActionCardCheckBox.xaml;ActionCardControls\ActionCardText.xaml;ActionCardControls\ActionCardWindow.xaml;ActionCardControls\ExpeditionWindow.xaml;ActionCardControls\WeaponForgingWindow.xaml;CDwarf.xaml;DwarfQueue.xaml;FurnishingWindow.xaml;ResourcesTab.xaml;Town.xaml;TradeWindow.xaml;Village.xaml;Window1.xaml;Window2.xaml;
 
 False
 

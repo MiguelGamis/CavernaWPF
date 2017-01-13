@@ -19,9 +19,13 @@ namespace CavernaWPF.ActionCardControls
 		public string Text { get; set; }
 		public bool Selected { get; set; }
 		public UserControl Control { get; set; }
-		public ActionCardOption()
+		public bool Able { get; set; }
+		public ActionCardOption(bool mandatory = false)
 		{
-			Control =  new ActionCardCheckBox();
+			if(mandatory)
+				Control = new ActionCardText();
+			else
+				Control =  new ActionCardCheckBox();
 			Control.DataContext = this;
 		}
 	}

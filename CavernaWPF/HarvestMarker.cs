@@ -1,23 +1,21 @@
 ﻿/*
  * Created by SharpDevelop.
  * User: Miguel
- * Date: 12/29/2016
- * Time: 00:58
+ * Date: 01/12/2017
+ * Time: 21:44
  * 
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
 using System;
 
-namespace CavernaWPF.Resources
+namespace CavernaWPF
 {
 	/// <summary>
-	/// Description of Sowable.
+	/// Description of HarvestMarker.
 	/// </summary>
-	public class Sowable : Tradable
+	public class HarvestMarker
 	{
-		public enum Type {Grain, Vegetable};
-		
-		public Sowable()
+		public HarvestMarker()
 		{
 		}
 	}

@@ -25,9 +25,9 @@ namespace CavernaWPF
 		
 		public TownContext town;
 		
-		private List<Dwarf> dwarfs = new List<Dwarf>();
+		private ObservableCollection<Dwarf> dwarfs = new ObservableCollection<Dwarf>();
 		
-		public List<Dwarf> Dwarfs
+		public ObservableCollection<Dwarf> Dwarfs
 		{
 			get { return dwarfs; }
 			set { 
@@ -38,13 +38,15 @@ namespace CavernaWPF
 		
 		public Dwarf GetNextDwarf()
 	    {
+			if(dwarfs.Count > 0)
+			{
 				int last = dwarfs.Count - 1;
-				Dwarf sentDwarf = dwarfs[last];
+				Dwarf nextDwarf = dwarfs[last];
 				dwarfs.RemoveAt(last);
-//				this.OnNotifyCollectionChanged(
-//			        new NotifyCollectionChangedEventArgs(
-//			          NotifyCollectionChangedAction.Remove, sentDwarf));
-				return sentDwarf;
+				this.OnNotifyCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Remove, nextDwarf));
+				return nextDwarf;
+			}
+			return null;
 	    }
 		
 		public string name;

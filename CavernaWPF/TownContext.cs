@@ -11,6 +11,7 @@ using System.ComponentModel;
 using System.Collections.ObjectModel;
 using System.Collections.Generic;
 using System.Collections.Specialized;
+using System.Linq;
 using CavernaWPF.Layables;
 using CavernaWPF.Resources;
 
@@ -33,11 +34,11 @@ namespace CavernaWPF
 			{
 				for(int col = 1; col < 4; col++)
 				{
-					boardtiles[col,row] = new BoardTile() { state = BoardTile.Type.Forest };
+					boardtiles[col,row] = new BoardTile() { state = BoardTile.Type.Forest, Row = row, Column = col };
 				}
 				for(int col = 4; col < 7; col++)
 				{
-					boardtiles[col,row] = new BoardTile() { state = BoardTile.Type.Rock };
+					boardtiles[col,row] = new BoardTile() { state = BoardTile.Type.Rock, Row = row, Column = col  };
 				}
 			}
 			
@@ -54,16 +55,37 @@ namespace CavernaWPF
 		public Town control;
 		public ResourcesTab tab;
 		
-		private ObservableCollection<object> tiles = new ObservableCollection<object>();
+		private ObservableCollection<Layable> tiles = new ObservableCollection<Layable>();
 		
-		public ObservableCollection<object> Tiles{ 
+		public ObservableCollection<Layable> Tiles{ 
 			get{ return tiles; }
 			set{ tiles = value; 
 			 	if (PropertyChanged != null) PropertyChanged(this, new PropertyChangedEventArgs("Tiles"));
 			}
 		}
 		
+		public void AddTile(Tile t)
+		{
+		}
+		
 		public BoardTile[,] boardtiles = new BoardTile[8,6];
+		
+		public int HowManyBoardTilesOfType(BoardTile.Type type)
+		{
+			var query = from BoardTile item in boardtiles
+						where item.state == type
+						select item;
+			return query.Count();
+		}
+		
+		public int HasAdjacent(BoardTile.Type type)
+		{
+			var query = from BoardTile item in boardtiles
+						where item.state == type
+						select item;
+			
+			return -1;
+		}
 		
 //		public Dictionary<Resource.Type, int> resources = new Dictionary<Resource.Type, int>() { 
 //			{Resource.Type.Food, 0}, 

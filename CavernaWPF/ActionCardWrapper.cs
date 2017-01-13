@@ -25,6 +25,8 @@ namespace CavernaWPF
 		
 		public string Img{ get; set;}
 		
+		public bool occupied;
+		
 		public ActionCardWrapper(ActionCard card)
 		{
 			actionCard = card;

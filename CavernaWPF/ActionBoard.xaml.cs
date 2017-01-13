@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -72,16 +73,35 @@ namespace CavernaWPF
 				}
 			}
 			
-			//Activate the correct action card
-			ActionBoardContext abc = (this.DataContext as ActionBoardContext);
-			
 			int actionCardIndex = col*3 + row;
 			
-			ActionCard ac = abc.ActionCards[actionCardIndex].actionCard;
-			Action<Dwarf> action = ac.PlayerAction;
-			if(action != null)
+			//Activate the correct action card
+			ActionBoardContext abc = (this.DataContext as ActionBoardContext);
+			ActionCardWrapper acw = abc.ActionCards[actionCardIndex];
+			if(!acw.occupied)
 			{
-				action.Invoke(n);
+				acw.occupied = true;
+				ActionCard ac = acw.actionCard;
+				Action<Dwarf> action = ac.PlayerAction;
+				if(action != null)
+				{
+					action.Invoke(n);
+					if(ActionBoardContext.Instance.readyForNextDwarf)
+					{
+						(sender as Thumb).DragDelta -= Thumb_DragDelta;
+						(sender as Thumb).DragCompleted -= Thumb_DragCompleted;
+					}
+					else
+					{
+						n.X = 0;
+						n.Y = 0;
+					}
+				}
+			}
+			else
+			{
+				n.X = 0;
+				n.Y = 0;
 			}
 	    }
 	}

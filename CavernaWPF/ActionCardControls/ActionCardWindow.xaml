@@ -4,10 +4,12 @@
 	Title="CavernaWPF.ActionCardControls" Height="200" Width="200" WindowStartupLocation="CenterScreen">
 	<Grid>
 		<Grid.RowDefinitions>
+			<RowDefinition Height="50"></RowDefinition>
 			<RowDefinition Height="*"></RowDefinition>
 			<RowDefinition Height="30"></RowDefinition>
 		</Grid.RowDefinitions>
-		<ItemsControl Grid.Row="0" x:Name="Options" ItemsSource="{Binding Options}">
+		<TextBlock Text="{Binding Description}"></TextBlock>
+		<ItemsControl Grid.Row="1" x:Name="Options" ItemsSource="{Binding Options}">
 			<ItemsControl.ItemsPanel>
 				<ItemsPanelTemplate>
 					<StackPanel Orientation="Vertical"></StackPanel>
@@ -19,7 +21,7 @@
 				</DataTemplate>
 			</ItemsControl.ItemTemplate>
 		</ItemsControl>
-		<Grid Grid.Row="1" HorizontalAlignment="Right">
+		<Grid Grid.Row="2" HorizontalAlignment="Right">
 			<Grid.ColumnDefinitions>
 				<ColumnDefinition Width="*"></ColumnDefinition>
 				<ColumnDefinition Width="60"></ColumnDefinition>

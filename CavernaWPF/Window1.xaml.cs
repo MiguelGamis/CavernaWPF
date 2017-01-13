@@ -40,10 +40,12 @@ namespace CavernaWPF
 			
 			StackPanel playerPanels = new StackPanel() { Orientation = Orientation.Horizontal };
 			
+			List<string> colors = new List<string>() {"Blue","Yellow","Green","Purple"};
+			
 			int numPlayers = 2;
 			for(int i = 0; i < numPlayers; i++)
 			{
-				Player p = new Player(); p.Color = "Yellow"; 
+				Player p = new Player(); p.Color = colors[i];
 				ActionBoardContext.Instance.players.Add(p);
 				
 				StackPanel playerPanel = new StackPanel() { Orientation = Orientation.Vertical };
@@ -51,7 +53,7 @@ namespace CavernaWPF
 				TownContext tc = new TownContext();
 				p.town = tc;
 				
-				Dwarf dwarf1 = new Dwarf() { player = p }; Dwarf dwarf2 = new Dwarf() { player = p };
+				Dwarf dwarf1 = new Dwarf() { player = p, Level = 8 }; Dwarf dwarf2 = new Dwarf() { player = p, Level = 14 };
 				p.Dwarfs.Add(dwarf1); p.Dwarfs.Add(dwarf2);
 				
 				playerPanel.Children.Add(tc.control);

@@ -1,7 +1,7 @@
 ﻿<UserControl x:Class="CavernaWPF.ActionCardControls.ActionCardCheckBox"
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-	<StackPanel Orientation="Horizontal">
+	<StackPanel Orientation="Horizontal" IsEnabled="{Binding Able}">
 		<CheckBox IsChecked="{Binding Selected, Mode=TwoWay}"></CheckBox>
 		<TextBlock Text="{Binding Text}"></TextBlock>
 	</StackPanel>

@@ -83,15 +83,12 @@ namespace CavernaWPF
 	 	        object uc = this.FindName(dockname);
 	 	        if(uc is DockPanel && String.Compare((uc as DockPanel).Name, dockname) == 0)
 	 	        {
-	 	        	DockPanel dp = (uc as DockPanel);
+    				DockPanel dp = (uc as DockPanel);
 	 	        	
 	 	        	if(n is Tile)
 	 	        	{
 	 	        		Tile t = n as Tile;
-	 	        		
-		 	       		//see if the boardtile(s) is open
 
-		 	       		
 		 	       		if(!isAllowed(t, _x+1, _y+1))
 			        	{
 			  	        	t.X = 0;
@@ -106,28 +103,45 @@ namespace CavernaWPF
 		 	        		return;
 				        }
 	 	        	}
-			        	
-	 	        	n.X = (uc as DockPanel).Margin.Left;
-	 	        	n.Y = (uc as DockPanel).Margin.Top;
-	 	        	
-//	 	        	tc.Tiles.Remove(obj);
-//	 	        	
-//	 	        	BitmapImage bimage = new BitmapImage();
-//					bimage.BeginInit();
-//					bimage.UriSource = new Uri(n.Img, UriKind.Absolute);
-//					bimage.EndInit();
-//	 	        	Image img = new Image() {Source = bimage, Height=n.Height, Width=n.Width};
-//	 	        	if(n is Tile)
-//	 	        	{
-//	 	        		Tile t = n as Tile;
-//	 	        		if(t.Twin)
-//	 	        		{
-//	 	        			RotateTransform rotateTransform = new RotateTransform(t.Rot*90, t.Width/2, t.Height/2);
-//	 	        			img.RenderTransform = rotateTransform;	
-//	 	        		}
-//	 	        	}
-//	 	        	
-//	 	        	(uc as DockPanel).Children.Add(img);
+	 	        	else if(n is FarmAnimal)
+	 	        	{
+	 	        		FarmAnimal fa = n as FarmAnimal;
+	 	        	}
+	 	        	else if(n is Sowable)
+	 	        	{
+	 	        		Sowable s = n as Sowable;
+	 	        		
+	 	        		TownContext tc = this.DataContext as TownContext;
+	 	        		try
+	 	        		{
+	 	        			if(tc.boardtiles[_x+1,_y+1].state == BoardTile.Type.Field)
+	 	        			{
+	 	        				switch(s.type)
+	 	        				{
+	 	        					case Sowable.Type.Grain:
+	 	        						tc.Tiles.Add(new Sowable(Sowable.Type.Grain) { X = dp.Margin.Left, Y =  dp.Margin.Top});
+	 	        						tc.Tiles.Add(new Sowable(Sowable.Type.Grain) { X = dp.Margin.Left, Y =  dp.Margin.Top});
+	 	        						break;
+	 	        					case Sowable.Type.Vegetable:
+	 	        						
+	 	        						break;
+	 	        				}
+	 	        			}
+	 	        			else
+	 	        			{
+								n.X = 0;
+	 	        				n.Y = 0;
+	 	        			}
+	 	        		}
+	 	        		catch(IndexOutOfRangeException ex)
+	 	        		{
+	 	       				n.X = 0;
+	 	        			n.Y = 0;
+	 	        		}
+	 	        	}
+			       	
+	 	        	n.X = dp.Margin.Left;
+	 	        	n.Y = dp.Margin.Top;
 	 	        }
 	 	        else
 	 	        {

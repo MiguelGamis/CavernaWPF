@@ -58,6 +58,7 @@ namespace CavernaWPF
 				this.OnNotifyCollectionChanged(
 			        new NotifyCollectionChangedEventArgs(
 			          NotifyCollectionChangedAction.Add, dwarf));
+				readyForNextDwarf = false;
 	    }
 		
 		public List<Player> players = new List<Player>();
@@ -92,45 +93,18 @@ namespace CavernaWPF
 
 		public void StartGame()
 		{
-			Replenish();
-			
 			PrepareActionCards();
+		
+			Replenish();	
 			
 			CurrentTurn = StartPlayerIndex;
 			
 			Dwarf dwarf = null;
 			
-//			LinkedList<Player> playersPlaying = new LinkedList<Player>();
-			
 			foreach(Player p in players)
 			{
 				playersPlaying.AddLast(new LinkedListNode<Player>(p));
 			}
-			
-//			LinkedListNode<Player> pl = playersPlaying.First;
-			
-//			while(pl != null)
-//			{
-//				if(pl.Value.Dwarfs.Count > 0)
-//				{
-//					int last = pl.Value.Dwarfs.Count - 1;
-//					AddDwarf(pl.Value.Dwarfs[last]);
-//					pl.Value.Dwarfs.RemoveAt(last);
-//					pl = pl.Next;
-//					if(pl == null)
-//						pl = playersPlaying.First;
-//				}
-//				else
-//				{
-//					LinkedListNode<Player> tmp = pl;
-//					playersPlaying.Remove(pl);
-//					pl = tmp.Next;
-//					if(pl == null)
-//						pl = playersPlaying.First;
-//				}
-//			}
-			
-			currentPlayer = playersPlaying.First;
 		}
 		
 		LinkedList<Player> playersPlaying = new LinkedList<Player>();
@@ -140,48 +114,63 @@ namespace CavernaWPF
 		public bool readyForNextDwarf = true;
 		
 		public void NextTurn()
-		{	
-			if(readyForNextDwarf)
+		{
+			if(!readyForNextDwarf)
 			{
-				bool roundOver = false;
-				
-				Dwarf nextDwarf = null;
-				
-				currentPlayer = currentPlayer.Next;
-				
-				do
+				return;
+			}
+			
+			if(currentPlayer == null)
+				currentPlayer = playersPlaying.First;
+			else
+			{
+				if(currentPlayer.Next == null)
 				{
-					if(playersPlaying.Count == 0)
-					{
-						roundOver = true;
-						return;
-					}
-					if(currentPlayer == null)
-						currentPlayer = playersPlaying.First;
-					else if(currentPlayer.Value.Dwarfs.Count > 0)
-						nextDwarf = currentPlayer.Value.GetNextDwarf();
-					else
-					{
-						LinkedListNode<Player> tmp = currentPlayer;
-						playersPlaying.Remove(currentPlayer);
-						currentPlayer = tmp.Next;
-						if(currentPlayer == null)
-							currentPlayer = playersPlaying.First;
-					}
-				}
-				while(nextDwarf == null);
-				
-				if(roundOver)
-				{
-					
+					currentPlayer = playersPlaying.First;
 				}
 				else
 				{
-					readyForNextDwarf = false;
-					AddDwarf(nextDwarf);
+					currentPlayer = currentPlayer.Next;
+				}
+			}
+			
+			Dwarf d = null;
+			while(d == null)
+			{
+				if(currentPlayer == null)
+				{
+					for(int i = ActionBoardContext.Instance.Dwarfs.Count - 1; i >= 0; i--)
+					{
+						Dwarf dw = ActionBoardContext.Instance.Dwarfs[i];
+						dw.player.Dwarfs.Add(dw);
+						ActionBoardContext.Instance.Dwarfs.RemoveAt(i);
+					}
+					EndPhase();
+					return;
 				}
 				
+				Player p = currentPlayer.Value;
+				d = p.GetNextDwarf();
+				if(d == null)
+				{
+					LinkedListNode<Player> tmp = currentPlayer;
+					playersPlaying.Remove(tmp);
+					if(currentPlayer.Next == null)
+					{
+						currentPlayer = playersPlaying.First;
+					}
+					else
+					{
+						currentPlayer = currentPlayer.Next;
+					}
+				}
 			}
+			ActionBoardContext.Instance.AddDwarf(d);
+		}
+		
+		private void EndPhase()
+		{
+			
 		}
 		
 		private void PrepareActionCards()
@@ -209,6 +198,16 @@ namespace CavernaWPF
 			AddActionCard(GetActionCard("Housework"));
 			
 			AddActionCard(GetActionCard("Slash-and-burn"));
+			
+			List<string> round1ActionCards = new List<string> { "Blacksmithing", "Sheep farming", "Ore mine construction" };
+			
+			Random r = new Random();
+			round1ActionCards.Sort((x, y) => r.Next(-1, 1));
+			
+			foreach(string cardName in round1ActionCards)
+			{
+				AddActionCard(GetActionCard(cardName));
+			}
 		}
 		
 		private ActionCard GetActionCard(string Name)
@@ -309,6 +308,29 @@ namespace CavernaWPF
 			                          	ac.Slashandburn(d);
 			                          });
 					break;
+				case "Blacksmithing":
+					ac.Name = "Blacksmithing";
+					ac.PlayerAction = new Action<Dwarf>((d) =>
+			                          {
+			                          	ac.Blacksmithing(d);
+			                          });
+					break;
+				case "Sheep farming":
+					ac.Name = "Sheep farming";
+					ac.Accumulators.Add(new ResourceAccumulator(){ResourceType = Resource.Type.Sheep, StartingAmount = 1, Accumulation = 1});
+					ac.PlayerAction = new Action<Dwarf>((d) =>
+			                          {
+			                          	ac.Sheepfarming(d);
+			                          });
+					break;
+				case "Ore mine construction":
+					ac.Name = "Ore mine construction";
+					ac.Accumulators.Add(new ResourceAccumulator(){ResourceType = Resource.Type.Sheep, StartingAmount = 1, Accumulation = 1});
+					ac.PlayerAction = new Action<Dwarf>((d) =>
+			                          {
+			                          	ac.Oremineconstruction(d);
+			                          });
+					break;
 				default:
 						return null;
 						break;
@@ -323,6 +345,8 @@ namespace CavernaWPF
 			ActionCardWrapper acw = new ActionCardWrapper(ac) { Column=actioncards.Count/3, Row=actioncards.Count%3 };
 			actioncards.Add(acw);
 		}
+		
+		
 		
 		private int StartPlayerIndex = 0;
 		

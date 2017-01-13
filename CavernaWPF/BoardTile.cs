@@ -37,6 +37,10 @@ namespace CavernaWPF
 		
 		public int bonusResourceAmount;
 		
+		public int Row {get; set;}
+		
+		public int Column {get; set;}
+		
 		public BoardTile()
 		{
 		}

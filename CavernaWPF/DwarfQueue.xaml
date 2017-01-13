@@ -4,6 +4,7 @@
 	xmlns:Converters="clr-namespace:CavernaWPF.Converters">
 	<ItemsControl.Resources>
 		<Converters:ColorToDwarfConverter x:Key="colorconverter"/>
+		<Converters:LevelToWeaponConverter x:Key="levelconverter"/>
 	</ItemsControl.Resources>
 	<ItemsControl.ItemsPanel>
 		<ItemsPanelTemplate>
@@ -12,7 +13,10 @@
 	</ItemsControl.ItemsPanel>
 	<ItemsControl.ItemTemplate>
 		<DataTemplate>
-			<Image Source="{Binding player.Color, Converter={StaticResource colorconverter}}"></Image>
+			<Grid>
+				<Image Height="38" Width="48" Source="{Binding player.Color, Converter={StaticResource colorconverter}}"></Image>
+				<Image Margin="0,0,0,7" Height="32" Width="40" Source="{Binding Level, Converter={StaticResource levelconverter}}"></Image>
+			</Grid>
 		</DataTemplate>
 	</ItemsControl.ItemTemplate>
 </ItemsControl>
