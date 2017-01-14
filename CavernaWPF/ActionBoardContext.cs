@@ -14,6 +14,8 @@ using System.Collections.Specialized;
 using CavernaWPF.Resources;
 using CavernaWPF.Layables;
 using System.Windows;
+using System.Windows.Controls;
+using System.Linq;
 
 namespace CavernaWPF
 {
@@ -54,11 +56,11 @@ namespace CavernaWPF
 		
 		public void AddDwarf(Dwarf dwarf)
 	    {
-				this.dwarfs.Add(dwarf);
-				this.OnNotifyCollectionChanged(
-			        new NotifyCollectionChangedEventArgs(
-			          NotifyCollectionChangedAction.Add, dwarf));
-				readyForNextDwarf = false;
+			this.dwarfs.Add(dwarf);
+			this.OnNotifyCollectionChanged(
+		        new NotifyCollectionChangedEventArgs(
+		          NotifyCollectionChangedAction.Add, dwarf));
+			readyForNextDwarf = false;
 	    }
 		
 		public List<Player> players = new List<Player>();
@@ -101,12 +103,9 @@ namespace CavernaWPF
 			
 			PrepareHarvestMarkers();
 			
-			CurrentTurn = StartPlayerIndex;
+			NextRound();
 			
-			foreach(Player p in players)
-			{
-				playersPlaying.AddLast(new LinkedListNode<Player>(p));
-			}
+			QueuePlayers();
 		}
 		
 		LinkedList<Player> playersPlaying = new LinkedList<Player>();
@@ -117,17 +116,13 @@ namespace CavernaWPF
 		
 		public void NextTurn()
 		{
-			Harvest();
-			NextRound();
-			return;
-			
 			if(!readyForNextDwarf)
 			{
 				return;
 			}
 			
 			if(currentPlayer == null)
-				currentPlayer = playersPlaying.First;
+				currentPlayer = playersPlaying.Find(startingPlayer);
 			else
 			{
 				if(currentPlayer.Next == null)
@@ -145,15 +140,20 @@ namespace CavernaWPF
 			{
 				if(currentPlayer == null)
 				{
+					ActionCards.ToList().ForEach(ac => ac.occupied = false);
+					
 					//TODO: Encapsulate -----------------
 					for(int i = ActionBoardContext.Instance.Dwarfs.Count - 1; i >= 0; i--)
 					{
 						Dwarf dw = ActionBoardContext.Instance.Dwarfs[i];
+						dw.X = 0;
+						dw.Y = 0;
 						dw.player.Dwarfs.Add(dw);
 						ActionBoardContext.Instance.Dwarfs.RemoveAt(i);
 					}
 					Harvest();
 					NextRound();
+					QueuePlayers();
 					return;
 					//------------------------------------
 				}
@@ -177,6 +177,8 @@ namespace CavernaWPF
 			ActionBoardContext.Instance.AddDwarf(d);
 		}
 		
+		public Button startButton = new Button() { Height = 30, Width = 60, Content = "Proceed"};
+		
 		int Round = 0;
 		
 		private void Harvest()
@@ -193,6 +195,23 @@ namespace CavernaWPF
 			}
 			else
 				Scoring();
+		}
+		
+		public Player startingPlayer;
+		
+		private int StartPlayerIndex = 0;
+		
+		private int CurrentTurn = 0;
+		
+		private void QueuePlayers()
+		{
+			foreach(Player p in players)
+			{
+				LinkedListNode<Player> pNode = new LinkedListNode<Player>(p);
+//				if(p == startingPlayer)
+//					currentPlayer = pNode;
+				playersPlaying.AddLast(pNode);
+			}
 		}
 		
 		private void Scoring()
@@ -489,10 +508,6 @@ namespace CavernaWPF
 			actioncards.Add(acw);
 		}
 
-		private int StartPlayerIndex = 0;
-		
-		private int CurrentTurn = 0;
-		
 		public event PropertyChangedEventHandler PropertyChanged;
 		
 	    #region INotifyCollectionChanged

@@ -80,14 +80,15 @@ namespace CavernaWPF
 			ActionCardWrapper acw = abc.ActionCards[actionCardIndex];
 			if(!acw.occupied)
 			{
-				acw.occupied = true;
 				ActionCard ac = acw.actionCard;
 				Action<Dwarf> action = ac.PlayerAction;
 				if(action != null)
 				{
 					action.Invoke(n);
+					//TODO:Action of Action card should return a bool to make dwarf immovable and set action card occupied
 					if(ActionBoardContext.Instance.readyForNextDwarf)
 					{
+						acw.occupied = true;
 						(sender as Thumb).DragDelta -= Thumb_DragDelta;
 						(sender as Thumb).DragCompleted -= Thumb_DragCompleted;
 					}

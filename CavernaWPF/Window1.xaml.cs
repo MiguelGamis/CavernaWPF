@@ -52,7 +52,7 @@ namespace CavernaWPF
 				TownContext tc = new TownContext();
 				p.town = tc;
 				
-				Dwarf dwarf1 = new Dwarf() { player = p, Level = 8 }; Dwarf dwarf2 = new Dwarf() { player = p, Level = 14 };
+				Dwarf dwarf1 = new Dwarf() { player = p}; Dwarf dwarf2 = new Dwarf() { player = p };
 				p.Dwarfs.Add(dwarf1); p.Dwarfs.Add(dwarf2);
 				
 				playerPanel.Children.Add(tc.control);
@@ -71,18 +71,16 @@ namespace CavernaWPF
 			Grid.SetRow(playerPanels, 1);
 			rootPanel.Children.Add(playerPanels);
 			
-			startButton.Click += new RoutedEventHandler(StartGame);
-			
-			Grid.SetRow(startButton,2);
-			rootPanel.Children.Add(startButton);
+			ActionBoardContext.Instance.startButton.Click += new RoutedEventHandler(StartGame);
+			Grid.SetRow(ActionBoardContext.Instance.startButton,2);
+			rootPanel.Children.Add(ActionBoardContext.Instance.startButton);
 			
 			this.Content = rootPanel;
 			InitializeComponent();
 			
+			ActionBoardContext.Instance.startingPlayer = ActionBoardContext.Instance.players[1];
 			ActionBoardContext.Instance.StartGame();
 		}
-		
-		Button startButton = new Button() { Height = 30, Width = 60, Content = "Proceed"};
 		
 		private void StartGame(object sender, RoutedEventArgs e)
 		{
@@ -93,7 +91,6 @@ namespace CavernaWPF
 		{
 			TradeManager tm = new TradeManager();
 			tm.PlayerTrading((sender as Button).Tag as Player);
-			//tm.control.ShowDialog();
 		}
 	}
 }
