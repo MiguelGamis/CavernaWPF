@@ -67,9 +67,11 @@ namespace CavernaWPF
 		{
 			actioncards = new ObservableCollection<ActionCardWrapper>();
 			dwarfs = new ObservableCollection<Dwarf>();
+			harvestmarkers = new ObservableCollection<HarvestMarker>();
+			Intitialize();
 		}
 		
-		public void Intitialize()
+		private void Intitialize()
 		{
 			ActionBoard ab = new ActionBoard();
 			control = ab;
@@ -96,6 +98,8 @@ namespace CavernaWPF
 			PrepareActionCards();
 		
 			Replenish();	
+			
+			PrepareHarvestMarkers();
 			
 			CurrentTurn = StartPlayerIndex;
 			
@@ -200,14 +204,59 @@ namespace CavernaWPF
 			AddActionCard(GetActionCard("Slash-and-burn"));
 			
 			List<string> round1ActionCards = new List<string> { "Blacksmithing", "Sheep farming", "Ore mine construction" };
+
+			List<string> round2ActionCards = new List<string> { "Donkey farming", "Ruby mine construction" };
 			
-			Random r = new Random();
-			round1ActionCards.Sort((x, y) => r.Next(-1, 1));
+			round2ActionCards.Insert(0, "Wish for Children");
 			
-			foreach(string cardName in round1ActionCards)
-			{
-				AddActionCard(GetActionCard(cardName));
+			List<string> round3ActionCards = new List<string> { "Family life", "Ore delivery", "Exploration"};
+			
+			List<string> round4ActionCards = new List<string> { "Ruby delivery", "Ore trading", "Adventure"};
+		}
+		
+		private ObservableCollection<HarvestMarker> harvestmarkers;
+		
+		public ObservableCollection<HarvestMarker> HarvestMarkers
+		{
+			get { return harvestmarkers; }
+			set { harvestmarkers = value; 
+				if (PropertyChanged != null) PropertyChanged(this, new PropertyChangedEventArgs("HarvestMarkers"));
 			}
+		}
+		
+		private void PrepareHarvestMarkers()
+		{
+			List<HarvestMarker> tmp = new List<HarvestMarker>();
+			for(int i = 0; i < 3; i++)
+				tmp.Add(new HarvestMarker(HarvestMarker.Type.QuestionMark){Hidden = true});
+			for(int i = 0; i < 4; i++)
+				tmp.Add(new HarvestMarker(HarvestMarker.Type.Harvest){Hidden= true});
+			
+			//TODO: Use a generic shuffle function
+			Random r = new Random();
+			tmp.Sort((x, y) => r.Next(-1, 1));
+			
+			tmp.Insert(0, new HarvestMarker(HarvestMarker.Type.NoHarvest));
+			tmp.Insert(1, new HarvestMarker(HarvestMarker.Type.NoHarvest));
+			tmp.Insert(2, new HarvestMarker(HarvestMarker.Type.Harvest));
+			tmp.Insert(3, new HarvestMarker(HarvestMarker.Type.Pay1FoodPerDwarf));
+			tmp.Insert(4, new HarvestMarker(HarvestMarker.Type.Harvest));
+			
+			int j = 12;
+			foreach(HarvestMarker hm in tmp)
+			{
+				hm.Row = j%3;
+				hm.Column = j/3;
+				harvestmarkers.Add(hm);
+				j++;
+			}
+			
+		}
+		
+		private void ShuffleList(List<object> list)
+		{
+			Random r = new Random();
+			list.Sort((x, y) => r.Next(-1, 1));
 		}
 		
 		private ActionCard GetActionCard(string Name)
@@ -331,9 +380,28 @@ namespace CavernaWPF
 			                          	ac.Oremineconstruction(d);
 			                          });
 					break;
+					
+				case "Wish for children":
+					
+					break;
+				case "Donkey farming":
+					ac.Name = "Donkey farming";
+					ac.Accumulators.Add(new ResourceAccumulator(){ResourceType = Resource.Type.Donkey, StartingAmount = 1, Accumulation = 1});
+					ac.PlayerAction = new Action<Dwarf>((d) =>
+			                          {
+			                          	ac.Donkeyfarming(d);
+			                          });
+					break;
+				case "Ruby mine construction":
+					break;
+				case "Family life":
+					break;
+				case "Ore delivery":
+					break;
+				case "Exploration":
+					break;
 				default:
-						return null;
-						break;
+					break;
 			}
 			return ac;
 		}

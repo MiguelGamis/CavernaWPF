@@ -426,5 +426,28 @@ namespace CavernaWPF
 				ActionBoardContext.Instance.readyForNextDwarf = true;
 			}
 		}
+		
+		public void Donkeyfarming(Dwarf d)
+		{
+			ActionCardWindowContext acwc = new ActionCardWindowContext();
+			int numWood = d.player.town.Resources[Resource.Type.Wood].Amount;
+			bool hasMeadow = d.player.town.HowManyBoardTilesOfType(BoardTile.Type.Meadow) > 0;
+			int numStone = d.player.town.Resources[Resource.Type.Stone].Amount;
+			//TODO:must query boardtiles for adjacent meadows
+			acwc.Options.Add(new ActionCardOption() {Text = "Build small fenced area", Selected = numWood == 1 && hasMeadow, Able = numWood > 0});
+			acwc.Options.Add(new ActionCardOption() {Text = "Build large fenced area", Selected = numWood > 1, Able = numWood > 1});
+			acwc.Options.Add(new ActionCardOption() {Selected = true, Text = "Build a stable"});
+			acwc.Options.Add(new ActionCardOption(true){Selected = true, Text = "Collect donkey"});
+			acwc.Control.ShowDialog();
+			
+			if((bool) acwc.Control.DialogResult)
+			{
+				if(acwc.Options[0].Selected)
+				{
+					
+				}
+				ActionBoardContext.Instance.readyForNextDwarf = true;
+			}
+		}
 	}
 }

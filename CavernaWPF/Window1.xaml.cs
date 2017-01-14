@@ -27,7 +27,6 @@ namespace CavernaWPF
 	{
 		public Window1()
 		{	
-			ActionBoardContext.Instance.Intitialize();
 			StackPanel rootPanel = new StackPanel() { Orientation = Orientation.Vertical };
 			rootPanel.Height = this.Height;
 			rootPanel.Width = this.Width;

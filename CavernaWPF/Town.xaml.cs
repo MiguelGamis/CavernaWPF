@@ -133,7 +133,7 @@ namespace CavernaWPF
 	 	        				n.Y = 0;
 	 	        			}
 	 	        		}
-	 	        		catch(IndexOutOfRangeException ex)
+	 	        		catch(IndexOutOfRangeException)
 	 	        		{
 	 	       				n.X = 0;
 	 	        			n.Y = 0;
@@ -275,7 +275,7 @@ namespace CavernaWPF
 		   			   return true;
 		   			   
 		   		}
-		   		catch(IndexOutOfRangeException ex)
+		   		catch(IndexOutOfRangeException)
 		   		{
 		   			continue;
 		   		}

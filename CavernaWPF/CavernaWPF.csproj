@@ -97,6 +97,7 @@
     </Compile>
     <Compile Include="BoardTile.cs" />
     <Compile Include="Converters\ColorToDwarfConverter.cs" />
+    <Compile Include="Converters\HarvestMarkerConverter.cs" />
     <Compile Include="Converters\ImageSizeConverter.cs" />
     <Compile Include="Converters\LevelToWeaponConverter.cs" />
     <Compile Include="Dwarf.cs" />
