@@ -21,7 +21,7 @@ namespace CavernaWPF
 		
 		public int Column{ get; set;}
 		
-		public bool FaceUp{ get; set;}
+		public bool Hidden{ get; set;}
 		
 		public string Img{ get; set;}
 		

@@ -103,8 +103,6 @@ namespace CavernaWPF
 			
 			CurrentTurn = StartPlayerIndex;
 			
-			Dwarf dwarf = null;
-			
 			foreach(Player p in players)
 			{
 				playersPlaying.AddLast(new LinkedListNode<Player>(p));
@@ -119,6 +117,10 @@ namespace CavernaWPF
 		
 		public void NextTurn()
 		{
+			Harvest();
+			NextRound();
+			return;
+			
 			if(!readyForNextDwarf)
 			{
 				return;
@@ -143,14 +145,17 @@ namespace CavernaWPF
 			{
 				if(currentPlayer == null)
 				{
+					//TODO: Encapsulate -----------------
 					for(int i = ActionBoardContext.Instance.Dwarfs.Count - 1; i >= 0; i--)
 					{
 						Dwarf dw = ActionBoardContext.Instance.Dwarfs[i];
 						dw.player.Dwarfs.Add(dw);
 						ActionBoardContext.Instance.Dwarfs.RemoveAt(i);
 					}
-					EndPhase();
+					Harvest();
+					NextRound();
 					return;
+					//------------------------------------
 				}
 				
 				Player p = currentPlayer.Value;
@@ -172,9 +177,17 @@ namespace CavernaWPF
 			ActionBoardContext.Instance.AddDwarf(d);
 		}
 		
-		private void EndPhase()
+		int Round = 0;
+		
+		private void Harvest()
 		{
+		}
+		
+		private void NextRound()
+		{
+			HarvestMarkers[Round].Hidden = false;
 			
+			Round++;
 		}
 		
 		private void PrepareActionCards()
@@ -204,14 +217,14 @@ namespace CavernaWPF
 			AddActionCard(GetActionCard("Slash-and-burn"));
 			
 			List<string> round1ActionCards = new List<string> { "Blacksmithing", "Sheep farming", "Ore mine construction" };
-
+			ShuffleList(round1ActionCards);
 			List<string> round2ActionCards = new List<string> { "Donkey farming", "Ruby mine construction" };
-			
+			ShuffleList(round2ActionCards);
 			round2ActionCards.Insert(0, "Wish for Children");
-			
 			List<string> round3ActionCards = new List<string> { "Family life", "Ore delivery", "Exploration"};
-			
+			ShuffleList(round3ActionCards);
 			List<string> round4ActionCards = new List<string> { "Ruby delivery", "Ore trading", "Adventure"};
+			ShuffleList(round4ActionCards);
 		}
 		
 		private ObservableCollection<HarvestMarker> harvestmarkers;
@@ -233,8 +246,7 @@ namespace CavernaWPF
 				tmp.Add(new HarvestMarker(HarvestMarker.Type.Harvest){Hidden= true});
 			
 			//TODO: Use a generic shuffle function
-			Random r = new Random();
-			tmp.Sort((x, y) => r.Next(-1, 1));
+			ShuffleList(tmp);
 			
 			tmp.Insert(0, new HarvestMarker(HarvestMarker.Type.NoHarvest));
 			tmp.Insert(1, new HarvestMarker(HarvestMarker.Type.NoHarvest));
@@ -253,7 +265,7 @@ namespace CavernaWPF
 			
 		}
 		
-		private void ShuffleList(List<object> list)
+		private void ShuffleList<T>(List<T> list)
 		{
 			Random r = new Random();
 			list.Sort((x, y) => r.Next(-1, 1));
@@ -413,9 +425,7 @@ namespace CavernaWPF
 			ActionCardWrapper acw = new ActionCardWrapper(ac) { Column=actioncards.Count/3, Row=actioncards.Count%3 };
 			actioncards.Add(acw);
 		}
-		
-		
-		
+
 		private int StartPlayerIndex = 0;
 		
 		private int CurrentTurn = 0;

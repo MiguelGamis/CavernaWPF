@@ -20,12 +20,15 @@ namespace CavernaWPF
 		
 		private double row;
     	private double column;
+    	private bool hidden;
+    	private Type _type;
     	
 		public HarvestMarker(Type t)
 		{
-			type = t;
+			_type = t;
 		}
 		
+		//TODO: Some of these properties don't need to notify if they are changed. Only Hidden needs it
 		public double Row
 	    {
 	        get { return row; }
@@ -46,9 +49,23 @@ namespace CavernaWPF
 	        }
 	    }
 	    
-	    public bool Hidden {get; set;}
+	    public bool Hidden {
+	    	get { return hidden; }
+	    	set
+	    	{
+	    		hidden = value;
+	    		if (PropertyChanged != null) PropertyChanged(this, new PropertyChangedEventArgs("Hidden"));
+	    	}
+	    }
 	    
-	    public Type type {get; set;}
+	    public Type type {
+	    	get { return _type; }
+	    	set
+	    	{
+	    		_type = value;
+	    		if (PropertyChanged != null) PropertyChanged(this, new PropertyChangedEventArgs("Type"));
+	    	}
+	    }
 	    
 	    public event PropertyChangedEventHandler PropertyChanged;
 	}
