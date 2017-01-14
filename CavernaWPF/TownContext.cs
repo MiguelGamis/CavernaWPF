@@ -27,9 +27,6 @@ namespace CavernaWPF
 			control = new Town();
 			control.DataContext = this;
 			
-			tab = new ResourcesTab();
-			tab.DataContext = this;
-			
 			for(int row = 1; row < 5; row++)
 			{
 				for(int col = 1; col < 4; col++)
@@ -53,7 +50,6 @@ namespace CavernaWPF
 		}
 		
 		public Town control;
-		public ResourcesTab tab;
 		
 		private ObservableCollection<Layable> tiles = new ObservableCollection<Layable>();
 		
@@ -73,9 +69,10 @@ namespace CavernaWPF
 		public int HowManyBoardTilesOfType(BoardTile.Type type)
 		{
 			var query = from BoardTile item in boardtiles
-						where item.state == type
+						where item != null
+						where item.state == BoardTile.Type.Cave
 						select item;
-			return query.Count();
+			return query == null ? 0 : query.Count();
 		}
 		
 		public int HasAdjacent(BoardTile.Type type)
@@ -97,26 +94,6 @@ namespace CavernaWPF
 //		};
 		
 		//public ResourcesTabContext ResourcesTabContext = new ResourcesTabContext();
-		
-		private Dictionary<Resource.Type, ResourceTab> resources = new Dictionary<Resource.Type, ResourceTab>(){
-			{ Resource.Type.Wood, new ResourceTab(){ ResourceType = Resource.Type.Wood, Amount = 0 } },
-			{ Resource.Type.Stone, new ResourceTab(){ ResourceType = Resource.Type.Stone, Amount = 0 } },
-			{ Resource.Type.Ore, new ResourceTab(){ ResourceType = Resource.Type.Ore, Amount = 0 } },
-			{ Resource.Type.Ruby, new ResourceTab(){ ResourceType = Resource.Type.Ruby, Amount = 0 } },
-			{ Resource.Type.Gold, new ResourceTab(){ ResourceType = Resource.Type.Gold, Amount = 0 } },
-			{ Resource.Type.Food, new ResourceTab(){ ResourceType = Resource.Type.Food, Amount = 0 } },
-			{ Resource.Type.Grain, new ResourceTab(){ ResourceType = Resource.Type.Grain, Amount = 0 } },
-			{ Resource.Type.Vegetable, new ResourceTab(){ ResourceType = Resource.Type.Vegetable, Amount = 0 } },
-			{ Resource.Type.Sheep, new ResourceTab(){ ResourceType = Resource.Type.Sheep, Amount = 0 } },
-			{ Resource.Type.Donkey, new ResourceTab(){ ResourceType = Resource.Type.Donkey, Amount = 0 } },
-			{ Resource.Type.Boar, new ResourceTab(){ ResourceType = Resource.Type.Boar, Amount = 0 } },
-			{ Resource.Type.Cow, new ResourceTab(){ ResourceType =Resource.Type.Cow, Amount = 0 } }
-		};
-		
-		public Dictionary<Resource.Type, ResourceTab> Resources{ 
-			get { return resources; }
-			set { resources = value; }
-		}
 		
 		public event PropertyChangedEventHandler PropertyChanged;
 	}

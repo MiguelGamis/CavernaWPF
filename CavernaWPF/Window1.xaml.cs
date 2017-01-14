@@ -57,10 +57,12 @@ namespace CavernaWPF
 				
 				playerPanel.Children.Add(tc.control);
 				StackPanel resourcesPanel = new StackPanel() {Orientation = Orientation.Horizontal};
-				resourcesPanel.Children.Add(tc.tab); 
+				resourcesPanel.Children.Add(p.tab); 
 				Button tradeButton = new Button() { Height = 30, Width = 60, Content = "Trade", Tag = p}; tradeButton.Click += new RoutedEventHandler(Trade);
 				resourcesPanel.Children.Add(tradeButton);
 				playerPanel.Children.Add(resourcesPanel);
+				
+				LayoutManager.Instance.map.Add(p, playerPanel);
 				
 				DwarfQueue dwarfLineUp = new DwarfQueue();
 				dwarfLineUp.ItemsSource = p.Dwarfs;
@@ -78,7 +80,7 @@ namespace CavernaWPF
 			this.Content = rootPanel;
 			InitializeComponent();
 			
-			ActionBoardContext.Instance.startingPlayer = ActionBoardContext.Instance.players[1];
+			ActionBoardContext.Instance.StartingPlayer = ActionBoardContext.Instance.players[1];
 			ActionBoardContext.Instance.StartGame();
 		}
 		

@@ -64,17 +64,17 @@ namespace CavernaWPF
 			bool hasEnough = true;
 			foreach(ResourceTab input in tradeInput)
 			{
-				hasEnough&=tm.player.town.Resources[input.ResourceType].Amount>=input.Amount;
+				hasEnough&=tm.player.Resources[input.ResourceType].Amount>=input.Amount;
 			}
 			if(hasEnough)
 			{
 				foreach(ResourceTab input in tradeInput)
 				{
-					tm.player.town.Resources[input.ResourceType].Amount-=input.Amount;
+					tm.player.Resources[input.ResourceType].Amount-=input.Amount;
 				}
 				foreach(ResourceTab input in tradeOutput)
 				{
-					tm.player.town.Resources[input.ResourceType].Amount+=input.Amount;
+					tm.player.Resources[input.ResourceType].Amount+=input.Amount;
 				}
 			}
 		}

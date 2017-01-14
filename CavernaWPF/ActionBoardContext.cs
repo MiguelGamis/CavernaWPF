@@ -153,6 +153,7 @@ namespace CavernaWPF
 					}
 					Harvest();
 					NextRound();
+					Replenish();
 					QueuePlayers();
 					return;
 					//------------------------------------
@@ -197,19 +198,29 @@ namespace CavernaWPF
 				Scoring();
 		}
 		
-		public Player startingPlayer;
+		private Player startingPlayer;
 		
-		private int StartPlayerIndex = 0;
-		
-		private int CurrentTurn = 0;
+		public Player StartingPlayer
+		{
+			get { return startingPlayer; }
+			set
+			{
+				if(value != null && value != startingPlayer)
+				{
+					if(startingPlayer != null)
+						LayoutManager.Instance.map[startingPlayer].Children.Remove(LayoutManager.Instance.startingPlayerPiece);
+					startingPlayer = value;
+					LayoutManager.Instance.map[startingPlayer].Children.Add(LayoutManager.Instance.startingPlayerPiece);
+					//LayoutManager.Instance.updateStartingPlayerPiece(value);
+				}
+			}
+		}
 		
 		private void QueuePlayers()
 		{
 			foreach(Player p in players)
 			{
 				LinkedListNode<Player> pNode = new LinkedListNode<Player>(p);
-//				if(p == startingPlayer)
-//					currentPlayer = pNode;
 				playersPlaying.AddLast(pNode);
 			}
 		}
