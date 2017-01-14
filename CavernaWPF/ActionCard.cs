@@ -33,8 +33,14 @@ namespace CavernaWPF
 		
 		public string Name
 		{
-			get { return name; }
-			set { name = value; }
+			get;
+			set;
+		}
+		
+		public int Stage
+		{
+			get;
+			set;
 		}
 		
 		public void Accumulate()
@@ -427,6 +433,11 @@ namespace CavernaWPF
 			}
 		}
 		
+		public void Wishforchildren(Dwarf d)
+		{
+			
+		}
+		
 		public void Donkeyfarming(Dwarf d)
 		{
 			ActionCardWindowContext acwc = new ActionCardWindowContext();
@@ -448,6 +459,41 @@ namespace CavernaWPF
 				}
 				ActionBoardContext.Instance.readyForNextDwarf = true;
 			}
+		}
+		
+		public void Exploration(Dwarf d)
+		{
+			
+		}
+		
+		public void Familylife(Dwarf d)
+		{
+			
+		}
+		
+		public void Oredelivery(Dwarf d)
+		{
+			
+		}
+		
+		public void Rubymineconstruction(Dwarf d)
+		{
+			
+		}
+		
+		public void Adventure(Dwarf d)
+		{
+			
+		}
+		
+		public void Oretrading(Dwarf d)
+		{
+			
+		}
+		
+		public void Rubydelivery(Dwarf d)
+		{
+			
 		}
 	}
 }

@@ -185,9 +185,19 @@ namespace CavernaWPF
 		
 		private void NextRound()
 		{
-			HarvestMarkers[Round].Hidden = false;
+			if(Round < 12)
+			{
+				HarvestMarkers[Round].Hidden = false;
+				ActionCards[Round+12].Hidden = false;
+				Round++;
+			}
+			else
+				Scoring();
+		}
+		
+		private void Scoring()
+		{
 			
-			Round++;
 		}
 		
 		private void PrepareActionCards()
@@ -218,13 +228,31 @@ namespace CavernaWPF
 			
 			List<string> round1ActionCards = new List<string> { "Blacksmithing", "Sheep farming", "Ore mine construction" };
 			ShuffleList(round1ActionCards);
+			foreach(String actionCardName in round1ActionCards)
+			{
+				AddActionCard(GetActionCard(actionCardName), true);
+			}
+			
+			AddActionCard(GetActionCard("Wish For Children"));
 			List<string> round2ActionCards = new List<string> { "Donkey farming", "Ruby mine construction" };
 			ShuffleList(round2ActionCards);
-			round2ActionCards.Insert(0, "Wish for Children");
+			foreach(String actionCardName in round2ActionCards)
+			{
+				AddActionCard(GetActionCard(actionCardName), true);
+			}
+			
 			List<string> round3ActionCards = new List<string> { "Family life", "Ore delivery", "Exploration"};
 			ShuffleList(round3ActionCards);
+			foreach(String actionCardName in round3ActionCards)
+			{
+				AddActionCard(GetActionCard(actionCardName), true);
+			}
 			List<string> round4ActionCards = new List<string> { "Ruby delivery", "Ore trading", "Adventure"};
 			ShuffleList(round4ActionCards);
+			foreach(String actionCardName in round4ActionCards)
+			{
+				AddActionCard(GetActionCard(actionCardName), true);
+			}
 		}
 		
 		private ObservableCollection<HarvestMarker> harvestmarkers;
@@ -274,10 +302,10 @@ namespace CavernaWPF
 		private ActionCard GetActionCard(string Name)
 		{
 			ActionCard ac = new ActionCard();
+			ac.Name = Name;
 			switch(Name)
 			{
-				case "Drift mining": 
-					ac.Name = "Drift mining";
+				case "Drift mining":
 					ac.Accumulators.Add(new ResourceAccumulator(){ResourceType = Resource.Type.Stone, StartingAmount = 1, Accumulation = 1});
 					ac.PlayerAction = new Action<Dwarf>((d) =>
                           {
@@ -285,7 +313,6 @@ namespace CavernaWPF
                           });
 					break;
 				case "Logging":
-					ac.Name = "Logging";
 					ac.Accumulators.Add(new ResourceAccumulator(){ResourceType = Resource.Type.Wood, StartingAmount = 3, Accumulation = 1});
 					ac.PlayerAction = new Action<Dwarf>((d) =>
 					                          {
@@ -293,7 +320,6 @@ namespace CavernaWPF
 					                          });
 					break;
 				case "Wood gathering":
-					ac.Name = "Wood gathering";
 					ac.Accumulators.Add(new ResourceAccumulator(){ResourceType = Resource.Type.Wood, StartingAmount = 1, Accumulation = 1});
 					ac.PlayerAction = new Action<Dwarf>((d) =>
 			                          {
@@ -301,7 +327,6 @@ namespace CavernaWPF
 			                          });
 					break;
 				case "Excavation":
-					ac.Name = "Excavation";
 					ac.Accumulators.Add(new ResourceAccumulator(){ResourceType = Resource.Type.Stone, StartingAmount = 1, Accumulation = 1});
 					ac.PlayerAction = new Action<Dwarf>((d) =>
 					                          {
@@ -309,14 +334,12 @@ namespace CavernaWPF
 					                          });
 					break;
 				case "Supplies":
-					ac.Name = "Supplies";
 					ac.PlayerAction = new Action<Dwarf>((d) =>
 			                          {
 			                          	ac.Supplies(d);
 			                          });
 					break;
 				case "Clearing":
-					ac.Name = "Clearing";
 					ac.Accumulators.Add(new ResourceAccumulator(){ResourceType = Resource.Type.Wood, StartingAmount = 1, Accumulation = 1});
 					ac.PlayerAction = new Action<Dwarf>((d) =>
 			                          {
@@ -324,7 +347,6 @@ namespace CavernaWPF
 			                          });
 					break;
 				case "Starting player":
-					ac.Name = "Starting player";
 					ac.Accumulators.Add(new ResourceAccumulator(){ResourceType = Resource.Type.Food, StartingAmount = 1, Accumulation = 1});
 					ac.PlayerAction = new Action<Dwarf>((d) =>
 			                          {
@@ -332,7 +354,6 @@ namespace CavernaWPF
 			                          });
 					break;	
 				case "Ore mining":
-					ac.Name = "Ore mining";
 					ac.Accumulators.Add(new ResourceAccumulator(){ResourceType = Resource.Type.Ore, StartingAmount = 2, Accumulation = 1});
 					ac.PlayerAction = new Action<Dwarf>((d) =>
 			                          {
@@ -340,7 +361,6 @@ namespace CavernaWPF
 			                          });
 					break;
 				case "Sustenance":
-					ac.Name = "Sustenance";
 					ac.Accumulators.Add(new ResourceAccumulator(){ResourceType = Resource.Type.Food, StartingAmount = 1, Accumulation = 1});
 					ac.PlayerAction = new Action<Dwarf>((d) =>
 			                          {
@@ -348,7 +368,6 @@ namespace CavernaWPF
 			                          });
 					break;
 				case "Ruby mining":
-					ac.Name = "Ruby mining";
 					ac.Accumulators.Add(new ResourceAccumulator(){ResourceType = Resource.Type.Ruby, StartingAmount = 1, Accumulation = 1});
 					ac.PlayerAction = new Action<Dwarf>((d) =>
 			                          {
@@ -356,28 +375,26 @@ namespace CavernaWPF
 			                          });
 					break;
 				case "Housework":
-					ac.Name = "Housework";
 					ac.PlayerAction = new Action<Dwarf>((d) =>
 			                          {
 			                          	ac.Housework(d);
 			                          });
 					break;
 				case "Slash-and-burn":
-					ac.Name = "Slash-and-burn";
 					ac.PlayerAction = new Action<Dwarf>((d) =>
 			                          {
 			                          	ac.Slashandburn(d);
 			                          });
 					break;
 				case "Blacksmithing":
-					ac.Name = "Blacksmithing";
+					ac.Stage = 1;
 					ac.PlayerAction = new Action<Dwarf>((d) =>
 			                          {
 			                          	ac.Blacksmithing(d);
 			                          });
 					break;
 				case "Sheep farming":
-					ac.Name = "Sheep farming";
+					ac.Stage = 1;
 					ac.Accumulators.Add(new ResourceAccumulator(){ResourceType = Resource.Type.Sheep, StartingAmount = 1, Accumulation = 1});
 					ac.PlayerAction = new Action<Dwarf>((d) =>
 			                          {
@@ -385,8 +402,7 @@ namespace CavernaWPF
 			                          });
 					break;
 				case "Ore mine construction":
-					ac.Name = "Ore mine construction";
-					ac.Accumulators.Add(new ResourceAccumulator(){ResourceType = Resource.Type.Sheep, StartingAmount = 1, Accumulation = 1});
+					ac.Stage = 1;
 					ac.PlayerAction = new Action<Dwarf>((d) =>
 			                          {
 			                          	ac.Oremineconstruction(d);
@@ -394,10 +410,13 @@ namespace CavernaWPF
 					break;
 					
 				case "Wish for children":
-					
+					ac.PlayerAction = new Action<Dwarf>((d) =>
+			                          {
+			                          	ac.Wishforchildren(d);
+			                          });
 					break;
 				case "Donkey farming":
-					ac.Name = "Donkey farming";
+					ac.Stage = 2;
 					ac.Accumulators.Add(new ResourceAccumulator(){ResourceType = Resource.Type.Donkey, StartingAmount = 1, Accumulation = 1});
 					ac.PlayerAction = new Action<Dwarf>((d) =>
 			                          {
@@ -405,12 +424,56 @@ namespace CavernaWPF
 			                          });
 					break;
 				case "Ruby mine construction":
+					ac.Stage = 2;
+					ac.PlayerAction = new Action<Dwarf>((d) =>
+					                  {
+					                  	ac.Rubymineconstruction(d);
+					                  });
 					break;
 				case "Family life":
+					ac.Stage = 3;
+					ac.PlayerAction = new Action<Dwarf>((d) =>
+					                  {
+					                  	ac.Familylife(d);
+					                  });
 					break;
 				case "Ore delivery":
+					ac.Stage = 3;
+					ac.Accumulators.Add(new ResourceAccumulator(){ResourceType = Resource.Type.Stone, StartingAmount = 1, Accumulation = 1});
+					ac.Accumulators.Add(new ResourceAccumulator(){ResourceType = Resource.Type.Ore, StartingAmount = 1, Accumulation = 1});
+					ac.PlayerAction = new Action<Dwarf>((d) =>
+					                  {
+					                  	ac.Oredelivery(d);
+					                  });
 					break;
 				case "Exploration":
+					ac.Stage = 3;
+					ac.PlayerAction = new Action<Dwarf>((d) =>
+					                  {
+					                  	ac.Exploration(d);
+					                  });
+					break;
+				case "Adventure":
+					ac.Stage = 4;
+					ac.PlayerAction = new Action<Dwarf>((d) =>
+					                  {
+					                  	ac.Adventure(d);
+					                  });
+					break;
+				case "Ore trading":
+					ac.Stage = 4;
+					ac.PlayerAction = new Action<Dwarf>((d) =>
+					                  {
+					                  	ac.Oretrading(d);
+					                  });
+					break;
+				case "Ruby delivery":
+					ac.Stage = 4;
+					ac.Accumulators.Add(new ResourceAccumulator(){ResourceType = Resource.Type.Ruby, StartingAmount = 2, Accumulation = 1});
+					ac.PlayerAction = new Action<Dwarf>((d) =>
+					                  {
+					                  	ac.Rubydelivery(d);
+					                  });
 					break;
 				default:
 					break;
@@ -418,11 +481,11 @@ namespace CavernaWPF
 			return ac;
 		}
 		
-		private void AddActionCard(ActionCard ac)
+		private void AddActionCard(ActionCard ac, bool isHidden = false)
 		{
 			if(ac == null)
 				return;
-			ActionCardWrapper acw = new ActionCardWrapper(ac) { Column=actioncards.Count/3, Row=actioncards.Count%3 };
+			ActionCardWrapper acw = new ActionCardWrapper(ac) { Column=actioncards.Count/3, Row=actioncards.Count%3, Hidden = isHidden };
 			actioncards.Add(acw);
 		}
 

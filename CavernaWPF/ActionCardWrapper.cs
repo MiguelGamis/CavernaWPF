@@ -7,25 +7,36 @@
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
 using System;
+using System.ComponentModel;
 
 namespace CavernaWPF
 {
 	/// <summary>
 	/// Description of ActionCardWrapper.
 	/// </summary>
-	public class ActionCardWrapper
+	public class ActionCardWrapper : INotifyPropertyChanged
 	{
 		public ActionCard actionCard;
+		
+		public bool occupied;
 		
 		public int Row{ get; set;}
 		
 		public int Column{ get; set;}
 		
-		public bool Hidden{ get; set;}
+		private bool hidden;
+		
+		public bool Hidden
+		{ 
+			get { return hidden; }
+			set
+			{
+				hidden = value;
+				if (PropertyChanged != null) PropertyChanged(this, new PropertyChangedEventArgs("Hidden"));
+			}
+		}
 		
 		public string Img{ get; set;}
-		
-		public bool occupied;
 		
 		public ActionCardWrapper(ActionCard card)
 		{
@@ -37,5 +48,7 @@ namespace CavernaWPF
 		{
 			Img = String.Format("C:\\Users\\Miguel\\Desktop\\Caverna\\ActionCards\\{0}.png", actionCard.Name);
 		}
+		
+		public event PropertyChangedEventHandler PropertyChanged;
 	}
 }
