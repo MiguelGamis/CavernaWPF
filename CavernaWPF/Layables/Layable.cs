@@ -73,6 +73,20 @@ namespace CavernaWPF.Layables
 	        }
 	    }
 	    
+	    public int row;
+	    public int column;
+	    
+	    private bool locked;
+	    public bool Locked
+	    {
+	   		get { return locked; }
+	    	set
+	        {
+	           locked = value;
+	           ProperyChanged("Locked");
+	        }
+	    }
+	    
 	    protected void ProperyChanged(string Property)
 	    {
 	    	if (PropertyChanged != null) PropertyChanged(this, new PropertyChangedEventArgs(Property));

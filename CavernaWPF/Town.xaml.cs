@@ -38,6 +38,16 @@ namespace CavernaWPF
 	    	if(obj is Layable)
 	    	{
 	        	Layable n = (Layable) obj;
+	        	if(n is Tile)
+	        	{
+	        		if((n as Tile).Locked)
+	        		{
+	        			(sender as Thumb).DragDelta -= Thumb_DragDelta;
+	        			(sender as Thumb).MouseRightButtonDown -= Rotate;
+	        			(sender as Thumb).DragCompleted -= Thumb_DragCompleted;
+	        			return;
+	        		}
+	        	}
 	        	n.X += e.HorizontalChange;
 	        	n.Y += e.VerticalChange;
 	    	}		
@@ -91,15 +101,13 @@ namespace CavernaWPF
 
 		 	       		if(!isAllowed(t, _x+1, _y+1))
 			        	{
-			  	        	t.X = 0;
-		 	        		t.Y = 0;
+			  	        	ResetLayable(n);
 		 	        		return;
 			        	}
 				        
 		 	       		if(!isAdjacent(t, _x+1, _y+1))
 				        {
-		 	       			t.X = 0;
-		 	        		t.Y = 0;
+		 	       			ResetLayable(n);
 		 	        		return;
 				        }
 	 	        	}
@@ -119,8 +127,8 @@ namespace CavernaWPF
 	 	        				switch(s.type)
 	 	        				{
 	 	        					case Sowable.Type.Grain:
-	 	        						tc.Tiles.Add(new Sowable(Sowable.Type.Grain) { X = dp.Margin.Left, Y =  dp.Margin.Top});
-	 	        						tc.Tiles.Add(new Sowable(Sowable.Type.Grain) { X = dp.Margin.Left, Y =  dp.Margin.Top});
+	 	        						tc.AddTile(new Sowable(Sowable.Type.Grain) { X = dp.Margin.Left, Y =  dp.Margin.Top + 5});
+	 	        						tc.AddTile(new Sowable(Sowable.Type.Grain) { X = dp.Margin.Left, Y =  dp.Margin.Top + 10});
 	 	        						break;
 	 	        					case Sowable.Type.Vegetable:
 	 	        						
@@ -129,26 +137,41 @@ namespace CavernaWPF
 	 	        			}
 	 	        			else
 	 	        			{
-								n.X = 0;
-	 	        				n.Y = 0;
+								ResetLayable(n);
+								return;
 	 	        			}
 	 	        		}
 	 	        		catch(IndexOutOfRangeException)
 	 	        		{
-	 	       				n.X = 0;
-	 	        			n.Y = 0;
+	 	       				ResetLayable(n);
+	 	       				return;
 	 	        		}
 	 	        	}
 			       	
+	 	        	n.column = _x + 1;
+	 	        	n.row = _y + 1;
 	 	        	n.X = dp.Margin.Left;
 	 	        	n.Y = dp.Margin.Top;
 	 	        }
 	 	        else
 	 	        {
-	 	        	n.X = 0;
-	 	        	n.Y = 0;
+	 	        	ResetLayable(n);
+	 	        	return;
 	 	        }
 			}
+	    }
+	    
+	    private void ResetLayable(Layable l)
+	    {
+	    	l.X = 0;
+	    	l.Y = 0;
+	    	l.row = 0;
+	    	l.column = 0;
+	    }
+	    
+	    private void LockIn(object sender, MouseButtonEventArgs e)
+	    {
+	    	
 	    }
 	    
 	   	private void Rotate(object sender, MouseButtonEventArgs e)

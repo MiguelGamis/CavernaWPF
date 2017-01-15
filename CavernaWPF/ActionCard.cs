@@ -120,19 +120,19 @@ namespace CavernaWPF
 						
 						break;
 					case "Meadow":
-						d.player.town.Tiles.Add(new Tile(Tile.Type.Meadow));
+						d.player.town.AddTile(new Tile(Tile.Type.Meadow));
 						break;
 					case "FurnishDwelling":
 						
 						break;
 					case "Field":
-						d.player.town.Tiles.Add(new Tile(Tile.Type.Field));
+						d.player.town.AddTile(new Tile(Tile.Type.Field));
 						break;
 					case "Sow":
 						
 						break;
 					case "Cavern":
-						d.player.town.Tiles.Add(new Tile(Tile.Type.Cave));
+						d.player.town.AddTile(new Tile(Tile.Type.Cave));
 						break;
 					case "Breed":
 						
@@ -161,7 +161,7 @@ namespace CavernaWPF
 				
 				if(acwc.Options[1].Selected)
 				{
-					d.player.town.Tiles.Add(new Tile(Tile.Type.CaveTunnel));
+					d.player.town.AddTile(new Tile(Tile.Type.CaveTunnel));
 				}
 				ActionBoardContext.Instance.readyForNextDwarf = true;
 			}
@@ -183,7 +183,7 @@ namespace CavernaWPF
 				
 				if(acwc.Options[1].Selected)
 				{
-					d.player.town.Tiles.Add(new Tile(Tile.Type.CaveTunnel));
+					d.player.town.AddTile(new Tile(Tile.Type.CaveTunnel));
 				}
 				ActionBoardContext.Instance.readyForNextDwarf = true;
 			}
@@ -270,7 +270,7 @@ namespace CavernaWPF
 				
 				if(acwc.Options[1].Selected)
 				{
-					d.player.town.Tiles.Add(new Tile(Tile.Type.MeadowField));
+					d.player.town.AddTile(new Tile(Tile.Type.MeadowField));
 				}
 				ActionBoardContext.Instance.readyForNextDwarf = true;
 			}
@@ -324,10 +324,11 @@ namespace CavernaWPF
 				if(acwc.Options[0].Selected)
 				{
 					CollectAccumulatingResource(d.player);
+					d.player.Resources[Resource.Type.Grain].Amount = 1;
 				}
 				if(acwc.Options[1].Selected)
 				{
-					d.player.town.Tiles.Add(new Tile(Tile.Type.MeadowField));
+					d.player.town.AddTile(new Tile(Tile.Type.MeadowField));
 				}
 				ActionBoardContext.Instance.readyForNextDwarf = true;
 			}
@@ -361,7 +362,7 @@ namespace CavernaWPF
 			{
 				if(acwc.Options[0].Selected)
 				{
-					CollectAccumulatingResource(d.player);
+					d.player.town.AddTile(new Dog());
 				}
 				ActionBoardContext.Instance.readyForNextDwarf = true;
 			}
@@ -378,11 +379,11 @@ namespace CavernaWPF
 			{
 				if(acwc.Options[0].Selected)
 				{
-					d.player.town.Tiles.Add(new Tile(Tile.Type.MeadowField));
+					d.player.town.AddTile(new Tile(Tile.Type.MeadowField));
 				}
 				int numGrain = d.player.Resources[Resource.Type.Grain].Amount;
 				int numVegetable = d.player.Resources[Resource.Type.Grain].Amount;
-				d.player.town.Tiles.Add(new Sowable(Sowable.Type.Grain));
+				d.player.town.AddTile(new Sowable(Sowable.Type.Grain));
 				
 				ActionBoardContext.Instance.readyForNextDwarf = true;
 			}

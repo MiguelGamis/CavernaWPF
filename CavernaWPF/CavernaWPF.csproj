@@ -116,6 +116,8 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="HarvestMarker.cs" />
+    <Compile Include="Helpers.cs" />
+    <Compile Include="Layables\Dog.cs" />
     <Compile Include="Layables\FarmAnimal.cs" />
     <Compile Include="Layables\Layable.cs" />
     <Compile Include="Layables\Sowable.cs" />
@@ -130,7 +132,6 @@
       <DependentUpon>ResourcesTab.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Resources\Dog.cs" />
     <Compile Include="Resources\Resource.cs" />
     <Compile Include="Resources\Stable.cs" />
     <Compile Include="Resources\Tradable.cs" />

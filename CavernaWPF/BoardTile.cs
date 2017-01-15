@@ -19,7 +19,7 @@ namespace CavernaWPF
 	/// </summary>
 	public class BoardTile
 	{
-		public enum Type {Forest, Field, Meadow, Rock, Cave, Tunnel, DeepTunnel, Fenced, Furnished, Dwelling};
+		public enum Type {Forest, Field, Meadow, Rock, Cave, Tunnel, DeepTunnel, Fenced, Furnished, Dwelling, OreMine, RubyMine};
 		
 		public Type state;
 		

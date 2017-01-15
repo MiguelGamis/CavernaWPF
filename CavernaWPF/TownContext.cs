@@ -7,6 +7,8 @@
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
 using System;
+using System.Windows;
+
 using System.ComponentModel;
 using System.Collections.ObjectModel;
 using System.Collections.Generic;
@@ -20,7 +22,7 @@ namespace CavernaWPF
 	/// <summary>
 	/// Description of TownContext.
 	/// </summary>
-	public class TownContext : INotifyPropertyChanged
+	public class TownContext : INotifyPropertyChanged, INotifyCollectionChanged
 	{
 		public TownContext()
 		{
@@ -60,8 +62,64 @@ namespace CavernaWPF
 			}
 		}
 		
-		public void AddTile(Tile t)
+		public void AddTile(Layable layable)
 		{
+			//ActionBoardContext.Instance.playerLocks[ActionBoardContext.Instance.currentPlayer.Value] = true;
+			ActionBoardContext.Instance.promptingPlacement = true;
+			Tiles.Add(layable);
+			//this.OnNotifyCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Remove, layable));
+			LayoutManager.Instance.confirmButtons[ActionBoardContext.Instance.currentPlayer.Value].Click += UnlockPlayer;
+		}
+		
+		private void UnlockPlayer(object sender, RoutedEventArgs e)
+		{
+			IEnumerable<Layable> deleteList = Tiles.ToList().Where(layable => layable.row == 0 && layable.column == 0);
+			
+			if(deleteList.Count() > 0)
+			{
+				MessageBoxResult result = MessageBox.Show("Are you sure you want to throw the tiles away", "There are tiles not placed", MessageBoxButton.YesNo, MessageBoxImage.Question);
+				if (result == MessageBoxResult.No)
+				{
+				    return;
+				}
+				else
+				{
+					deleteList.ToList().ForEach(l => Tiles.Remove(l));
+				}
+			}
+			
+			foreach(Layable layable in Tiles)
+			{
+				if(layable is Tile)
+				{
+					Tile t = (layable as Tile);
+					boardtiles[t.column, t.row].state = Helpers.convertFirst(t);
+					if(t.Twin)
+					{
+						switch(t.Rot)
+						{
+							case 0:
+								t.column++;
+								break;
+							case 1:
+								t.row++;
+								break;
+							case 2:
+								t.column--;
+								break;
+							case 3:
+								t.row--;
+								break;
+						}
+						boardtiles[t.column, t.row].state = Helpers.convertSecond(t);
+					}
+				}
+				layable.Locked = true;
+			}
+			
+			//ActionBoardContext.Instance.playerLocks[ActionBoardContext.Instance.currentPlayer.Value] = false;
+			LayoutManager.Instance.confirmButtons[ActionBoardContext.Instance.currentPlayer.Value].Click -= UnlockPlayer;
+			ActionBoardContext.Instance.promptingPlacement = false;
 		}
 		
 		public BoardTile[,] boardtiles = new BoardTile[8,6];
@@ -84,17 +142,17 @@ namespace CavernaWPF
 			return -1;
 		}
 		
-//		public Dictionary<Resource.Type, int> resources = new Dictionary<Resource.Type, int>() { 
-//			{Resource.Type.Food, 0}, 
-//			{Resource.Type.Gold, 0},
-//			{Resource.Type.Wood, 0},
-//			{Resource.Type.Stone, 0},
-//			{Resource.Type.Ore, 0},
-//			{Resource.Type.Ruby, 0}
-//		};
-		
-		//public ResourcesTabContext ResourcesTabContext = new ResourcesTabContext();
-		
 		public event PropertyChangedEventHandler PropertyChanged;
+		
+		#region INotifyCollectionChanged
+	    private void OnNotifyCollectionChanged(NotifyCollectionChangedEventArgs args)
+	    {
+			if (this.CollectionChanged != null)
+			{
+			    this.CollectionChanged(this, args);
+			}
+	    }
+	    public event NotifyCollectionChangedEventHandler CollectionChanged;
+	    #endregion INotifyCollectionChanged
 	}
 }

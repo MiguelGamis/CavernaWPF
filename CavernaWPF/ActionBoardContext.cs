@@ -110,13 +110,16 @@ namespace CavernaWPF
 		
 		LinkedList<Player> playersPlaying = new LinkedList<Player>();
 		
-		LinkedListNode<Player> currentPlayer;
+		public LinkedListNode<Player> currentPlayer;
 		
 		public bool readyForNextDwarf = true;
 		
+		//public Dictionary<Player, bool> playerLocks = new Dictionary<Player, bool>();
+		public bool promptingPlacement= false;
+		
 		public void NextTurn()
 		{
-			if(!readyForNextDwarf)
+			if(!readyForNextDwarf || promptingPlacement)
 			{
 				return;
 			}
@@ -394,7 +397,7 @@ namespace CavernaWPF
 					ac.Accumulators.Add(new ResourceAccumulator(){ResourceType = Resource.Type.Food, StartingAmount = 1, Accumulation = 1});
 					ac.PlayerAction = new Action<Dwarf>((d) =>
 			                          {
-			                          	ac.Woodgathering(d);
+			                          	ac.Sustenance(d);
 			                          });
 					break;
 				case "Ruby mining":

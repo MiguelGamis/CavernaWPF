@@ -1,19 +1,19 @@
 ﻿/*
  * Created by SharpDevelop.
  * User: Miguel
- * Date: 12/23/2016
- * Time: 21:53
+ * Date: 1/14/2017
+ * Time: 4:12 PM
  * 
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
 using System;
 
-namespace CavernaWPF
+namespace CavernaWPF.Layables
 {
 	/// <summary>
 	/// Description of Dog.
 	/// </summary>
-	public class Dog
+	public class Dog : Layable
 	{
 		public Dog()
 		{

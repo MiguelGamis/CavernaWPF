@@ -56,6 +56,8 @@ namespace CavernaWPF
 				p.Dwarfs.Add(dwarf1); p.Dwarfs.Add(dwarf2);
 				
 				playerPanel.Children.Add(tc.control);
+				Button lockinButton = new Button() { Height = 30, Width = 60, Content = "Confirm", Tag = p }; LayoutManager.Instance.confirmButtons.Add(p, lockinButton);
+				playerPanel.Children.Add(lockinButton);
 				StackPanel resourcesPanel = new StackPanel() {Orientation = Orientation.Horizontal};
 				resourcesPanel.Children.Add(p.tab); 
 				Button tradeButton = new Button() { Height = 30, Width = 60, Content = "Trade", Tag = p}; tradeButton.Click += new RoutedEventHandler(Trade);
