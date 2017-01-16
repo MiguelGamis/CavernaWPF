@@ -68,10 +68,10 @@ namespace CavernaWPF
 			ActionBoardContext.Instance.promptingPlacement = true;
 			Tiles.Add(layable);
 			//this.OnNotifyCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Remove, layable));
-			LayoutManager.Instance.confirmButtons[ActionBoardContext.Instance.currentPlayer.Value].Click += UnlockPlayer;
+			LayoutManager.Instance.confirmButtons[ActionBoardContext.Instance.currentPlayer.Value].Click += Confirm;
 		}
 		
-		private void UnlockPlayer(object sender, RoutedEventArgs e)
+		public void Confirm(object sender, RoutedEventArgs e)
 		{
 			IEnumerable<Layable> deleteList = Tiles.ToList().Where(layable => layable.row == 0 && layable.column == 0);
 			
@@ -92,33 +92,44 @@ namespace CavernaWPF
 			{
 				if(layable is Tile)
 				{
+					if(layable.Locked)
+						continue;
+					
 					Tile t = (layable as Tile);
-					boardtiles[t.column, t.row].state = Helpers.convertFirst(t);
+					var ftype = Helpers.convertFirst(t);
+					int row = t.row;
+					int col = t.column;
+					boardtiles[col, row].state = ftype;
 					if(t.Twin)
 					{
 						switch(t.Rot)
 						{
 							case 0:
-								t.column++;
+								col++;
 								break;
-							case 1:
-								t.row++;
+							case 90:
+								row++;
 								break;
-							case 2:
-								t.column--;
+							case 180:
+								col--;
 								break;
-							case 3:
-								t.row--;
+							case 270:
+								row--;
 								break;
 						}
-						boardtiles[t.column, t.row].state = Helpers.convertSecond(t);
+						var stype = Helpers.convertSecond(t);
+						boardtiles[col, row].state = stype;
 					}
+					t.Locked = true;
 				}
-				layable.Locked = true;
+				if(layable is FarmAnimal)
+				{
+					
+				}
 			}
 			
 			//ActionBoardContext.Instance.playerLocks[ActionBoardContext.Instance.currentPlayer.Value] = false;
-			LayoutManager.Instance.confirmButtons[ActionBoardContext.Instance.currentPlayer.Value].Click -= UnlockPlayer;
+			LayoutManager.Instance.confirmButtons[ActionBoardContext.Instance.currentPlayer.Value].Click -= Confirm;
 			ActionBoardContext.Instance.promptingPlacement = false;
 		}
 		

@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using CavernaWPF.Layables;
 using CavernaWPF.Resources;
+using System.Linq;
 
 namespace CavernaWPF
 {
@@ -23,13 +24,13 @@ namespace CavernaWPF
 		
 		public Type state;
 		
-		public ObservableCollection<FarmAnimal> farmAnimals;
+		public ObservableCollection<FarmAnimal> farmAnimals = new ObservableCollection<FarmAnimal>();
 		
 		public int farmAnimalCapacity = 0;
 		
 		public BoardTile twin;
 		
-		public List<Dog> dogs;
+		public int dogs;
 		
 		public bool hasStable;
 		
@@ -47,7 +48,17 @@ namespace CavernaWPF
 		
 		public bool PlaceAnimal(ref List<FarmAnimal> newFAs, BoardTile origin = null)
 		{
+//			if(newFAs.All(fa => fa.row == ref newFAs[0].row && fa.column == ref newFAs[0].column))
+//				throw new Exception();
+			
+			if(newFAs.Count == 0)
+				return false;
+			
 			if(farmAnimals.Count > 0 && newFAs[0].type == farmAnimals[0].type)
+			{
+				
+			}
+			else if(farmAnimals.Count == 0)
 			{
 				if(state == Type.Fenced)
 				{
@@ -63,6 +74,7 @@ namespace CavernaWPF
 						newFAs.RemoveAt(lastIndex);
 						farmAnimals.Add(fa);
 					}
+					return true;
 				}
 				else if(state == Type.Meadow)
 				{
@@ -76,11 +88,11 @@ namespace CavernaWPF
 							farmAnimals.Add(fa);
 						}
 					}
-					else if(dogs.Count > 0)
+					else if(dogs > 0)
 					{
 						if(newFAs[0].type == FarmAnimal.Type.Sheep)
 						{
-							int herdCapacity = dogs.Count;
+							int herdCapacity = dogs;
 							while(farmAnimals.Count < herdCapacity && newFAs.Count > 0)
 							{
 								int lastIndex = newFAs.Count - 1;
@@ -90,6 +102,7 @@ namespace CavernaWPF
 							}
 						}
 					}
+					return true;
 				}
 				else if(state == Type.Forest)
 				{
@@ -108,7 +121,15 @@ namespace CavernaWPF
 					}
 				}
 			}
+			else if(newFAs[0].type != farmAnimals[0].type)
+			{
+			}
 			
+			return false;
+		}
+				
+		public bool HasRoom(ref List<FarmAnimal> newFAs, BoardTile origin = null)
+		{
 			return false;
 		}
 	}

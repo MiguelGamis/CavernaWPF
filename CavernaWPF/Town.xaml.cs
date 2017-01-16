@@ -19,6 +19,7 @@ using System.Windows.Media;
 using System.Collections.ObjectModel;
 using CavernaWPF.Layables;
 using System.Windows.Media.Imaging;
+using System.Linq;
 
 namespace CavernaWPF
 {
@@ -60,6 +61,17 @@ namespace CavernaWPF
 	    	{
 				Layable n = (Layable) obj;
 				
+				if(n is Tile)
+	        	{
+	        		if((n as Tile).Locked)
+	        		{
+	        			(sender as Thumb).DragDelta -= Thumb_DragDelta;
+	        			(sender as Thumb).MouseRightButtonDown -= Rotate;
+	        			(sender as Thumb).DragCompleted -= Thumb_DragCompleted;
+	        			return;
+	        		}
+	        	}
+				
 				double adjX = 35; double adjY = 35;
 				
 		        double x = n.X + adjX;
@@ -85,11 +97,11 @@ namespace CavernaWPF
 				
 		        y -= 28.0;
 		        y /= 70.0;
-		        int _x = (int) x;
-		        int _y = (int) y;
+		        int col = (int) x;
+		        int row = (int) y;
 		        
 		        
-		        string dockname = String.Format("Panel{0}{1}", _x, _y);
+		        string dockname = String.Format("Panel{0}{1}", col, row);
 	 	        object uc = this.FindName(dockname);
 	 	        if(uc is DockPanel && String.Compare((uc as DockPanel).Name, dockname) == 0)
 	 	        {
@@ -99,57 +111,53 @@ namespace CavernaWPF
 	 	        	{
 	 	        		Tile t = n as Tile;
 
-		 	       		if(!isAllowed(t, _x+1, _y+1))
+		 	       		if(!isAllowed(t, col+1, row+1))
 			        	{
 			  	        	ResetLayable(n);
 		 	        		return;
 			        	}
 				        
-		 	       		if(!isAdjacent(t, _x+1, _y+1))
+		 	       		if(!isAdjacent(t, col+1, row+1))
 				        {
 		 	       			ResetLayable(n);
 		 	        		return;
 				        }
 	 	        	}
+	 	        	else if(n is Dog)
+	 	        	{
+	 	        		TownContext tc = this.DataContext as TownContext;
+	 	        		BoardTile bt = tc.boardtiles[col+1, row+1];
+	 	        		bt.dogs++;
+	 	        	}
 	 	        	else if(n is FarmAnimal)
 	 	        	{
+	 	        		TownContext tc = this.DataContext as TownContext;
+	 	        		
 	 	        		FarmAnimal fa = n as FarmAnimal;
+	
+	 	        		int __x = col + 1; int __y = row + 1;
+	 	        		List<Tile> bruh  = tc.Tiles.OfType<Tile>().Where(t => Intersects(t, __y, __x)).ToList();
+	 	        		List<Tile> broseph= bruh.Where(t => t.type == Tile.Type.Fence).ToList();
+	 	        		if(broseph.Count == 1)
+	 	        		{
+	 	        			n.column = __x;
+			 	        	n.row =__y;
+			 	        	n.X = dp.Margin.Left;
+			 	        	n.Y = dp.Margin.Top;
+	 	        		}
+	 	        		else
+	 	        		{
+	 	        			ResetLayable(n);
+	 	        		}
+	 	        		return;
 	 	        	}
 	 	        	else if(n is Sowable)
 	 	        	{
 	 	        		Sowable s = n as Sowable;
-	 	        		
-	 	        		TownContext tc = this.DataContext as TownContext;
-	 	        		try
-	 	        		{
-	 	        			if(tc.boardtiles[_x+1,_y+1].state == BoardTile.Type.Field)
-	 	        			{
-	 	        				switch(s.type)
-	 	        				{
-	 	        					case Sowable.Type.Grain:
-	 	        						tc.AddTile(new Sowable(Sowable.Type.Grain) { X = dp.Margin.Left, Y =  dp.Margin.Top + 5});
-	 	        						tc.AddTile(new Sowable(Sowable.Type.Grain) { X = dp.Margin.Left, Y =  dp.Margin.Top + 10});
-	 	        						break;
-	 	        					case Sowable.Type.Vegetable:
-	 	        						
-	 	        						break;
-	 	        				}
-	 	        			}
-	 	        			else
-	 	        			{
-								ResetLayable(n);
-								return;
-	 	        			}
-	 	        		}
-	 	        		catch(IndexOutOfRangeException)
-	 	        		{
-	 	       				ResetLayable(n);
-	 	       				return;
-	 	        		}
 	 	        	}
 			       	
-	 	        	n.column = _x + 1;
-	 	        	n.row = _y + 1;
+	 	        	n.column = col + 1;
+	 	        	n.row = row + 1;
 	 	        	n.X = dp.Margin.Left;
 	 	        	n.Y = dp.Margin.Top;
 	 	        }
@@ -159,6 +167,26 @@ namespace CavernaWPF
 	 	        	return;
 	 	        }
 			}
+	    }
+	    
+	    private bool Intersects(Tile t, int row, int col)
+	    {
+	    	bool bool1 = t.row == row && t.column == col;
+	    	if(t.Twin)
+	    	{
+	    		switch(t.Rot)
+	    		{
+	    			case 0:
+	    				return bool1 || (t.row == row && t.column + 1 == col);
+	    			case 90:
+	    				return bool1 || (t.row + 1 == row && t.column == col);
+	    			case 180:
+	    				return bool1 || (t.row == row && t.column - 1 == col);
+	    			case 270:
+	    				return bool1 || (t.row - 1 == row && t.column == col);
+	    		}
+	    	}
+			return bool1;
 	    }
 	    
 	    private void ResetLayable(Layable l)

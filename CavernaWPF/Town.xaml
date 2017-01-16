@@ -241,7 +241,7 @@
 			</ItemsControl.Resources>
 			<ItemsControl.ItemsPanel>
 				<ItemsPanelTemplate>
-					<Canvas
+					<Canvas x:Name="GG"
 						Grid.Column="0"
 						Grid.Row="0">
 					</Canvas>

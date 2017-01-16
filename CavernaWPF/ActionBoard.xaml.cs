@@ -77,29 +77,37 @@ namespace CavernaWPF
 			
 			//Activate the correct action card
 			ActionBoardContext abc = (this.DataContext as ActionBoardContext);
-			ActionCardWrapper acw = abc.ActionCards[actionCardIndex];
-			if(!acw.occupied)
+			try
 			{
-				ActionCard ac = acw.actionCard;
-				Action<Dwarf> action = ac.PlayerAction;
-				if(action != null)
+				ActionCardWrapper acw = abc.ActionCards[actionCardIndex];
+				if(!acw.occupied)
 				{
-					action.Invoke(n);
-					//TODO:Action of Action card should return a bool to make dwarf immovable and set action card occupied
-					if(ActionBoardContext.Instance.readyForNextDwarf)
+					ActionCard ac = acw.actionCard;
+					Action<Dwarf> action = ac.PlayerAction;
+					if(action != null)
 					{
-						acw.occupied = true;
-						(sender as Thumb).DragDelta -= Thumb_DragDelta;
-						(sender as Thumb).DragCompleted -= Thumb_DragCompleted;
-					}
-					else
-					{
-						n.X = 0;
-						n.Y = 0;
+						action.Invoke(n);
+						//TODO:Action of Action card should return a bool to make dwarf immovable and set action card occupied
+						if(ActionBoardContext.Instance.readyForNextDwarf)
+						{
+							acw.occupied = true;
+							(sender as Thumb).DragDelta -= Thumb_DragDelta;
+							(sender as Thumb).DragCompleted -= Thumb_DragCompleted;
+						}
+						else
+						{
+							n.X = 0;
+							n.Y = 0;
+						}
 					}
 				}
+				else
+				{
+					n.X = 0;
+					n.Y = 0;
+				}
 			}
-			else
+			catch(IndexOutOfRangeException)
 			{
 				n.X = 0;
 				n.Y = 0;

@@ -411,8 +411,8 @@ namespace CavernaWPF
 			bool hasMeadow = d.player.town.HowManyBoardTilesOfType(BoardTile.Type.Meadow) > 0;
 			int numStone = d.player.Resources[Resource.Type.Stone].Amount;
 			//TODO:must query boardtiles for adjacent meadows
-			acwc.Options.Add(new ActionCardOption() {Text = "Build small fenced area", Selected = numWood == 1 && hasMeadow, Able = numWood > 0});
-			acwc.Options.Add(new ActionCardOption() {Text = "Build large fenced area", Selected = numWood > 1, Able = numWood > 1});
+			acwc.Options.Add(new ActionCardOption() {Text = "Build small fenced area", Selected = numWood > 1 && hasMeadow, Able = numWood > 0});
+			acwc.Options.Add(new ActionCardOption() {Text = "Build large fenced area", Selected = numWood > 3, Able = numWood > 1});
 			acwc.Options.Add(new ActionCardOption() {Selected = true, Text = "Build a stable"});
 			acwc.Options.Add(new ActionCardOption(true){Selected = true, Text = "Collect sheep"});
 			acwc.Control.ShowDialog();
@@ -421,7 +421,12 @@ namespace CavernaWPF
 			{
 				if(acwc.Options[0].Selected)
 				{
-					
+					d.player.Resources[Resource.Type.Wood].Amount-=2;
+					d.player.town.AddTile(new Tile(Tile.Type.Fence));
+				}
+				if(acwc.Options[3].Selected)
+				{
+					d.player.town.AddTile(new FarmAnimal(FarmAnimal.Type.Sheep));
 				}
 				ActionBoardContext.Instance.readyForNextDwarf = true;
 			}
