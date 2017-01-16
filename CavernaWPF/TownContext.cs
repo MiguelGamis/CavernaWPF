@@ -64,73 +64,7 @@ namespace CavernaWPF
 		
 		public void AddTile(Layable layable)
 		{
-			//ActionBoardContext.Instance.playerLocks[ActionBoardContext.Instance.currentPlayer.Value] = true;
-			ActionBoardContext.Instance.promptingPlacement = true;
 			Tiles.Add(layable);
-			//this.OnNotifyCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Remove, layable));
-			LayoutManager.Instance.confirmButtons[ActionBoardContext.Instance.currentPlayer.Value].Click += Confirm;
-		}
-		
-		public void Confirm(object sender, RoutedEventArgs e)
-		{
-			IEnumerable<Layable> deleteList = Tiles.ToList().Where(layable => layable.row == 0 && layable.column == 0);
-			
-			if(deleteList.Count() > 0)
-			{
-				MessageBoxResult result = MessageBox.Show("Are you sure you want to throw the tiles away", "There are tiles not placed", MessageBoxButton.YesNo, MessageBoxImage.Question);
-				if (result == MessageBoxResult.No)
-				{
-				    return;
-				}
-				else
-				{
-					deleteList.ToList().ForEach(l => Tiles.Remove(l));
-				}
-			}
-			
-			foreach(Layable layable in Tiles)
-			{
-				if(layable is Tile)
-				{
-					if(layable.Locked)
-						continue;
-					
-					Tile t = (layable as Tile);
-					var ftype = Helpers.convertFirst(t);
-					int row = t.row;
-					int col = t.column;
-					boardtiles[col, row].state = ftype;
-					if(t.Twin)
-					{
-						switch(t.Rot)
-						{
-							case 0:
-								col++;
-								break;
-							case 90:
-								row++;
-								break;
-							case 180:
-								col--;
-								break;
-							case 270:
-								row--;
-								break;
-						}
-						var stype = Helpers.convertSecond(t);
-						boardtiles[col, row].state = stype;
-					}
-					t.Locked = true;
-				}
-				if(layable is FarmAnimal)
-				{
-					
-				}
-			}
-			
-			//ActionBoardContext.Instance.playerLocks[ActionBoardContext.Instance.currentPlayer.Value] = false;
-			LayoutManager.Instance.confirmButtons[ActionBoardContext.Instance.currentPlayer.Value].Click -= Confirm;
-			ActionBoardContext.Instance.promptingPlacement = false;
 		}
 		
 		public BoardTile[,] boardtiles = new BoardTile[8,6];

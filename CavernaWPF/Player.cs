@@ -61,7 +61,7 @@ namespace CavernaWPF
 		}
 		
 		private Dictionary<Resource.Type, ResourceTab> resources = new Dictionary<Resource.Type, ResourceTab>(){
-			{ Resource.Type.Wood, new ResourceTab(){ ResourceType = Resource.Type.Wood, Amount = 0 } },
+			{ Resource.Type.Wood, new ResourceTab(){ ResourceType = Resource.Type.Wood, Amount = 5 } },
 			{ Resource.Type.Stone, new ResourceTab(){ ResourceType = Resource.Type.Stone, Amount = 0 } },
 			{ Resource.Type.Ore, new ResourceTab(){ ResourceType = Resource.Type.Ore, Amount = 0 } },
 			{ Resource.Type.Ruby, new ResourceTab(){ ResourceType = Resource.Type.Ruby, Amount = 0 } },

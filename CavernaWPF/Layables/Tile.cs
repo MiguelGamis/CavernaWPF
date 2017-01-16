@@ -7,6 +7,7 @@
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 
 namespace CavernaWPF.Layables
@@ -132,6 +133,8 @@ namespace CavernaWPF.Layables
 		{
 			Rot = (Rot+90)%360 ;
 		}
+		
+		public List<Layable> occupants = new List<Layable>();
 	    
 //	    public event PropertyChangedEventHandler PropertyChanged;
 	}

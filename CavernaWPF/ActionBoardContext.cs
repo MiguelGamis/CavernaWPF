@@ -124,6 +124,9 @@ namespace CavernaWPF
 				return;
 			}
 			
+			if(currentPlayer != null && !ConfirmEndTurn())
+				return;
+			
 			if(currentPlayer == null)
 				currentPlayer = playersPlaying.Find(startingPlayer);
 			else
@@ -184,6 +187,27 @@ namespace CavernaWPF
 		public Button startButton = new Button() { Height = 30, Width = 60, Content = "Proceed"};
 		
 		int Round = 0;
+		
+		private bool ConfirmEndTurn()
+		{
+			var deleteList = currentPlayer.Value.town.Tiles.ToList().Where(layable => layable.row == 0 && layable.column == 0).ToList();
+			
+			if(deleteList.Count> 0)
+			{
+				MessageBoxResult result = MessageBox.Show("Are you sure you want to throw the tiles away", "There are tiles not placed", MessageBoxButton.YesNo, MessageBoxImage.Question);
+				if (result == MessageBoxResult.No)
+				{
+				    return false;
+				}
+				else
+				{
+					deleteList.ForEach(l => currentPlayer.Value.town.Tiles.Remove(l));
+				}
+			}
+			
+			currentPlayer.Value.town.Tiles.OfType<Tile>().Where(t => !t.Locked).ToList().ForEach(l => l.Locked = true);
+			return true;
+ 		}
 		
 		private void Harvest()
 		{
@@ -257,7 +281,8 @@ namespace CavernaWPF
 			
 			AddActionCard(GetActionCard("Housework"));
 			
-			AddActionCard(GetActionCard("Slash-and-burn"));
+			AddActionCard(GetActionCard("Sheep farming"));
+			//AddActionCard(GetActionCard("Slash-and-burn"));
 			
 			List<string> round1ActionCards = new List<string> { "Blacksmithing", "Sheep farming", "Ore mine construction" };
 			ShuffleList(round1ActionCards);

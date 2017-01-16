@@ -30,13 +30,10 @@ namespace CavernaWPF
 		private LayoutManager()
 		{
 			map = new Dictionary<Player, StackPanel>();
-			confirmButtons = new Dictionary<Player, Button>();
 		}
 		
 		public Dictionary<Player, StackPanel> map;
 		
-		public Image startingPlayerPiece = new Image() { Height=10, Width=5, Source = new BitmapImage(new Uri("C:\\Users\\Miguel\\Desktop\\Caverna\\StartingPlayer.png"))};
-		
-		public Dictionary<Player, Button> confirmButtons; 
+		public Image startingPlayerPiece = new Image() { Height=30, Width=15, Source = new BitmapImage(new Uri("C:\\Users\\Miguel\\Desktop\\Caverna\\StartingPlayer.png"))};
 	}
 }
