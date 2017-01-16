@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <UserControl
 	Height="356"
 	Width="500"
@@ -19,7 +19,7 @@
 		<DockPanel
 			Grid.Column="0"
 			Grid.Row="0"
-			x:Name="Panel00"
+			x:Name="Panel11"
 			HorizontalAlignment="Stretch"
 			Width="70"
 			Height="70"
@@ -33,7 +33,7 @@
 			Width="70"
 			HorizontalAlignment="Left"
 			Margin="95,28,0,258"
-			x:Name="Panel10"></DockPanel>
+			x:Name="Panel21"></DockPanel>
 		<DockPanel
 			Grid.Column="0"
 			Grid.Row="0"
@@ -42,7 +42,7 @@
 			Margin="165,28,265,258"
 			Width="70"
 			Height="70"
-			x:Name="Panel20"></DockPanel>
+			x:Name="Panel31"></DockPanel>
 		<DockPanel
 			Grid.Column="0"
 			Grid.Row="0"
@@ -51,14 +51,14 @@
 			Margin="265,28,165,258"
 			Width="70"
 			Height="70"
-			x:Name="Panel30"></DockPanel>
+			x:Name="Panel41"></DockPanel>
 		<DockPanel
 			Grid.Column="0"
 			HorizontalAlignment="Stretch"
 			VerticalAlignment="Stretch"
 			Width="70"
 			Height="70"
-			x:Name="Panel12"
+			x:Name="Panel23"
 			Margin="95,168,335,118"
 			Grid.Row="0"></DockPanel>
 		<DockPanel
@@ -69,14 +69,14 @@
 			Margin="405,28,25,258"
 			Width="70"
 			Height="70"
-			x:Name="Panel50"></DockPanel>
+			x:Name="Panel61"></DockPanel>
 		<DockPanel
 			Grid.Column="0"
 			HorizontalAlignment="Stretch"
 			VerticalAlignment="Stretch"
 			Width="70"
 			Height="70"
-			x:Name="Panel21"
+			x:Name="Panel32"
 			Margin="165,98,265,188"
 			Grid.Row="0"></DockPanel>
 		<DockPanel
@@ -85,7 +85,7 @@
 			VerticalAlignment="Stretch"
 			Width="70"
 			Height="70"
-			x:Name="Panel23"
+			x:Name="Panel34"
 			Margin="165,238,265,48"
 			Grid.Row="0"></DockPanel>
 		<DockPanel
@@ -93,7 +93,7 @@
 			Grid.Row="0"
 			HorizontalAlignment="Stretch"
 			Width="70"
-			x:Name="Panel40"
+			x:Name="Panel51"
 			Height="70"
 			VerticalAlignment="Top"
 			Margin="335,28,95,0"></DockPanel>
@@ -103,7 +103,7 @@
 			VerticalAlignment="Stretch"
 			Width="70"
 			Height="70"
-			x:Name="Panel51"
+			x:Name="Panel62"
 			Margin="405,98,25,188"
 			Grid.Row="0"></DockPanel>
 		<DockPanel
@@ -112,7 +112,7 @@
 			VerticalAlignment="Stretch"
 			Width="70"
 			Height="70"
-			x:Name="Panel52"
+			x:Name="Panel63"
 			Margin="405,168,25,118"
 			Grid.Row="0"></DockPanel>
 		<DockPanel
@@ -129,7 +129,7 @@
 			VerticalAlignment="Stretch"
 			Width="70"
 			Height="70"
-			x:Name="Panel43"
+			x:Name="Panel54"
 			Margin="335,238,95,48"
 			Grid.Row="0"></DockPanel>
 		<DockPanel
@@ -138,14 +138,14 @@
 			VerticalAlignment="Stretch"
 			Width="70"
 			Height="70"
-			x:Name="Panel53"
+			x:Name="Panel64"
 			Margin="405,238,25,48"
 			Grid.Row="0"></DockPanel>
 		<DockPanel
 			Grid.Column="0"
 			HorizontalAlignment="Stretch"
 			Width="70"
-			x:Name="Panel11"
+			x:Name="Panel22"
 			Height="70"
 			VerticalAlignment="Top"
 			Margin="95,98,335,0"
@@ -158,7 +158,7 @@
 			Height="70"
 			Margin="25,98,405,188"
 			Grid.Row="0"
-			x:Name="Panel01"></DockPanel>
+			x:Name="Panel12"></DockPanel>
 		<DockPanel
 			Grid.Column="0"
 			HorizontalAlignment="Stretch"
@@ -167,14 +167,14 @@
 			VerticalAlignment="Top"
 			Margin="25,168,405,0"
 			Grid.Row="0"
-			x:Name="Panel02"></DockPanel>
+			x:Name="Panel13"></DockPanel>
 		<DockPanel
 			Grid.Column="0"
 			HorizontalAlignment="Stretch"
 			VerticalAlignment="Stretch"
 			Width="70"
 			Height="70"
-			x:Name="Panel42"
+			x:Name="Panel53"
 			Margin="335,168,95,118"
 			Grid.Row="0"></DockPanel>
 		<DockPanel
@@ -183,13 +183,13 @@
 			VerticalAlignment="Stretch"
 			Width="70"
 			Height="70"
-			x:Name="Panel13"
+			x:Name="Panel24"
 			Margin="95,238,335,48"
 			Grid.Row="0"></DockPanel>
 		<DockPanel
 			Grid.Column="0"
 			VerticalAlignment="Stretch"
-			x:Name="Panel03"
+			x:Name="Panel14"
 			Grid.Row="0"
 			Width="70"
 			HorizontalAlignment="Left"
@@ -200,11 +200,11 @@
 			VerticalAlignment="Stretch"
 			Width="70"
 			Height="70"
-			x:Name="Panel41"
+			x:Name="Panel52"
 			Margin="335,98,95,188"
 			Grid.Row="0"></DockPanel>
 		<DockPanel
-			x:Name="Panel32"
+			x:Name="Panel43"
 			Grid.Column="0"
 			Grid.Row="0"
 			HorizontalAlignment="Stretch"
@@ -213,7 +213,7 @@
 			Width="70"
 			Height="70"></DockPanel>
 		<DockPanel
-			x:Name="Panel22"
+			x:Name="Panel33"
 			Grid.Column="0"
 			Grid.Row="0"
 			HorizontalAlignment="Stretch"
@@ -222,7 +222,7 @@
 			Width="70"
 			Height="70"></DockPanel>
 		<DockPanel
-			x:Name="Panel31"
+			x:Name="Panel42"
 			Grid.Column="0"
 			Grid.Row="0"
 			HorizontalAlignment="Stretch"
@@ -233,18 +233,18 @@
 		<ItemsControl
 			Height="356"
 			Width="500"
-			x:Name="canvas" 
-			ItemsSource="{Binding Tiles}"
-			xmlns:Converters="clr-namespace:CavernaWPF.Converters">
+			x:Name="canvas"
+			ItemsSource="{Binding Tiles}" xmlns:Converters="clr-namespace:CavernaWPF.Converters">
 			<ItemsControl.Resources>
-				<Converters:ImageSizeConverter x:Key="imagesizeconverter"/>
+				<Converters:ImageSizeConverter
+					x:Key="imagesizeconverter" />
 			</ItemsControl.Resources>
 			<ItemsControl.ItemsPanel>
 				<ItemsPanelTemplate>
-					<Canvas x:Name="GG"
+					<Canvas
+						x:Name="GG"
 						Grid.Column="0"
-						Grid.Row="0">
-					</Canvas>
+						Grid.Row="0"></Canvas>
 				</ItemsPanelTemplate>
 			</ItemsControl.ItemsPanel>
 			<ItemsControl.ItemTemplate>
@@ -260,7 +260,10 @@
 								<Image
 									Source="{Binding Img}">
 									<Image.RenderTransform>
-										<RotateTransform Angle="{Binding Rot}" CenterX="{Binding Height, Converter={StaticResource imagesizeconverter}}" CenterY="{Binding Height, Converter={StaticResource imagesizeconverter}}"></RotateTransform>
+										<RotateTransform
+											Angle="{Binding Rot}"
+											CenterX="{Binding Height, Converter={StaticResource imagesizeconverter}}"
+											CenterY="{Binding Height, Converter={StaticResource imagesizeconverter}}"></RotateTransform>
 									</Image.RenderTransform>
 								</Image>
 							</ControlTemplate>
@@ -279,5 +282,14 @@
 				</Style>
 			</ItemsControl.ItemContainerStyle>
 		</ItemsControl>
+		<DockPanel
+			x:Name="Panel44"
+			Grid.Column="0"
+			Grid.Row="0"
+			HorizontalAlignment="Stretch"
+			VerticalAlignment="Top"
+			Margin="265,238,165,0"
+			Width="70"
+			Height="70"></DockPanel>
 	</Grid>
 </UserControl>

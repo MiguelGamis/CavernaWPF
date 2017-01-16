@@ -97,8 +97,8 @@ namespace CavernaWPF
 				
 		        y -= 28.0;
 		        y /= 70.0;
-		        int col = (int) x;
-		        int row = (int) y;
+		        int col = (int) x + 1;
+		        int row = (int) y + 1;
 		        
 		        
 		        string dockname = String.Format("Panel{0}{1}", col, row);
@@ -117,13 +117,13 @@ namespace CavernaWPF
 		 	       		}
 		 	       		t.occupants.Clear();
 	 	        		
-		 	       		if(!isAllowed(t, col+1, row+1))
+		 	       		if(!isAllowed(t, col, row))
 			        	{
 			  	        	ResetLayable(n);
 		 	        		return;
 			        	}
 				        
-		 	       		if(!isAdjacent(t, col+1, row+1))
+		 	       		if(!isAdjacent(t, col, row))
 				        {
 		 	       			ResetLayable(n);
 		 	        		return;
@@ -132,7 +132,7 @@ namespace CavernaWPF
 	 	        	else if(n is Dog)
 	 	        	{
 	 	        		TownContext tc = this.DataContext as TownContext;
-	 	        		BoardTile bt = tc.boardtiles[col+1, row+1];
+	 	        		BoardTile bt = tc.boardtiles[col, row];
 	 	        		bt.dogs++;
 	 	        	}
 	 	        	else if(n is FarmAnimal)
@@ -141,15 +141,14 @@ namespace CavernaWPF
 	 	        		
 	 	        		FarmAnimal fa = n as FarmAnimal;
 	
-	 	        		int __x = col + 1; int __y = row + 1;
-	 	        		List<Tile> intersectingTiles  = tc.Tiles.OfType<Tile>().Where(t => Intersects(t, __y, __x)).ToList();
+	 	        		List<Tile> intersectingTiles  = tc.Tiles.OfType<Tile>().Where(t => Intersects(t, row, col)).ToList();
 	 	        		List<Tile> fenced= intersectingTiles.Where(t => t.type == Tile.Type.Fence).ToList();
 	 	        		if(fenced.Count == 1)
 	 	        		{
 	 	        			fenced[0].occupants.Add(fa);
 	 	        			
-	 	        			n.column = __x;
-			 	        	n.row =__y;
+	 	        			n.column = col;
+			 	        	n.row = row;
 			 	        	n.X = dp.Margin.Left;
 			 	        	n.Y = dp.Margin.Top;
 	 	        		}
@@ -201,7 +200,7 @@ namespace CavernaWPF
 	    {
 	    	if(!(l.row == 0 && l.column == 0))
 	    	{
-	    		string dockname = String.Format("Panel{0}{1}", l.column - 1, l.row - 1);
+	    		string dockname = String.Format("Panel{0}{1}", l.column, l.row);
 	 	        object uc = this.FindName(dockname);
 	 	        if(uc is DockPanel && String.Compare((uc as DockPanel).Name, dockname) == 0)
 	 	        {
