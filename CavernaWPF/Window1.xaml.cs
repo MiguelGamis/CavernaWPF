@@ -41,7 +41,7 @@ namespace CavernaWPF
 			
 			List<string> colors = new List<string>() {"Blue","Yellow","Green","Purple"};
 			
-			int numPlayers = 2;
+			int numPlayers = 3;
 			for(int i = 0; i < numPlayers; i++)
 			{
 				Player p = new Player(); p.Color = colors[i];

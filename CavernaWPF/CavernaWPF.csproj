@@ -127,6 +127,7 @@
     <Compile Include="Layables\FarmAnimal.cs" />
     <Compile Include="Layables\Layable.cs" />
     <Compile Include="Layables\Sowable.cs" />
+    <Compile Include="Layables\Stable.cs" />
     <Compile Include="LayoutManager.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -139,7 +140,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Resources\Resource.cs" />
-    <Compile Include="Resources\Stable.cs" />
     <Compile Include="Resources\Tradable.cs" />
     <Compile Include="ResourceTab.cs" />
     <Compile Include="Town.xaml.cs">

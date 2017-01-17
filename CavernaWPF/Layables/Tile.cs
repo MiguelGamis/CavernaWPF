@@ -51,18 +51,28 @@ namespace CavernaWPF.Layables
 					break;
 				case Type.BigFence: 
 					Img = "C:\\Users\\Miguel\\Desktop\\Caverna\\BigFence.png";
+					twinTile = new Tile(Type.BigFenceDummy);
+					twinTile.twinTile = this;
 					break;
 				case Type.CaveTunnel: 
 					Img = "C:\\Users\\Miguel\\Desktop\\Caverna\\CaveTunnel.png";
+					twinTile = new Tile(Type.TunnelDummy);
+					twinTile.twinTile = this;
 					break;
 				case Type.CaveCave: 
 					Img = "C:\\Users\\Miguel\\Desktop\\Caverna\\CaveCave.png";
+					twinTile = new Tile(Type.CaveDummy);
+					twinTile.twinTile = this;
 					break;
 				case Type.MeadowField: 
 					Img = "C:\\Users\\Miguel\\Desktop\\Caverna\\MeadowField.png";
+					twinTile = new Tile(Type.FieldDummy);
+					twinTile.twinTile = this;
 					break;								
 				case Type.OreMine: 
 					Img = "C:\\Users\\Miguel\\Desktop\\Caverna\\OreMine.png";
+					twinTile = new Tile(Type.DeepTunnelDummy);
+					twinTile.twinTile = this;
 					break;
 				default: break;
 			}
@@ -135,7 +145,12 @@ namespace CavernaWPF.Layables
 			Rot = (Rot+90)%360 ;
 		}
 		
-		public List<Layable> occupants = new List<Layable>();
+		private Tile twinTile;
+		
+		public Tile GetTwinTile()
+		{
+			return twinTile;
+		}
 	    
 //	    public event PropertyChangedEventHandler PropertyChanged;
 	}

@@ -111,29 +111,87 @@ namespace CavernaWPF
 	 	        	{
 	 	        		Tile t = n as Tile;
 
-	 	        		foreach(Layable l in t.occupants)
-		 	       		{
-		 	       			ReleaseLayable(l);
-		 	       		}
-		 	       		t.occupants.Clear();
-	 	        		
+	 	        		TownContext tc = this.DataContext as TownContext;
+	 	        		ReleaseFarmAnimals(t.row, t.column);
+	 	        		List<Stable> occupyingStable = tc.Tiles.OfType<Stable>().Where(s => s.row == t.row && s.column == t.column).ToList();
+	 	        		occupyingStable.ForEach(s => ReleaseLayable(s));
+	 	        		                             
 		 	       		if(!isAllowed(t, col, row))
 			        	{
-			  	        	ResetLayable(n);
+			  	        	ReleaseLayable(n);
 		 	        		return;
 			        	}
 				        
-		 	       		if(!isAdjacent(ref t, col, row))
+		 	       		if(!isAdjacent(t, col, row))
 				        {
-		 	       			ResetLayable(n);
+		 	       			ReleaseLayable(n);
 		 	        		return;
 				        }
+		 	       		
+		 	       		if(t.Twin)
+		 	       		{
+		 	       			Tile twinTile= t.GetTwinTile();
+		 	       			int twinsrow = row;
+		 	       			int twinscolumn = col;
+		 	       			switch(t.Rot)
+		 	       			{
+		 	       				case 0:
+		 	       					twinscolumn++;
+		 	       					twinTile.row = twinsrow;
+		 	       					twinTile.column = twinscolumn;
+		 	       					tc.Tiles.Add(twinTile);
+		 	       					break;
+		 	       				case 90:
+		 	       					twinsrow++;
+		 	       					twinTile.row = twinsrow;
+		 	       					twinTile.column = twinscolumn;
+		 	       					tc.Tiles.Add(twinTile);
+		 	       					break;
+		 	       				case 180:
+		 	       					twinscolumn--;
+		 	       					twinTile.row = twinsrow;
+		 	       					twinTile.column = twinscolumn;
+		 	       					tc.Tiles.Add(twinTile);
+		 	       					break;
+		 	       				case 270:
+		 	       					twinsrow--;
+		 	       					twinTile.row = twinsrow;
+		 	       					twinTile.column = twinscolumn;
+		 	       					tc.Tiles.Add(twinTile);
+		 	       					break;
+		 	       			}
+		 	       		}
+	       				n.column = col;
+	 	        		n.row = row;
+	 	        		n.X = dp.Margin.Left;
+	 	        		n.Y = dp.Margin.Top;
+	 	        		
+	 	        		return;
 	 	        	}
 	 	        	else if(n is Dog)
 	 	        	{
 	 	        		TownContext tc = this.DataContext as TownContext;
-	 	        		BoardTile bt = tc.boardtiles[col, row];
-	 	        		bt.dogs++;
+
+	 	        	}
+	 	        	else if(n is Stable)
+	 	        	{
+	 	        		TownContext tc = this.DataContext as TownContext;
+	 	        		
+	 	        		if(col > 3)
+	 	        		{
+	 	        			ReleaseLayable(n);
+	 	        		}
+	 	        		
+	 	        		bool otherStable = tc.Tiles.OfType<Stable>().Any(t => t.row == row && t.column == col);
+	 	        		if(otherStable)
+	 	        		{
+	 	        			ReleaseLayable(n);
+	 	        		}
+	 	        		
+	 	       			n.column = col;
+		 	        	n.row = row;
+		 	        	n.X = dp.Margin.Left;
+		 	        	n.Y = dp.Margin.Top;
 	 	        	}
 	 	        	else if(n is FarmAnimal)
 	 	        	{
@@ -141,8 +199,19 @@ namespace CavernaWPF
 	 	        		
 	 	        		FarmAnimal fa = n as FarmAnimal;
 	
+	 	        		List<FarmAnimal> intersectingFarmAnimals = tc.Tiles.OfType<FarmAnimal>().Where(s => s.row == row && s.column == col).ToList();
+	 	        		if(intersectingFarmAnimals.Count > 0)
+	 	        		{
+	 	        			if(intersectingFarmAnimals[0].type != fa.type)
+	 	        			{
+	 	        				ReleaseLayable(fa);
+	 	        				return;
+	 	        			}
+	 	        		}
+	 	        		
 	 	        		List<Tile> intersectingTiles  = tc.Tiles.OfType<Tile>().Where(t => t.row == row && t.column == col).ToList();
-	 	        		List<Tile> fenced= intersectingTiles.Where(t => t.type == Tile.Type.Fence).ToList();
+	 	        		List<Stable> intersectingStable = tc.Tiles.OfType<Stable>().Where(s => s.row == row && s.column == col).ToList();
+	 	        		List<Tile> fenced= intersectingTiles.Where(t => t.type == Tile.Type.Fence || t.type == Tile.Type.BigFence).ToList();
 	 	        		if(fenced.Count == 1)
 	 	        		{
 	 	        			int cap = 0;
@@ -155,11 +224,12 @@ namespace CavernaWPF
 	 	        					cap = 4;
 	 	        					break;
 	 	        			}
-	 	        			int count = fenced[0].occupants.Count;
-	 	        			if(count + 1 <= cap)
+	 	        			if(intersectingStable.Count == 1)
 	 	        			{
-	 	        				fenced[0].occupants.Add(fa);
-	 	        			
+	 	        				cap *= 2;
+	 	        			}
+	 	        			if(intersectingFarmAnimals.Count + 1 <= cap)
+	 	        			{
 	 	        				n.column = col;
 			 	        		n.row = row;
 			 	        		n.X = dp.Margin.Left;
@@ -168,24 +238,33 @@ namespace CavernaWPF
 			 	        		return;
 	 	        			}
 	 	        		}
-	 	        		ResetLayable(n);
+	 	        		List<Tile> meadows= intersectingTiles.Where(t => t.type == Tile.Type.Meadow || t.type == Tile.Type.MeadowField).ToList();
+	 	        		if(meadows.Count == 1)
+	 	        		{
+	 	        			if(fa.type == FarmAnimal.Type.Sheep)
+	 	        			{
+	 	        				List<Dog> intersectingDogs = tc.Tiles.OfType<Dog>().Where(d => d.row == row && d.column == col).ToList();
+	 	        				if(intersectingDogs.Count > 0 ? intersectingDogs.Count + 1 >= intersectingFarmAnimals.Count : false)
+	 	        				{
+									n.column = col;
+				 	        		n.row = row;
+				 	        		n.X = dp.Margin.Left;
+				 	        		n.Y = dp.Margin.Top;
+				 	        		
+				 	        		return;
+	 	        				}
+	 	        			}
+	 	        		}
+	 	        		ReleaseLayable(n);
 	 	        		return;
 	 	        	}
 	 	        	else if(n is Sowable)
 	 	        	{
 	 	        		Sowable s = n as Sowable;
 	 	        	}
-			       	
-	 	        	n.column = col;
-	 	        	n.row = row;
-	 	        	n.X = dp.Margin.Left;
-	 	        	n.Y = dp.Margin.Top;
 	 	        }
-	 	        else
-	 	        {
-	 	        	ResetLayable(n);
-	 	        	return;
-	 	        }
+ 	        	ReleaseLayable(n);
+ 	        	return;
 			}
 	    }
 	    
@@ -210,12 +289,33 @@ namespace CavernaWPF
 	    
 	   	private void ReleaseLayable(Layable l)
 	    {
+	   		if(l is Tile)
+	    	{
+	   			ReleaseFarmAnimals(l.row, l.column);
+	   			if((l as Tile).Twin)
+	   			{
+	   				ReleaseLayable((l as Tile).GetTwinTile());
+	   			}
+	    	}
+	   		
 	    	l.X = 0;
 	    	l.Y = 0;
 	    	l.column = 0;
 	    	l.row = 0;
 	    }
 	    
+	   	private void PlaceLayable(Layable l, int row, int col)
+	   	{
+	   		
+	   	}
+	   	
+	   	private void ReleaseFarmAnimals(int row, int col)
+	   	{
+	   		TownContext tc = this.DataContext as TownContext;
+	   		List<FarmAnimal> occupyingFarmAnimals = tc.Tiles.OfType<FarmAnimal>().Where(fa => fa.row == row && fa.column == col).ToList();
+	 	    occupyingFarmAnimals.ForEach(fa => ReleaseLayable(fa));
+	   	}
+	   	
 	    private void LockIn(object sender, MouseButtonEventArgs e)
 	    {
 	    	
@@ -223,15 +323,19 @@ namespace CavernaWPF
 	    
 	   	private void Rotate(object sender, MouseButtonEventArgs e)
 	    {
-	        object dc = ((FrameworkElement)sender).DataContext;
-	        if(dc is Tile)
+	        object obj = ((FrameworkElement)sender).DataContext;
+	        if(obj is Layable)
 	        {
-	        	Tile t = dc as Tile;
-	        	if(t.Twin)
-	        	{
-		        	t.Rotate();
-		        	ReleaseLayable(t);
-	        	}
+	        	Layable l = obj as Layable;
+		        if(l is Tile)
+		        {
+		        	Tile t = l as Tile;
+		        	if(t.Twin)
+		        	{
+			        	t.Rotate();
+		        	}
+		        }
+		        ReleaseLayable(l);
 	        }
 	    }
 	   	
@@ -279,7 +383,7 @@ namespace CavernaWPF
 	   		}
 	   		TownContext tc = (DataContext as TownContext);
 	   		
-	   		List<Tile> intersectingTiles = tc.Tiles.OfType<Tile>().Where(t => t.row == row && t.column == col && t != tile).ToList();
+	   		List<Tile> intersectingTiles = tc.Tiles.OfType<Tile>().Where(t => t.row == row && t.column == col && t != tile && t != tile.GetTwinTile()).ToList();
 	   		List<Tile> rightPreTiles = intersectingTiles.Where(t => acceptableTiles.Any(type => type == t.type)).ToList();
 	   		
 	   		if(tile.Twin)
@@ -323,8 +427,8 @@ namespace CavernaWPF
 		   				break;
     			}
     			
-	   			List<Tile> intersectingTiles2 = tc.Tiles.OfType<Tile>().Where(t => t.row == row && t.column == col && t != tile).ToList();
-	   			List<Tile> rightPreTiles2 = intersectingTiles.Where(t => acceptableTiles.Any(type => type == t.type)).ToList();
+	   			List<Tile> intersectingTiles2 = tc.Tiles.OfType<Tile>().Where(t => t.row == row && t.column == col && t != tile && t != tile.GetTwinTile()).ToList();
+	   			List<Tile> rightPreTiles2 = intersectingTiles2.Where(t => acceptableTiles.Any(type => type == t.type)).ToList();
 	   			
 	   			if(isPreTile)
 	   				return intersectingTiles.Count == 0 && intersectingTiles2.Count == 0;
@@ -404,11 +508,10 @@ namespace CavernaWPF
 //    		return true;
 //	   	}
 	   	
-	   	private bool isAdjacent(ref Tile tile, int col, int row)
+	   	private bool isAdjacent(Tile tile, int col, int row)
 	   	{
 	   		TownContext tc = (DataContext as TownContext);
-	   		var adjs1 = tc.Tiles.Where(t => (t.row == row && Math.Abs(t.column - col) == 1 ) || (t.column == col && Math.Abs(t.row - row) == 1)).ToList();
-	   		adjs1.Remove(tile);
+	   		var adjs1 = tc.Tiles.Where(t => ((t.row == row && Math.Abs(t.column - col) == 1 ) || (t.column == col && Math.Abs(t.row - row) == 1)) && t != tile && t != tile.GetTwinTile() ).ToList();
 	   		bool bool1 = adjs1.Count > 0;
 	   		if(tile.Twin)
 	   		{
@@ -427,8 +530,7 @@ namespace CavernaWPF
     					row--;
     					break;
     			}
-	   			var adjs2 = tc.Tiles.Where(t => (t.row == row && Math.Abs(t.column - col) == 1 ) || (t.column == col && Math.Abs(t.row - row) == 1)).ToList();
-	   			adjs2.Remove(tile);
+	   			var adjs2 = tc.Tiles.Where(t => ((t.row == row && Math.Abs(t.column - col) == 1 ) || (t.column == col && Math.Abs(t.row - row) == 1)) && t != tile && t != tile.GetTwinTile() ).ToList();
 	   			bool bool2 = adjs2.Count > 0;
 	   			return bool1 || bool2;
 	   		}

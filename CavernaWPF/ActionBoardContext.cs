@@ -208,37 +208,37 @@ namespace CavernaWPF
 			
 			var unlockedTiles = currentPlayer.Value.town.Tiles.OfType<Tile>().Where(t => !t.Locked).ToList();
 			
-			var unlockedTwinTiles = unlockedTiles.Where(t => t.Twin).ToList();
+			//var unlockedTwinTiles = unlockedTiles.Where(t => t.Twin).ToList();
 			
 			unlockedTiles.ForEach(t => t.Locked = true);
 			
-			foreach(Tile tt in unlockedTwinTiles)
-			{
-				int row = tt.row; int col = tt.column;
-				switch(tt.Rot)
-				{
-					case 0:
-						col++;
-						break;
-					case 90:
-						row++;
-						break;
-					case 180:
-						col--;
-						break;
-					case 270:
-						row--;
-						break;
-				}
-				switch(tt.type)
-				{
-					case Tile.Type.MeadowField:
-						Tile dummy = new Tile(Tile.Type.FieldDummy) { Locked = true };
-						dummy.row = row; dummy.column = col;
-						currentPlayer.Value.town.Tiles.Add(dummy);
-						break;
-				}
-			}
+//			foreach(Tile tt in unlockedTwinTiles)
+//			{
+//				int row = tt.row; int col = tt.column;
+//				switch(tt.Rot)
+//				{
+//					case 0:
+//						col++;
+//						break;
+//					case 90:
+//						row++;
+//						break;
+//					case 180:
+//						col--;
+//						break;
+//					case 270:
+//						row--;
+//						break;
+//				}
+//				switch(tt.type)
+//				{
+//					case Tile.Type.MeadowField:
+//						Tile dummy = new Tile(Tile.Type.FieldDummy) { Locked = true };
+//						dummy.row = row; dummy.column = col;
+//						currentPlayer.Value.town.Tiles.Add(dummy);
+//						break;
+//				}
+//			}
 			
 			return true;
  		}
@@ -272,7 +272,6 @@ namespace CavernaWPF
 						LayoutManager.Instance.map[startingPlayer].Children.Remove(LayoutManager.Instance.startingPlayerPiece);
 					startingPlayer = value;
 					LayoutManager.Instance.map[startingPlayer].Children.Add(LayoutManager.Instance.startingPlayerPiece);
-					//LayoutManager.Instance.updateStartingPlayerPiece(value);
 				}
 			}
 		}
