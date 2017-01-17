@@ -65,6 +65,12 @@ namespace CavernaWPF
 	        }
 	    }
 	    
+	    public bool Locked
+	    {
+	    	get;
+	    	set;
+	    }
+	    
 	    public event PropertyChangedEventHandler PropertyChanged;
 	}
 }

@@ -21,7 +21,6 @@ namespace CavernaWPF
 	/// </summary>
 	public class ActionCard
 	{
-		private string name;
 		public Action<Dwarf> PlayerAction;
 		
 		//TODO: Consider using a Dictionary to be able to see how many of a specific resource
@@ -148,8 +147,8 @@ namespace CavernaWPF
 		public void Driftmining(Dwarf d)
 		{
 			ActionCardWindowContext acwc = new ActionCardWindowContext();
-			acwc.Options.Add(new ActionCardOption(){ Selected = true, Text = "Collect Resources"});
-			acwc.Options.Add(new ActionCardOption(){ Selected = true, Text = "Place Cave-Tunnel Tile"});
+			acwc.Options.Add(new ActionCardCheckBox(){ Selected = true, Text = "Collect Resources"});
+			acwc.Options.Add(new ActionCardCheckBox(){ Selected = true, Text = "Place Cave-Tunnel Tile"});
 			acwc.Control.ShowDialog();
 			
 			if((bool) acwc.Control.DialogResult)
@@ -170,8 +169,8 @@ namespace CavernaWPF
 		public void Excavation(Dwarf d)
 		{
 			ActionCardWindowContext acwc = new ActionCardWindowContext();
-			acwc.Options.Add(new ActionCardOption(){ Selected = true, Text = "Collect Resources"});
-			acwc.Options.Add(new ActionCardOption(){ Selected = true, Text = "Place Cave-Tunnel Tile"});
+			acwc.Options.Add(new ActionCardCheckBox(){ Selected = true, Text = "Collect Resources"});
+			acwc.Options.Add(new ActionCardCheckBox(){ Selected = true, Text = "Place Cave-Tunnel Tile"});
 			acwc.Control.ShowDialog();
 			
 			if((bool) acwc.Control.DialogResult)
@@ -192,9 +191,9 @@ namespace CavernaWPF
 		public void Logging(Dwarf d)
 		{
 			ActionCardWindowContext acwc = new ActionCardWindowContext();
-			acwc.Options.Add(new ActionCardOption(){ Selected = true, Text = "Collect Resources", Able = true});
+			acwc.Options.Add(new ActionCardCheckBox(){ Selected = true, Text = "Collect Resources", Able = true});
 			bool expeditionAble = d.Level > 0;
-			acwc.Options.Add(new ActionCardOption(){ Selected = expeditionAble, Text = "Go on 1 Expedition", Able = expeditionAble});
+			acwc.Options.Add(new ActionCardCheckBox(){ Selected = expeditionAble, Text = "Go on 1 Expedition", Able = expeditionAble});
 			acwc.Control.ShowDialog();
 			
 			if((bool) acwc.Control.DialogResult)
@@ -220,7 +219,7 @@ namespace CavernaWPF
 		public void Woodgathering(Dwarf d)
 		{
 			ActionCardWindowContext acwc = new ActionCardWindowContext();
-			acwc.Options.Add(new ActionCardOption(){ Selected = true, Text = "Collect Resources"});
+			acwc.Options.Add(new ActionCardCheckBox(){ Selected = true, Text = "Collect Resources"});
 			acwc.Control.ShowDialog();
 			
 			if((bool) acwc.Control.DialogResult)
@@ -237,7 +236,7 @@ namespace CavernaWPF
 		public void Supplies(Dwarf d)
 		{
 			ActionCardWindowContext acwc = new ActionCardWindowContext();
-			acwc.Options.Add(new ActionCardOption(){ Selected = true, Text = "Collect Resources"});
+			acwc.Options.Add(new ActionCardCheckBox(){ Selected = true, Text = "Collect Resources"});
 			acwc.Control.ShowDialog();
 			
 			if((bool) acwc.Control.DialogResult)
@@ -257,8 +256,8 @@ namespace CavernaWPF
 		public bool Clearing(Dwarf d)
 		{
 			ActionCardWindowContext acwc = new ActionCardWindowContext();
-			acwc.Options.Add(new ActionCardOption(){ Selected = true, Text = "Collect Resources"});
-			acwc.Options.Add(new ActionCardOption(){ Selected = true, Text = "Place Meadow-Field Tile"});
+			acwc.Options.Add(new ActionCardCheckBox(){ Selected = true, Text = "Collect Resources"});
+			acwc.Options.Add(new ActionCardCheckBox(){ Selected = true, Text = "Place Meadow-Field Tile"});
 			acwc.Control.ShowDialog();
 			
 			if((bool) acwc.Control.DialogResult)
@@ -281,7 +280,7 @@ namespace CavernaWPF
 		public void Startingplayer(Dwarf d)
 		{
 			ActionCardWindowContext acwc = new ActionCardWindowContext();
-			acwc.Options.Add(new ActionCardOption(){ Selected = true, Text = "Collect Resources and become the starting player"});
+			acwc.Options.Add(new ActionCardCheckBox(){ Selected = true, Text = "Collect Resources and become the starting player"});
 			acwc.Control.ShowDialog();
 			
 			if((bool) acwc.Control.DialogResult)
@@ -299,7 +298,7 @@ namespace CavernaWPF
 		public void Oremining(Dwarf d)
 		{
 			ActionCardWindowContext acwc = new ActionCardWindowContext();
-			acwc.Options.Add(new ActionCardOption(){ Selected = true, Text = "Collect Resources"});
+			acwc.Options.Add(new ActionCardCheckBox(){ Selected = true, Text = "Collect Resources"});
 			acwc.Control.ShowDialog();
 			
 			if((bool) acwc.Control.DialogResult)
@@ -315,8 +314,8 @@ namespace CavernaWPF
 		public void Sustenance(Dwarf d)
 		{
 			ActionCardWindowContext acwc = new ActionCardWindowContext();
-			acwc.Options.Add(new ActionCardOption(){ Selected = true, Text = "Collect Resources"});
-			acwc.Options.Add(new ActionCardOption(){ Selected = true, Text = "Place Meadow-Field Tile"});
+			acwc.Options.Add(new ActionCardCheckBox(){ Selected = true, Text = "Collect Resources"});
+			acwc.Options.Add(new ActionCardCheckBox(){ Selected = true, Text = "Place Meadow-Field Tile"});
 			acwc.Control.ShowDialog();
 			
 			if((bool) acwc.Control.DialogResult)
@@ -337,7 +336,7 @@ namespace CavernaWPF
 		public void Rubymining(Dwarf d)
 		{
 			ActionCardWindowContext acwc = new ActionCardWindowContext();
-			acwc.Options.Add(new ActionCardOption(){ Selected = true, Text = "Collect Resources"});
+			acwc.Options.Add(new ActionCardCheckBox(){ Selected = true, Text = "Collect Resources"});
 			acwc.Control.ShowDialog();
 			
 			if((bool) acwc.Control.DialogResult)
@@ -353,9 +352,9 @@ namespace CavernaWPF
 		public void Housework(Dwarf d)
 		{
 			ActionCardWindowContext acwc = new ActionCardWindowContext();
-			acwc.Options.Add(new ActionCardOption(){ Selected = true, Text = "Collect Dog", Able = true});
+			acwc.Options.Add(new ActionCardCheckBox(){ Selected = true, Text = "Collect Dog", Able = true});
 			bool roomForCavern = d.player.town.HowManyBoardTilesOfType(BoardTile.Type.Cave) > 0;
-			acwc.Options.Add(new ActionCardOption(){ Selected = roomForCavern, Text = "Furnish a cavern", Able = roomForCavern});
+			acwc.Options.Add(new ActionCardCheckBox(){ Selected = roomForCavern, Text = "Furnish a cavern", Able = roomForCavern});
 			acwc.Control.ShowDialog();
 			
 			if((bool) acwc.Control.DialogResult)
@@ -371,8 +370,8 @@ namespace CavernaWPF
 		public void Slashandburn(Dwarf d)
 		{
 			ActionCardWindowContext acwc = new ActionCardWindowContext();
-			acwc.Options.Add(new ActionCardOption(){ Selected = true, Text = "Place Meadow-Field Tile"});
-			acwc.Options.Add(new ActionCardOption(true){ Selected = true, Text = "... and sow crops"});
+			acwc.Options.Add(new ActionCardCheckBox(){ Selected = true, Text = "Place Meadow-Field Tile"});
+			acwc.Options.Add(new ActionCardCheckBox(true){ Selected = true, Text = "... and sow crops"});
 			acwc.Control.ShowDialog();
 			
 			if((bool) acwc.Control.DialogResult)
@@ -393,8 +392,8 @@ namespace CavernaWPF
 		{
 			ActionCardWindowContext acwc = new ActionCardWindowContext();
 			if(d.Level == 0)
-				acwc.Options.Add(new ActionCardOption() {Selected = true, Text = "Forge a weapon and go on 3 expeditions"});
-			acwc.Options.Add(new ActionCardOption(true){Selected = true, Text = "Go on 3 expeditions"});
+				acwc.Options.Add(new ActionCardCheckBox() {Selected = true, Text = "Forge a weapon and go on 3 expeditions"});
+			acwc.Options.Add(new ActionCardCheckBox(true){Selected = true, Text = "Go on 3 expeditions"});
 			//TODO: Warn player if he or she has no ores and his or her dwarf has no weapon
 			acwc.Control.ShowDialog();
 			
@@ -411,10 +410,10 @@ namespace CavernaWPF
 			bool hasMeadow = d.player.town.HowManyBoardTilesOfType(BoardTile.Type.Meadow) > 0;
 			int numStone = d.player.Resources[Resource.Type.Stone].Amount;
 			//TODO:must query boardtiles for adjacent meadows
-			acwc.Options.Add(new ActionCardOption() {Text = "Build small fenced area", Selected = numWood > 1 && hasMeadow, Able = numWood > 0});
-			acwc.Options.Add(new ActionCardOption() {Text = "Build large fenced area", Selected = numWood > 3, Able = numWood > 1});
-			acwc.Options.Add(new ActionCardOption() {Selected = true, Text = "Build a stable"});
-			acwc.Options.Add(new ActionCardOption(true){Selected = true, Text = "Collect sheep"});
+			acwc.Options.Add(new ActionCardCheckBox() {Text = "Build small fenced area", Selected = numWood > 1 && hasMeadow, Able = numWood > 0});
+			acwc.Options.Add(new ActionCardCheckBox() {Text = "Build large fenced area", Selected = numWood > 3, Able = numWood > 1});
+			acwc.Options.Add(new ActionCardCheckBox() {Selected = true, Text = "Build a stable"});
+			acwc.Options.Add(new ActionCardCheckBox(true){Selected = true, Text = "Collect sheep"});
 			acwc.Control.ShowDialog();
 			
 			if((bool) acwc.Control.DialogResult)
@@ -427,6 +426,8 @@ namespace CavernaWPF
 				if(acwc.Options[3].Selected)
 				{
 					d.player.town.AddTile(new FarmAnimal(FarmAnimal.Type.Sheep));
+					d.player.town.AddTile(new FarmAnimal(FarmAnimal.Type.Sheep));
+					d.player.town.AddTile(new FarmAnimal(FarmAnimal.Type.Sheep));
 				}
 				ActionBoardContext.Instance.readyForNextDwarf = true;
 			}
@@ -436,7 +437,7 @@ namespace CavernaWPF
 		{
 			ActionCardWindowContext acwc = new ActionCardWindowContext();
 			//TODO:must query boardtiles for adjacent tunnels
-			acwc.Options.Add(new ActionCardOption(){Text = "Build a ore mine"});
+			acwc.Options.Add(new ActionCardCheckBox(){Text = "Build a ore mine"});
 			acwc.Control.ShowDialog();
 			
 			if((bool) acwc.Control.DialogResult)
@@ -447,7 +448,19 @@ namespace CavernaWPF
 		
 		public void Wishforchildren(Dwarf d)
 		{
+			ActionCardWindowContext acwc = new ActionCardWindowContext();
+			acwc.Options.Add(new ActionCardRadioButton(new List<string>() {"Make a child", "Furnish a dwelling"}) {Selected = true});
+			acwc.Control.ShowDialog();
 			
+			if((bool) acwc.Control.DialogResult)
+			{
+				if(acwc.Options[0].Selected)
+				{
+					Dwarf babyDwarf = new Dwarf() {X = d.X, Y = d.Y - 5, Locked = true }; babyDwarf.player = d.player;
+					ActionBoardContext.Instance.Dwarfs.Add(babyDwarf);
+				}
+				ActionBoardContext.Instance.readyForNextDwarf = true;
+			}
 		}
 		
 		public void Donkeyfarming(Dwarf d)
@@ -457,17 +470,24 @@ namespace CavernaWPF
 			bool hasMeadow = d.player.town.HowManyBoardTilesOfType(BoardTile.Type.Meadow) > 0;
 			int numStone = d.player.Resources[Resource.Type.Stone].Amount;
 			//TODO:must query boardtiles for adjacent meadows
-			acwc.Options.Add(new ActionCardOption() {Text = "Build small fenced area", Selected = numWood == 1 && hasMeadow, Able = numWood > 0});
-			acwc.Options.Add(new ActionCardOption() {Text = "Build large fenced area", Selected = numWood > 1, Able = numWood > 1});
-			acwc.Options.Add(new ActionCardOption() {Selected = true, Text = "Build a stable"});
-			acwc.Options.Add(new ActionCardOption(true){Selected = true, Text = "Collect donkey"});
+			acwc.Options.Add(new ActionCardCheckBox() {Text = "Build small fenced area", Selected = numWood > 1 && hasMeadow, Able = numWood > 0});
+			acwc.Options.Add(new ActionCardCheckBox() {Text = "Build large fenced area", Selected = numWood > 3, Able = numWood > 1});
+			acwc.Options.Add(new ActionCardCheckBox() {Selected = true, Text = "Build a stable"});
+			acwc.Options.Add(new ActionCardCheckBox(true){Selected = true, Text = "Collect donkey"});
 			acwc.Control.ShowDialog();
 			
 			if((bool) acwc.Control.DialogResult)
 			{
 				if(acwc.Options[0].Selected)
 				{
-					
+					d.player.Resources[Resource.Type.Wood].Amount-=2;
+					d.player.town.AddTile(new Tile(Tile.Type.Fence));
+				}
+				if(acwc.Options[3].Selected)
+				{
+					d.player.town.AddTile(new FarmAnimal(FarmAnimal.Type.Donkey));
+					d.player.town.AddTile(new FarmAnimal(FarmAnimal.Type.Donkey));
+					d.player.town.AddTile(new FarmAnimal(FarmAnimal.Type.Donkey));
 				}
 				ActionBoardContext.Instance.readyForNextDwarf = true;
 			}

@@ -66,11 +66,17 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="ActionCard.cs" />
-    <Compile Include="ActionCardControls\ActionCardCheckBox.xaml.cs">
-      <DependentUpon>ActionCardCheckBox.xaml</DependentUpon>
+    <Compile Include="ActionCardControls\ActionCardCheckBoxControl.xaml.cs">
+      <DependentUpon>ActionCardCheckBoxControl.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="ActionCardControls\ActionCardCheckBox.cs" />
     <Compile Include="ActionCardControls\ActionCardOption.cs" />
+    <Compile Include="ActionCardControls\ActionCardRadioButton.cs" />
+    <Compile Include="ActionCardControls\ActionCardRadioButtonControl.xaml.cs">
+      <DependentUpon>ActionCardRadioButtonControl.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="ActionCardControls\ActionCardText.xaml.cs">
       <DependentUpon>ActionCardText.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -161,7 +167,8 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="ActionBoard.xaml" />
-    <Page Include="ActionCardControls\ActionCardCheckBox.xaml" />
+    <Page Include="ActionCardControls\ActionCardCheckBoxControl.xaml" />
+    <Page Include="ActionCardControls\ActionCardRadioButtonControl.xaml" />
     <Page Include="ActionCardControls\ActionCardText.xaml" />
     <Page Include="ActionCardControls\ActionCardWindow.xaml" />
     <Page Include="ActionCardControls\ExpeditionWindow.xaml" />

@@ -123,7 +123,7 @@ namespace CavernaWPF
 		 	        		return;
 			        	}
 				        
-		 	       		if(!isAdjacent(t, col, row))
+		 	       		if(!isAdjacent(ref t, col, row))
 				        {
 		 	       			ResetLayable(n);
 		 	        		return;
@@ -141,21 +141,34 @@ namespace CavernaWPF
 	 	        		
 	 	        		FarmAnimal fa = n as FarmAnimal;
 	
-	 	        		List<Tile> intersectingTiles  = tc.Tiles.OfType<Tile>().Where(t => Intersects(t, row, col)).ToList();
+	 	        		List<Tile> intersectingTiles  = tc.Tiles.OfType<Tile>().Where(t => t.row == row && t.column == col).ToList();
 	 	        		List<Tile> fenced= intersectingTiles.Where(t => t.type == Tile.Type.Fence).ToList();
 	 	        		if(fenced.Count == 1)
 	 	        		{
-	 	        			fenced[0].occupants.Add(fa);
+	 	        			int cap = 0;
+	 	        			switch(fenced[0].type)
+	 	        			{
+	 	        				case Tile.Type.Fence:
+	 	        					cap = 2;
+	 	        					break;
+	 	        				case Tile.Type.BigFence:
+	 	        					cap = 4;
+	 	        					break;
+	 	        			}
+	 	        			int count = fenced[0].occupants.Count;
+	 	        			if(count + 1 <= cap)
+	 	        			{
+	 	        				fenced[0].occupants.Add(fa);
 	 	        			
-	 	        			n.column = col;
-			 	        	n.row = row;
-			 	        	n.X = dp.Margin.Left;
-			 	        	n.Y = dp.Margin.Top;
+	 	        				n.column = col;
+			 	        		n.row = row;
+			 	        		n.X = dp.Margin.Left;
+			 	        		n.Y = dp.Margin.Top;
+			 	        		
+			 	        		return;
+	 	        			}
 	 	        		}
-	 	        		else
-	 	        		{
-	 	        			ResetLayable(n);
-	 	        		}
+	 	        		ResetLayable(n);
 	 	        		return;
 	 	        	}
 	 	        	else if(n is Sowable)
@@ -163,8 +176,8 @@ namespace CavernaWPF
 	 	        		Sowable s = n as Sowable;
 	 	        	}
 			       	
-	 	        	n.column = col + 1;
-	 	        	n.row = row + 1;
+	 	        	n.column = col;
+	 	        	n.row = row;
 	 	        	n.X = dp.Margin.Left;
 	 	        	n.Y = dp.Margin.Top;
 	 	        }
@@ -176,26 +189,6 @@ namespace CavernaWPF
 			}
 	    }
 	    
-	    private bool Intersects(Tile t, int row, int col)
-	    {
-	    	bool bool1 = t.row == row && t.column == col;
-	    	if(t.Twin)
-	    	{
-	    		switch(t.Rot)
-	    		{
-	    			case 0:
-	    				return bool1 || (t.row == row && t.column + 1 == col);
-	    			case 90:
-	    				return bool1 || (t.row + 1 == row && t.column == col);
-	    			case 180:
-	    				return bool1 || (t.row == row && t.column - 1 == col);
-	    			case 270:
-	    				return bool1 || (t.row - 1 == row && t.column == col);
-	    		}
-	    	}
-			return bool1;
-	    }
-	    
 	    private void ResetLayable(Layable l)
 	    {
 	    	if(!(l.row == 0 && l.column == 0))
@@ -205,6 +198,7 @@ namespace CavernaWPF
 	 	        if(uc is DockPanel && String.Compare((uc as DockPanel).Name, dockname) == 0)
 	 	        {
 	 	        	DockPanel dp = (uc as DockPanel);
+	 	        	
 	 	        	l.X = dp.Margin.Left;
 	 	        	l.Y = dp.Margin.Top;
 	 	        	return;
@@ -236,51 +230,60 @@ namespace CavernaWPF
 	        	if(t.Twin)
 	        	{
 		        	t.Rotate();
-//		        	t.X = 0;
-//		        	t.Y = 0;
+		        	ReleaseLayable(t);
 	        	}
 	        }
 	    }
 	   	
 	   	private bool isAllowed(Tile tile, int col, int row)
 	   	{
-	 	    List<BoardTile.Type> acceptableTiles = new List<BoardTile.Type>();
-    		
-    		switch(tile.type)
-    		{
-    			case Tile.Type.BigFence:
-    			case Tile.Type.Fence:
-    				acceptableTiles.Add(BoardTile.Type.Meadow);
-    				break;
+	   		List<Tile.Type> acceptableTiles = new List<Tile.Type>();
+	   		
+	   		bool isPreTile = false;
+	   		
+	   		switch(tile.type)
+	   		{
     			case Tile.Type.CaveCave:
     			case Tile.Type.CaveTunnel:
     			case Tile.Type.Cave:
     			case Tile.Type.Tunnel:
-    				acceptableTiles.Add(BoardTile.Type.Rock);
-    				break;
+	   				if(col < 4)
+	   				{
+	   					return false;
+	   				}
+	   				isPreTile = true;
+	   				break;
     			case Tile.Type.MeadowField:
     			case Tile.Type.Field:
     			case Tile.Type.Meadow:
-    				acceptableTiles.Add(BoardTile.Type.Forest);
+	   				if(col > 3)
+	   				{
+	   					return false;
+	   				}
+	   				isPreTile = true;
+    				break;
+    			case Tile.Type.BigFence:
+    			case Tile.Type.Fence:
+    				acceptableTiles.Add(Tile.Type.Meadow);
+    				acceptableTiles.Add(Tile.Type.MeadowField);
     				break;
     			case Tile.Type.OreMine:
-    				acceptableTiles.Add(BoardTile.Type.Tunnel);
+    				acceptableTiles.Add(Tile.Type.Tunnel);
+    				acceptableTiles.Add(Tile.Type.TunnelDummy);
     				break;
     			case Tile.Type.RubyMine:
-    				acceptableTiles.Add(BoardTile.Type.Tunnel);
-    				acceptableTiles.Add(BoardTile.Type.DeepTunnel);
-				break;
-				default:
-					break;
-    		}
-    		TownContext tc = (DataContext as TownContext);
-    		BoardTile bt = tc.boardtiles[col,row];
-    		
-    		if(bt == null || !acceptableTiles.Exists(at => at == bt.state))
-    			return false;
-    		
-    		if(tile.Twin)
-    		{
+    				acceptableTiles.Add(Tile.Type.Tunnel);
+    				acceptableTiles.Add(Tile.Type.TunnelDummy);
+    				acceptableTiles.Add(Tile.Type.DeepTunnelDummy);
+    				break;
+	   		}
+	   		TownContext tc = (DataContext as TownContext);
+	   		
+	   		List<Tile> intersectingTiles = tc.Tiles.OfType<Tile>().Where(t => t.row == row && t.column == col && t != tile).ToList();
+	   		List<Tile> rightPreTiles = intersectingTiles.Where(t => acceptableTiles.Any(type => type == t.type)).ToList();
+	   		
+	   		if(tile.Twin)
+	   		{
     			switch(tile.Rot)
     			{
     				case 0:
@@ -298,28 +301,118 @@ namespace CavernaWPF
     				default:
     					break;
     			}
+	   			
+    			switch(tile.type)
+	   			{
+	    			case Tile.Type.CaveCave:
+	    			case Tile.Type.CaveTunnel:
+	    			case Tile.Type.Cave:
+	    			case Tile.Type.Tunnel:
+		   				if(col < 4)
+		   				{
+		   					return false;
+		   				}
+		   				break;
+	    			case Tile.Type.MeadowField:
+	    			case Tile.Type.Field:
+	    			case Tile.Type.Meadow:
+		   				if(col > 3)
+		   				{
+		   					return false;
+		   				}
+		   				break;
+    			}
     			
-    			BoardTile bt2 = tc.boardtiles[col,row];
-    			if(bt2 == null || !acceptableTiles.Exists(at => at == bt2.state))
-    				return false;
-    		}
-    		return true;
+	   			List<Tile> intersectingTiles2 = tc.Tiles.OfType<Tile>().Where(t => t.row == row && t.column == col && t != tile).ToList();
+	   			List<Tile> rightPreTiles2 = intersectingTiles.Where(t => acceptableTiles.Any(type => type == t.type)).ToList();
+	   			
+	   			if(isPreTile)
+	   				return intersectingTiles.Count == 0 && intersectingTiles2.Count == 0;
+	   			else
+	   				return rightPreTiles.Count > 0 && rightPreTiles2.Count > 0;
+	   		}
+	   		else
+	   		{
+	   			if(isPreTile)
+	   				return intersectingTiles.Count == 0;
+	   			else
+	   				return rightPreTiles.Count > 0;
+	   		}
 	   	}
 	   	
-	   	//needs work but it works for my purposes
-	   	private bool isAdjacent(Tile t, int col, int row)
+//	   	private bool isAllowed(Tile tile, int col, int row)
+//	   	{
+//	 	    List<BoardTile.Type> acceptableTiles = new List<BoardTile.Type>();
+//    		
+//    		switch(tile.type)
+//    		{
+//    			case Tile.Type.BigFence:
+//    			case Tile.Type.Fence:
+//    				acceptableTiles.Add(BoardTile.Type.Meadow);
+//    				break;
+//    			case Tile.Type.CaveCave:
+//    			case Tile.Type.CaveTunnel:
+//    			case Tile.Type.Cave:
+//    			case Tile.Type.Tunnel:
+//    				acceptableTiles.Add(BoardTile.Type.Rock);
+//    				break;
+//    			case Tile.Type.MeadowField:
+//    			case Tile.Type.Field:
+//    			case Tile.Type.Meadow:
+//    				acceptableTiles.Add(BoardTile.Type.Forest);
+//    				break;
+//    			case Tile.Type.OreMine:
+//    				acceptableTiles.Add(BoardTile.Type.Tunnel);
+//    				break;
+//    			case Tile.Type.RubyMine:
+//    				acceptableTiles.Add(BoardTile.Type.Tunnel);
+//    				acceptableTiles.Add(BoardTile.Type.DeepTunnel);
+//				break;
+//				default:
+//					break;
+//    		}
+//    		TownContext tc = (DataContext as TownContext);
+//    		BoardTile bt = tc.boardtiles[col,row];
+//    		
+//    		if(bt == null || !acceptableTiles.Exists(at => at == bt.state))
+//    			return false;
+//    		
+//    		if(tile.Twin)
+//    		{
+//    			switch(tile.Rot)
+//    			{
+//    				case 0:
+//    					col++;
+//    					break;
+//    				case 90:
+//    					row++;
+//    					break;
+//    				case 180:
+//    					col--;
+//    					break;
+//    				case 270:
+//    					row--;
+//    					break;
+//    				default:
+//    					break;
+//    			}
+//    			
+//    			BoardTile bt2 = tc.boardtiles[col,row];
+//    			if(bt2 == null || !acceptableTiles.Exists(at => at == bt2.state))
+//    				return false;
+//    		}
+//    		return true;
+//	   	}
+	   	
+	   	private bool isAdjacent(ref Tile tile, int col, int row)
 	   	{
 	   		TownContext tc = (DataContext as TownContext);
-	   		List<KeyValuePair<int,int>> coords = new List<KeyValuePair<int, int>>() 
+	   		var adjs1 = tc.Tiles.Where(t => (t.row == row && Math.Abs(t.column - col) == 1 ) || (t.column == col && Math.Abs(t.row - row) == 1)).ToList();
+	   		adjs1.Remove(tile);
+	   		bool bool1 = adjs1.Count > 0;
+	   		if(tile.Twin)
 	   		{
-	   			new KeyValuePair<int,int>(col - 1, row),
-	   			new KeyValuePair<int,int>(col + 1, row),
-	   			new KeyValuePair<int,int>(col, row-1),
-	   			new KeyValuePair<int,int>(col, row+1)
-	   		};
-	   		if(t.Twin)
-	   		{
-	   			switch(t.Rot)
+	   			switch(tile.Rot)
     			{
     				case 0:
     					col++;
@@ -333,30 +426,66 @@ namespace CavernaWPF
     				case 270:
     					row--;
     					break;
-    				default:
-    					break;
     			}
-	   			coords.Add(new KeyValuePair<int,int>(col - 1, row));
-	   			coords.Add(new KeyValuePair<int,int>(col + 1, row));
-	   			coords.Add(new KeyValuePair<int,int>(col, row-1));
-	   			coords.Add(new KeyValuePair<int,int>(col, row+1));
+	   			var adjs2 = tc.Tiles.Where(t => (t.row == row && Math.Abs(t.column - col) == 1 ) || (t.column == col && Math.Abs(t.row - row) == 1)).ToList();
+	   			adjs2.Remove(tile);
+	   			bool bool2 = adjs2.Count > 0;
+	   			return bool1 || bool2;
 	   		}
-	   		
-	   		foreach(KeyValuePair<int,int> coord in coords)
-	   		{
-		   		try
-		   		{
-		   			BoardTile bt = tc.boardtiles[coord.Key, coord.Value];
-		   			if(bt != null && bt.state != BoardTile.Type.Rock && bt.state != BoardTile.Type.Forest)
-		   			   return true;
-		   			   
-		   		}
-		   		catch(IndexOutOfRangeException)
-		   		{
-		   			continue;
-		   		}
-	   		}
-	   		return false;
+	   		return bool1;
 	   	}
+	   	
+	   	//needs work but it works for my purposes
+//	   	private bool isAdjacent(Tile t, int col, int row)
+//	   	{
+//	   		TownContext tc = (DataContext as TownContext);
+//	   		List<KeyValuePair<int,int>> coords = new List<KeyValuePair<int, int>>() 
+//	   		{
+//	   			new KeyValuePair<int,int>(col - 1, row),
+//	   			new KeyValuePair<int,int>(col + 1, row),
+//	   			new KeyValuePair<int,int>(col, row-1),
+//	   			new KeyValuePair<int,int>(col, row+1)
+//	   		};
+//	   		if(t.Twin)
+//	   		{
+//	   			switch(t.Rot)
+//    			{
+//    				case 0:
+//    					col++;
+//    					break;
+//    				case 90:
+//    					row++;
+//    					break;
+//    				case 180:
+//    					col--;
+//    					break;
+//    				case 270:
+//    					row--;
+//    					break;
+//    				default:
+//    					break;
+//    			}
+//	   			coords.Add(new KeyValuePair<int,int>(col - 1, row));
+//	   			coords.Add(new KeyValuePair<int,int>(col + 1, row));
+//	   			coords.Add(new KeyValuePair<int,int>(col, row-1));
+//	   			coords.Add(new KeyValuePair<int,int>(col, row+1));
+//	   		}
+//	   		
+//	   		foreach(KeyValuePair<int,int> coord in coords)
+//	   		{
+//		   		try
+//		   		{
+//		   			BoardTile bt = tc.boardtiles[coord.Key, coord.Value];
+//		   			if(bt != null && bt.state != BoardTile.Type.Rock && bt.state != BoardTile.Type.Forest)
+//		   			   return true;
+//		   			   
+//		   		}
+//		   		catch(IndexOutOfRangeException)
+//		   		{
+//		   			continue;
+//		   		}
+//	   		}
+//	   		return false;
+//	   	}
 	}
 }

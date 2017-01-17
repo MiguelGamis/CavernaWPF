@@ -21,9 +21,9 @@ namespace CavernaWPF.ActionCardControls
 	/// <summary>
 	/// Interaction logic for ActionCardCheckBox.xaml
 	/// </summary>
-	public partial class ActionCardCheckBox : UserControl
+	public partial class ActionCardCheckBoxControl : UserControl
 	{
-		public ActionCardCheckBox()
+		public ActionCardCheckBoxControl()
 		{
 			InitializeComponent();
 		}

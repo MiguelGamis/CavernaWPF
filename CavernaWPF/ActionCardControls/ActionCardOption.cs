@@ -1,8 +1,8 @@
 ﻿/*
  * Created by SharpDevelop.
  * User: Miguel
- * Date: 1/4/2017
- * Time: 9:01 PM
+ * Date: 01/16/2017
+ * Time: 14:42
  * 
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
@@ -14,19 +14,11 @@ namespace CavernaWPF.ActionCardControls
 	/// <summary>
 	/// Description of ActionCardOption.
 	/// </summary>
-	public class ActionCardOption
+	public abstract class ActionCardOption
 	{
 		public string Text { get; set; }
 		public bool Selected { get; set; }
 		public UserControl Control { get; set; }
 		public bool Able { get; set; }
-		public ActionCardOption(bool mandatory = false)
-		{
-			if(mandatory)
-				Control = new ActionCardText();
-			else
-				Control =  new ActionCardCheckBox();
-			Control.DataContext = this;
-		}
 	}
 }

@@ -154,6 +154,7 @@ namespace CavernaWPF
 						Dwarf dw = ActionBoardContext.Instance.Dwarfs[i];
 						dw.X = 0;
 						dw.Y = 0;
+						dw.Locked = false;
 						dw.player.Dwarfs.Add(dw);
 						ActionBoardContext.Instance.Dwarfs.RemoveAt(i);
 					}
@@ -205,7 +206,40 @@ namespace CavernaWPF
 				}
 			}
 			
-			currentPlayer.Value.town.Tiles.OfType<Tile>().Where(t => !t.Locked).ToList().ForEach(l => l.Locked = true);
+			var unlockedTiles = currentPlayer.Value.town.Tiles.OfType<Tile>().Where(t => !t.Locked).ToList();
+			
+			var unlockedTwinTiles = unlockedTiles.Where(t => t.Twin).ToList();
+			
+			unlockedTiles.ForEach(t => t.Locked = true);
+			
+			foreach(Tile tt in unlockedTwinTiles)
+			{
+				int row = tt.row; int col = tt.column;
+				switch(tt.Rot)
+				{
+					case 0:
+						col++;
+						break;
+					case 90:
+						row++;
+						break;
+					case 180:
+						col--;
+						break;
+					case 270:
+						row--;
+						break;
+				}
+				switch(tt.type)
+				{
+					case Tile.Type.MeadowField:
+						Tile dummy = new Tile(Tile.Type.FieldDummy) { Locked = true };
+						dummy.row = row; dummy.column = col;
+						currentPlayer.Value.town.Tiles.Add(dummy);
+						break;
+				}
+			}
+			
 			return true;
  		}
 		
@@ -281,7 +315,7 @@ namespace CavernaWPF
 			
 			AddActionCard(GetActionCard("Housework"));
 			
-			AddActionCard(GetActionCard("Sheep farming"));
+			AddActionCard(GetActionCard("Donkey farming"));
 			//AddActionCard(GetActionCard("Slash-and-burn"));
 			
 			List<string> round1ActionCards = new List<string> { "Blacksmithing", "Sheep farming", "Ore mine construction" };
@@ -291,7 +325,7 @@ namespace CavernaWPF
 				AddActionCard(GetActionCard(actionCardName), true);
 			}
 			
-			AddActionCard(GetActionCard("Wish For Children"));
+			AddActionCard(GetActionCard("Wish for children"));
 			List<string> round2ActionCards = new List<string> { "Donkey farming", "Ruby mine construction" };
 			ShuffleList(round2ActionCards);
 			foreach(String actionCardName in round2ActionCards)

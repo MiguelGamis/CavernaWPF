@@ -32,14 +32,30 @@ namespace CavernaWPF
 		private void Thumb_DragDelta(object sender, System.Windows.Controls.Primitives.DragDeltaEventArgs e)
 	    {
 			Dwarf n = (Dwarf)((FrameworkElement)sender).DataContext;
+			
+			if(n.Locked)
+			{
+				(sender as Thumb).DragDelta -= Thumb_DragDelta;
+				(sender as Thumb).DragCompleted -= Thumb_DragCompleted;
+				return;
+			}
+			
 	        n.X += e.HorizontalChange;
 	        n.Y += e.VerticalChange;
 	    }
 	    
 	    private void Thumb_DragCompleted(object sender, System.Windows.Controls.Primitives.DragCompletedEventArgs e)
 	    {
-	    	//Snap dwarf to closest action card location
 			Dwarf n = (Dwarf)((FrameworkElement)sender).DataContext;
+			
+			if(n.Locked)
+			{
+				(sender as Thumb).DragDelta -= Thumb_DragDelta;
+				(sender as Thumb).DragCompleted -= Thumb_DragCompleted;
+				return;
+			}
+			
+			//Snap dwarf to closest action card location
 			double w = ((FrameworkElement)sender).Width;
 			double h = ((FrameworkElement)sender).Height;
 			double x = w + n.X;
@@ -93,6 +109,7 @@ namespace CavernaWPF
 							acw.occupied = true;
 							(sender as Thumb).DragDelta -= Thumb_DragDelta;
 							(sender as Thumb).DragCompleted -= Thumb_DragCompleted;
+							return;
 						}
 						else
 						{

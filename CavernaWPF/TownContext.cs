@@ -49,6 +49,13 @@ namespace CavernaWPF
 			
 			boardtiles[4,4].state = BoardTile.Type.Dwelling;
 			boardtiles[4,3].state = BoardTile.Type.Cave;
+			
+			Tile cavedummy = new Tile(Tile.Type.CaveDummy) {Locked = true};
+			cavedummy.row = 3; cavedummy.column = 4;
+			Tiles.Add(cavedummy);
+			Tile dwellingdummy = new Tile(Tile.Type.DwellingDummy) {Locked = true};
+			dwellingdummy.row = 4; dwellingdummy.column = 4;
+			Tiles.Add(dwellingdummy);
 		}
 		
 		public Town control;
