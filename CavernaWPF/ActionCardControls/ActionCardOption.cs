@@ -7,6 +7,7 @@
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
 using System;
+using System.ComponentModel;
 using System.Windows.Controls;
 
 namespace CavernaWPF.ActionCardControls
@@ -14,11 +15,22 @@ namespace CavernaWPF.ActionCardControls
 	/// <summary>
 	/// Description of ActionCardOption.
 	/// </summary>
-	public abstract class ActionCardOption
+	public abstract class ActionCardOption : INotifyPropertyChanged
 	{
 		public string Text { get; set; }
-		public bool Selected { get; set; }
+		private bool selected;
+		public bool Selected
+		{
+			get {return selected;}
+			set 
+			{
+				selected = value;
+				if (PropertyChanged != null) PropertyChanged(this, new PropertyChangedEventArgs("Selected"));
+			}
+		}
 		public UserControl Control { get; set; }
 		public bool Able { get; set; }
+		
+		public event PropertyChangedEventHandler PropertyChanged;
 	}
 }

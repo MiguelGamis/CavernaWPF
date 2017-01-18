@@ -22,9 +22,16 @@ namespace CavernaWPF.ActionCardControls
 			set;
 		}
 		
-		public ActionCardRadioButton(List<String> options, bool mandatory = false)
+		public bool Optional
+		{
+			get;
+			set;
+		}
+		
+		public ActionCardRadioButton(List<String> options, bool optional = false)
 		{
 			Options = options;
+			Optional = optional;
 			Control =  new ActionCardRadioButtonControl();
 			Control.DataContext = this;
 		}

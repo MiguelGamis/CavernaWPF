@@ -170,7 +170,7 @@ namespace CavernaWPF
 		{
 			ActionCardWindowContext acwc = new ActionCardWindowContext();
 			acwc.Options.Add(new ActionCardCheckBox(){ Selected = true, Text = "Collect Resources"});
-			acwc.Options.Add(new ActionCardCheckBox(){ Selected = true, Text = "Place Cave-Tunnel Tile"});
+			acwc.Options.Add(new ActionCardRadioButton(new List<string>(){"Place Cave-Cave Tile", "Place Cave-Tunnel Tile"}, true){ Selected = true });
 			acwc.Control.ShowDialog();
 			
 			if((bool) acwc.Control.DialogResult)
@@ -412,7 +412,7 @@ namespace CavernaWPF
 			//TODO:must query boardtiles for adjacent meadows
 			acwc.Options.Add(new ActionCardCheckBox() {Text = "Build small fenced area", Selected = numWood > 1 && hasMeadow, Able = numWood > 0});
 			acwc.Options.Add(new ActionCardCheckBox() {Text = "Build large fenced area", Selected = numWood > 3, Able = numWood > 1});
-			acwc.Options.Add(new ActionCardCheckBox() {Selected = true, Text = "Build a stable"});
+			acwc.Options.Add(new ActionCardCheckBox() {Selected = numStone > 1, Able = numStone > 1, Text = "Build a stable"});
 			acwc.Options.Add(new ActionCardCheckBox(true){Selected = true, Text = "Collect sheep"});
 			acwc.Control.ShowDialog();
 			
@@ -423,10 +423,18 @@ namespace CavernaWPF
 					d.player.Resources[Resource.Type.Wood].Amount-=2;
 					d.player.town.AddTile(new Tile(Tile.Type.Fence));
 				}
+				if(acwc.Options[1].Selected)
+				{
+					d.player.Resources[Resource.Type.Wood].Amount-= 4;
+					d.player.town.AddTile(new Tile(Tile.Type.BigFence));
+				}
+				if(acwc.Options[2].Selected)
+				{
+					d.player.Resources[Resource.Type.Stone].Amount-=1;
+					d.player.town.AddTile(new Stable());
+				}
 				if(acwc.Options[3].Selected)
 				{
-					d.player.town.AddTile(new FarmAnimal(FarmAnimal.Type.Sheep));
-					d.player.town.AddTile(new FarmAnimal(FarmAnimal.Type.Sheep));
 					d.player.town.AddTile(new FarmAnimal(FarmAnimal.Type.Sheep));
 				}
 				ActionBoardContext.Instance.readyForNextDwarf = true;
@@ -480,25 +488,24 @@ namespace CavernaWPF
 			{
 				if(acwc.Options[0].Selected)
 				{
-					//d.player.Resources[Resource.Type.Wood].Amount-=2;
+					d.player.Resources[Resource.Type.Wood].Amount-=2;
 					d.player.town.AddTile(new Tile(Tile.Type.Fence));
 				}
 				if(acwc.Options[1].Selected)
 				{
-					//d.player.Resources[Resource.Type.Wood].Amount-= 4;
+					d.player.Resources[Resource.Type.Wood].Amount-= 4;
 					d.player.town.AddTile(new Tile(Tile.Type.BigFence));
-					d.player.town.AddTile(new Tile(Tile.Type.Meadow));
-					d.player.town.AddTile(new Tile(Tile.Type.MeadowField));
-					d.player.town.AddTile(new Tile(Tile.Type.MeadowField));
+				}
+				if(acwc.Options[2].Selected)
+				{
+					d.player.Resources[Resource.Type.Stone].Amount-=1;
+					d.player.town.AddTile(new Stable());
 				}
 				if(acwc.Options[3].Selected)
 				{
 					d.player.town.AddTile(new FarmAnimal(FarmAnimal.Type.Donkey));
 					d.player.town.AddTile(new FarmAnimal(FarmAnimal.Type.Donkey));
-					d.player.town.AddTile(new FarmAnimal(FarmAnimal.Type.Sheep));
-					d.player.town.AddTile(new FarmAnimal(FarmAnimal.Type.Sheep));
-					d.player.town.AddTile(new FarmAnimal(FarmAnimal.Type.Sheep));
-					d.player.town.AddTile(new FarmAnimal(FarmAnimal.Type.Boar));
+					d.player.town.AddTile(new FarmAnimal(FarmAnimal.Type.Donkey));
 				}
 				ActionBoardContext.Instance.readyForNextDwarf = true;
 			}

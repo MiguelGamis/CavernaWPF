@@ -102,6 +102,7 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="BoardTile.cs" />
+    <Compile Include="Converters\BoolToVisibilityConverter.cs" />
     <Compile Include="Converters\ColorToDwarfConverter.cs" />
     <Compile Include="Converters\HarvestMarkerConverter.cs" />
     <Compile Include="Converters\ImageSizeConverter.cs" />

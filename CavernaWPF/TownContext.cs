@@ -26,7 +26,7 @@ namespace CavernaWPF
 	{
 		public TownContext()
 		{
-			control = new Town();
+			control = new Village();
 			control.DataContext = this;
 			
 			for(int row = 1; row < 5; row++)
@@ -58,7 +58,7 @@ namespace CavernaWPF
 			Tiles.Add(dwellingdummy);
 		}
 		
-		public Town control;
+		public Village control;
 		
 		private ObservableCollection<Layable> tiles = new ObservableCollection<Layable>();
 		

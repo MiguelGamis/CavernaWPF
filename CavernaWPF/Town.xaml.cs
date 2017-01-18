@@ -161,10 +161,7 @@ namespace CavernaWPF
 		 	       					break;
 		 	       			}
 		 	       		}
-	       				n.column = col;
-	 	        		n.row = row;
-	 	        		n.X = dp.Margin.Left;
-	 	        		n.Y = dp.Margin.Top;
+						PlaceLayable(n, row, col);
 	 	        		
 	 	        		return;
 	 	        	}
@@ -188,10 +185,7 @@ namespace CavernaWPF
 	 	        			ReleaseLayable(n);
 	 	        		}
 	 	        		
-	 	       			n.column = col;
-		 	        	n.row = row;
-		 	        	n.X = dp.Margin.Left;
-		 	        	n.Y = dp.Margin.Top;
+						PlaceLayable(n, row, col);
 	 	        	}
 	 	        	else if(n is FarmAnimal)
 	 	        	{
@@ -230,10 +224,7 @@ namespace CavernaWPF
 	 	        			}
 	 	        			if(intersectingFarmAnimals.Count + 1 <= cap)
 	 	        			{
-	 	        				n.column = col;
-			 	        		n.row = row;
-			 	        		n.X = dp.Margin.Left;
-			 	        		n.Y = dp.Margin.Top;
+	 	        				PlaceLayable(n, row, col);
 			 	        		
 			 	        		return;
 	 	        			}
@@ -246,10 +237,7 @@ namespace CavernaWPF
 	 	        				List<Dog> intersectingDogs = tc.Tiles.OfType<Dog>().Where(d => d.row == row && d.column == col).ToList();
 	 	        				if(intersectingDogs.Count > 0 ? intersectingDogs.Count + 1 >= intersectingFarmAnimals.Count : false)
 	 	        				{
-									n.column = col;
-				 	        		n.row = row;
-				 	        		n.X = dp.Margin.Left;
-				 	        		n.Y = dp.Margin.Top;
+									PlaceLayable(n, row, col);
 				 	        		
 				 	        		return;
 	 	        				}
@@ -306,7 +294,17 @@ namespace CavernaWPF
 	    
 	   	private void PlaceLayable(Layable l, int row, int col)
 	   	{
-	   		
+			string dockname = String.Format("Panel{0}{1}", col, row);
+ 	        object uc = this.FindName(dockname);
+ 	        if(uc is DockPanel && String.Compare((uc as DockPanel).Name, dockname) == 0)
+ 	        {
+ 	        	DockPanel dp = (uc as DockPanel);
+ 	        	
+				l.column = col;
+	    		l.row = row;
+	    		l.X = dp.Margin.Left;
+	    		l.Y = dp.Margin.Top;
+ 	        }
 	   	}
 	   	
 	   	private void ReleaseFarmAnimals(int row, int col)
@@ -373,12 +371,12 @@ namespace CavernaWPF
     				break;
     			case Tile.Type.OreMine:
     				acceptableTiles.Add(Tile.Type.Tunnel);
-    				acceptableTiles.Add(Tile.Type.TunnelDummy);
+    				//acceptableTiles.Add(Tile.Type.TunnelDummy);
     				break;
     			case Tile.Type.RubyMine:
     				acceptableTiles.Add(Tile.Type.Tunnel);
-    				acceptableTiles.Add(Tile.Type.TunnelDummy);
-    				acceptableTiles.Add(Tile.Type.DeepTunnelDummy);
+    				//acceptableTiles.Add(Tile.Type.TunnelDummy);
+    				//acceptableTiles.Add(Tile.Type.DeepTunnelDummy);
     				break;
 	   		}
 	   		TownContext tc = (DataContext as TownContext);

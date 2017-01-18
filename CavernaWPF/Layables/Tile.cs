@@ -17,7 +17,7 @@ namespace CavernaWPF.Layables
 	/// </summary>
 	public class Tile : Layable//, INotifyPropertyChanged
 	{
-		public enum Type {Meadow, Field, Cave, Tunnel, RubyMine, MeadowField, CaveCave, CaveTunnel, OreMine, Fence, BigFence, 
+		public enum Type {Meadow, Field, Cave, Tunnel, RubyMine, MeadowField, CaveCave, CaveTunnel, OreMine, Fence, BigFence, Dwelling,
 					DeepTunnelDummy, BigFenceDummy, CaveDummy, TunnelDummy, FieldDummy, DwellingDummy};
 //		private double x;
 //    	private double y;
