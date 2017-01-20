@@ -371,7 +371,10 @@ namespace CavernaWPF
 		{
 			ActionCardWindowContext acwc = new ActionCardWindowContext();
 			acwc.Options.Add(new ActionCardCheckBox(){ Selected = true, Text = "Place Meadow-Field Tile"});
-			acwc.Options.Add(new ActionCardCheckBox(true){ Selected = true, Text = "... and sow crops"});
+			int numGrain = d.player.Resources[Resource.Type.Grain].Amount;
+			int numVegetable = d.player.Resources[Resource.Type.Grain].Amount;
+			bool ableToSow = numGrain + numVegetable > 0;
+			acwc.Options.Add(new ActionCardCheckBox(true){ Selected = ableToSow, Able = ableToSow, Text = "... and sow crops"});
 			acwc.Control.ShowDialog();
 			
 			if((bool) acwc.Control.DialogResult)
@@ -380,9 +383,14 @@ namespace CavernaWPF
 				{
 					d.player.town.AddTile(new Tile(Tile.Type.MeadowField));
 				}
-				int numGrain = d.player.Resources[Resource.Type.Grain].Amount;
-				int numVegetable = d.player.Resources[Resource.Type.Grain].Amount;
-				d.player.town.AddTile(new Sowable(Sowable.Type.Grain));
+				if(acwc.Options[1].Selected)
+				{
+					ActionBoardContext.Instance.Sow = true;
+					for(int i = 0; i < Math.Min(numGrain, 2); i++)
+						d.player.town.AddTile(new Sowable(Sowable.Type.Grain){X=40*6, Y=420, row=0, column=0});
+					for(int i = 0; i < Math.Min(numVegetable, 2); i++)
+						d.player.town.AddTile(new Sowable(Sowable.Type.Vegetable){X=40*7, Y=420, row=0, column=0});
+				}
 				
 				ActionBoardContext.Instance.readyForNextDwarf = true;
 			}
@@ -503,8 +511,6 @@ namespace CavernaWPF
 				}
 				if(acwc.Options[3].Selected)
 				{
-					d.player.town.AddTile(new FarmAnimal(FarmAnimal.Type.Donkey));
-					d.player.town.AddTile(new FarmAnimal(FarmAnimal.Type.Donkey));
 					d.player.town.AddTile(new FarmAnimal(FarmAnimal.Type.Donkey));
 				}
 				ActionBoardContext.Instance.readyForNextDwarf = true;

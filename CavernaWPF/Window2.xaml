@@ -3,7 +3,8 @@
 	x:Class="CavernaWPF.Window2" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	Title="CavernaWPF"
 	Height="300"
-	Width="300">
+	Width="300"
+	xmlns:custom="clr-namespace:CavernaWPF">
 	<Grid>
 		<Grid.RowDefinitions>
 			<RowDefinition
@@ -11,6 +12,10 @@
 			<RowDefinition
 				Height="30"></RowDefinition>
 		</Grid.RowDefinitions>
+		<Grid Grid.Row="0" MouseDown="test_MouseDown" MouseMove="test_MouseMove">
+			<custom:PlayerBoard></custom:PlayerBoard>
+			<custom:SowableSource x:Name="test"></custom:SowableSource>
+		</Grid>
 		<Grid
 			Grid.Row="1"
 			HorizontalAlignment="Right">

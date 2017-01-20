@@ -102,11 +102,16 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="BoardTile.cs" />
+    <Compile Include="Board_Tile.xaml.cs">
+      <DependentUpon>Board_Tile.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Converters\BoolToVisibilityConverter.cs" />
     <Compile Include="Converters\ColorToDwarfConverter.cs" />
     <Compile Include="Converters\HarvestMarkerConverter.cs" />
     <Compile Include="Converters\ImageSizeConverter.cs" />
     <Compile Include="Converters\LevelToWeaponConverter.cs" />
+    <Compile Include="Converters\ResourceToIconConverter.cs" />
     <Compile Include="Converters\StageToCardbackConverter.cs" />
     <Compile Include="Dwarf.cs" />
     <Compile Include="CDwarf.xaml.cs">
@@ -131,6 +136,10 @@
     <Compile Include="Layables\Stable.cs" />
     <Compile Include="LayoutManager.cs" />
     <Compile Include="Player.cs" />
+    <Compile Include="PlayerBoard.xaml.cs">
+      <DependentUpon>PlayerBoard.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\WPFAssemblyInfo.cs" />
     <Compile Include="Layables\Tile.cs" />
@@ -143,6 +152,10 @@
     <Compile Include="Resources\Resource.cs" />
     <Compile Include="Resources\Tradable.cs" />
     <Compile Include="ResourceTab.cs" />
+    <Compile Include="SowableSource.xaml.cs">
+      <DependentUpon>SowableSource.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Town.xaml.cs">
       <DependentUpon>Town.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -174,10 +187,13 @@
     <Page Include="ActionCardControls\ActionCardWindow.xaml" />
     <Page Include="ActionCardControls\ExpeditionWindow.xaml" />
     <Page Include="ActionCardControls\WeaponForgingWindow.xaml" />
+    <Page Include="Board_Tile.xaml" />
     <Page Include="CDwarf.xaml" />
     <Page Include="DwarfQueue.xaml" />
     <Page Include="FurnishingWindow.xaml" />
+    <Page Include="PlayerBoard.xaml" />
     <Page Include="ResourcesTab.xaml" />
+    <Page Include="SowableSource.xaml" />
     <Page Include="Town.xaml" />
     <Page Include="TradeWindow.xaml" />
     <Page Include="Village.xaml" />

@@ -18,6 +18,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Collections.ObjectModel;
 using CavernaWPF.Layables;
+using CavernaWPF.Resources;
 using System.Windows.Media.Imaging;
 using System.Linq;
 
@@ -39,9 +40,9 @@ namespace CavernaWPF
 	    	if(obj is Layable)
 	    	{
 	        	Layable n = (Layable) obj;
-	        	if(n is Tile)
+				if(n is Tile || n is Sowable || n is Stable)
 	        	{
-	        		if((n as Tile).Locked)
+	        		if(n.Locked)
 	        		{
 	        			(sender as Thumb).DragDelta -= Thumb_DragDelta;
 	        			(sender as Thumb).MouseRightButtonDown -= Rotate;
@@ -61,9 +62,9 @@ namespace CavernaWPF
 	    	{
 				Layable n = (Layable) obj;
 				
-				if(n is Tile)
+				if(n is Tile || n is Sowable || n is Stable)
 	        	{
-	        		if((n as Tile).Locked)
+	        		if(n.Locked)
 	        		{
 	        			(sender as Thumb).DragDelta -= Thumb_DragDelta;
 	        			(sender as Thumb).MouseRightButtonDown -= Rotate;
@@ -235,6 +236,33 @@ namespace CavernaWPF
  	        		ResetLayable(n);
  	        		return;
  	        	}
+				if(n is Sowable)
+ 	        	{
+					Sowable sow = n as Sowable;
+					TownContext tc = this.DataContext as TownContext;
+					List<Tile> fieldsg = tc.Tiles.OfType<Tile>().ToList();
+					List<Tile> fields = tc.Tiles.OfType<Tile>().Where(t => t.row == row && t.column == col && (t as Tile).type == Tile.Type.Field || (t as Tile).type == Tile.Type.FieldDummy).ToList();
+					bool isSowed = tc.Tiles.OfType<Sowable>().Any(sw => sw.row == row && sw.column == col);
+					if(fields.Count == 1 && !isSowed)
+					{
+						if(sow.type == Sowable.Type.Grain)
+						{
+							if(sow.row == 0 && sow.column == 0)
+								ActionBoardContext.Instance.currentPlayer.Value.Resources[Resource.Type.Grain].Amount--;
+							PlaceLayable(sow, row, col, _x, _y);
+							return;
+						}
+						else if(sow.type == Sowable.Type.Vegetable)
+						{
+							if(sow.row == 0 && sow.column == 0)
+								ActionBoardContext.Instance.currentPlayer.Value.Resources[Resource.Type.Vegetable].Amount--;
+							PlaceLayable(sow, row, col, _x, _y);
+							return;
+						}
+					}
+					ResetLayable(sow);
+ 	        	}
+				
 				
 	 	        if(1 <= col && col <= 6 && 1 <= row && row <= 4)
 	 	        {
@@ -269,10 +297,6 @@ namespace CavernaWPF
 	 	        		
 						PlaceLayable(n, row, col, _x, _y);
 	 	        	}
-	 	        	else if(n is Sowable)
-	 	        	{
-	 	        		Sowable s = n as Sowable;
-	 	        	}
 	 	        }
  	        	ReleaseLayable(n);
  	        	return;
@@ -287,35 +311,6 @@ namespace CavernaWPF
 	    	if(col > 3) col++;
 	    	l.X = board.ColumnDefinitions.ToList().GetRange(0, col).Sum(c => c.ActualWidth);
 	    	l.Y = board.RowDefinitions.ToList().GetRange(0, l.row).Sum(r => r.ActualHeight);
-	    	
-//	    	int col = 0;
-//	    	int row = 0;
-//    		double _x = 0; double _y = 0;
-//			foreach(ColumnDefinition rd in board.ColumnDefinitions)
-//			{
-//				if(_x + rd.ActualWidth < x)
-//				{
-//					_x += rd.ActualWidth;
-//					col++;
-//				}
-//				else
-//				{	
-//					if(col == 4)
-//						ReleaseLayable(n);
-//					if(col > 4)
-//						col--;
-//					break;
-//				}
-//			}
-//			foreach(RowDefinition rd in board.RowDefinitions)
-//			{
-//				if(_y + rd.ActualHeight < y)
-//				{
-//					_y += rd.ActualHeight;
-//					row++;
-//				}
-//				break;
-//			}
  	    }
 	    
 	   	private void ReleaseLayable(Layable l)
@@ -330,8 +325,29 @@ namespace CavernaWPF
 	   			}
 	    	}
 	   		
-	    	l.X = 0;
-	    	l.Y = 0;
+	   		if(l is Sowable)
+	   		{
+	   			Sowable s = l as Sowable;
+	   			if(s.type == Sowable.Type.Grain)
+	   			{
+	   				if(l.column != 0 || l.row != 0)
+	   					ActionBoardContext.Instance.currentPlayer.Value.Resources[Resource.Type.Grain].Amount++;
+	   				l.X = 40*6;
+	   				l.Y = 420;
+	   			}
+	   			else
+	   			{
+	   				if(l.column != 0 || l.row != 0)
+	   					ActionBoardContext.Instance.currentPlayer.Value.Resources[Resource.Type.Vegetable].Amount++;
+	   				l.X = 40*7;
+	   				l.Y = 420;
+	   			}
+	   		}
+	   		else
+	   		{
+		    	l.X = 0;
+		    	l.Y = 0;
+	   		}
 	    	l.column = 0;
 	    	l.row = 0;
 	    }
@@ -344,6 +360,15 @@ namespace CavernaWPF
 			l.Y = y;
 	   	}
 	   	
+	   	private void PlaceLayable(Layable l, int row, int col)
+	   	{
+	   		l.column = col;
+			l.row = row;
+	   		if(col > 3) col++;
+			l.X = board.ColumnDefinitions.ToList().GetRange(0, col).Sum(c => c.ActualWidth);
+	    	l.Y = board.RowDefinitions.ToList().GetRange(0, row).Sum(r => r.ActualHeight);
+	   	}
+	   	
 	    private void PlaceFarmAnimals(List<FarmAnimal> fas, int row, int col, double x, double y)
 	   	{
 	    	int count = 0;
@@ -351,8 +376,8 @@ namespace CavernaWPF
 	    	{
 				fa.column = col;
 				fa.row = row;
-				fa.X = x + count*15;
-				fa.Y = y + count*15;
+				fa.X = x + count*10;
+				fa.Y = y + count*10;
 				count++;
 	    	}
 	   	}
@@ -389,6 +414,18 @@ namespace CavernaWPF
 	        if(obj is Layable)
 	        {
 	        	Layable l = obj as Layable;
+	        	
+	        	if(l is Tile || l is Sowable || l is Stable)
+	        	{
+	        		if(l.Locked)
+	        		{
+	        			(sender as Thumb).DragDelta -= Thumb_DragDelta;
+	        			(sender as Thumb).MouseRightButtonDown -= Rotate;
+	        			(sender as Thumb).DragCompleted -= Thumb_DragCompleted;
+	        			return;
+	        		}
+	        	}
+	        	
 		        if(l is Tile)
 		        {
 		        	Tile t = l as Tile;

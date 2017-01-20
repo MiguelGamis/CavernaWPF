@@ -18,8 +18,8 @@ namespace CavernaWPF.Layables
 		public Stable()
 		{
 			Img = "C:\\Users\\Miguel\\Desktop\\Caverna\\Dog.png";
-			Width=45;
-			Height=35;
+			Width=40;
+			Height=40;
 		}
 	}
 }

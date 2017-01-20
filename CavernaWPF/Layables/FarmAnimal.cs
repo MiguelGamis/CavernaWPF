@@ -22,6 +22,7 @@ namespace CavernaWPF.Layables
 		
 		public FarmAnimal(Type type)
 		{
+			this.type = type;
 			switch(type)
 			{
 				case Type.Sheep:
@@ -37,8 +38,8 @@ namespace CavernaWPF.Layables
 					Img = "C:\\Users\\Miguel\\Desktop\\Caverna\\Cow.png"; 
 					break;
 			}
-			Width=45;
-			Height=35;
+			Width=40;
+			Height=40;
 		}
 		
 //		private double y;

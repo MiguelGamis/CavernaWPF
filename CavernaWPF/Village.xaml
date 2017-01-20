@@ -3,89 +3,78 @@
 	Height="420"
 	Width="590"
 	x:Class="CavernaWPF.Village" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-	<UserControl.Resources>
-		<VisualBrush
-			x:Key="myBrush">
-			<VisualBrush.Visual>
-				<Grid>
-					<Image
-						Source="C:\Users\Miguel\Desktop\Caverna\Village.png" />
-				</Grid>
-			</VisualBrush.Visual>
-		</VisualBrush>
-	</UserControl.Resources>
-		<Grid Height="420" Width="590">
-			<Grid x:Name="board">
-				<Grid.ColumnDefinitions>
-					<ColumnDefinition Width="*"></ColumnDefinition>
-					<ColumnDefinition Width="*"></ColumnDefinition>
-					<ColumnDefinition Width="*"></ColumnDefinition>
-					<ColumnDefinition Width="*"></ColumnDefinition>
-					<ColumnDefinition Width="0.428571428*"></ColumnDefinition>
-					<ColumnDefinition Width="*"></ColumnDefinition>
-					<ColumnDefinition Width="*"></ColumnDefinition>
-					<ColumnDefinition Width="*"></ColumnDefinition>
-					<ColumnDefinition Width="*"></ColumnDefinition>
-				</Grid.ColumnDefinitions>
-				<Grid.RowDefinitions>
-					<RowDefinition Height="*"></RowDefinition>
-					<RowDefinition Height="*"></RowDefinition>
-					<RowDefinition Height="*"></RowDefinition>
-					<RowDefinition Height="*"></RowDefinition>
-					<RowDefinition Height="*"></RowDefinition>
-					<RowDefinition Height="*"></RowDefinition>
-				</Grid.RowDefinitions>
-			</Grid>
-			<Grid Margin="0,42,0,22" Height="356" Width="500">
-				<Grid.Background>
-					<ImageBrush ImageSource="C:\Users\Miguel\Desktop\Caverna\Village.png" />
-				</Grid.Background>
-			</Grid>
-			<ItemsControl
-				ItemsSource="{Binding Tiles}" xmlns:Converters="clr-namespace:CavernaWPF.Converters">
-				<ItemsControl.Resources>
-					<Converters:ImageSizeConverter
-						x:Key="imagesizeconverter" />
-				</ItemsControl.Resources>
-				<ItemsControl.ItemsPanel>
-					<ItemsPanelTemplate>
-						<Canvas></Canvas>
-					</ItemsPanelTemplate>
-				</ItemsControl.ItemsPanel>
-				<ItemsControl.ItemTemplate>
-					<DataTemplate>
-						<Thumb
-							Height="{Binding Height}"
-							Width="{Binding Width}"
-							DragCompleted="Thumb_DragCompleted"
-							DragDelta="Thumb_DragDelta"
-							MouseRightButtonDown="Rotate">
-							<Thumb.Template>
-								<ControlTemplate>
-									<Image
-										Source="{Binding Img}">
-										<Image.RenderTransform>
-											<RotateTransform
-												Angle="{Binding Rot}"
-												CenterX="{Binding Height, Converter={StaticResource imagesizeconverter}}"
-												CenterY="{Binding Height, Converter={StaticResource imagesizeconverter}}"></RotateTransform>
-										</Image.RenderTransform>
-									</Image>
-								</ControlTemplate>
-							</Thumb.Template>
-						</Thumb>
-					</DataTemplate>
-				</ItemsControl.ItemTemplate>
-				<ItemsControl.ItemContainerStyle>
-					<Style>
-						<Setter
-							Property="Canvas.Left"
-							Value="{Binding X}" />
-						<Setter
-							Property="Canvas.Top"
-							Value="{Binding Y}" />
-					</Style>
-				</ItemsControl.ItemContainerStyle>
-			</ItemsControl>
+	<Grid Height="420" Width="590">
+		<Grid x:Name="board">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="*"></ColumnDefinition>
+				<ColumnDefinition Width="*"></ColumnDefinition>
+				<ColumnDefinition Width="*"></ColumnDefinition>
+				<ColumnDefinition Width="*"></ColumnDefinition>
+				<ColumnDefinition Width="0.428571428*"></ColumnDefinition>
+				<ColumnDefinition Width="*"></ColumnDefinition>
+				<ColumnDefinition Width="*"></ColumnDefinition>
+				<ColumnDefinition Width="*"></ColumnDefinition>
+				<ColumnDefinition Width="*"></ColumnDefinition>
+			</Grid.ColumnDefinitions>
+			<Grid.RowDefinitions>
+				<RowDefinition Height="*"></RowDefinition>
+				<RowDefinition Height="*"></RowDefinition>
+				<RowDefinition Height="*"></RowDefinition>
+				<RowDefinition Height="*"></RowDefinition>
+				<RowDefinition Height="*"></RowDefinition>
+				<RowDefinition Height="*"></RowDefinition>
+			</Grid.RowDefinitions>
 		</Grid>
+		<Grid Margin="0,42,0,22" Height="356" Width="500">
+			<Grid.Background>
+				<ImageBrush ImageSource="C:\Users\Miguel\Desktop\Caverna\Village.png" />
+			</Grid.Background>
+		</Grid>
+		<ItemsControl
+			ItemsSource="{Binding Tiles}" xmlns:Converters="clr-namespace:CavernaWPF.Converters">
+			<ItemsControl.Resources>
+				<Converters:ImageSizeConverter
+					x:Key="imagesizeconverter" />
+			</ItemsControl.Resources>
+			<ItemsControl.ItemsPanel>
+				<ItemsPanelTemplate>
+					<Canvas></Canvas>
+				</ItemsPanelTemplate>
+			</ItemsControl.ItemsPanel>
+			<ItemsControl.ItemTemplate>
+				<DataTemplate>
+					<Thumb
+						Height="{Binding Height}"
+						Width="{Binding Width}"
+						DragCompleted="Thumb_DragCompleted"
+						DragDelta="Thumb_DragDelta"
+						MouseRightButtonDown="Rotate">
+						<Thumb.Template>
+							<ControlTemplate>
+								<Image
+									Source="{Binding Img}">
+									<Image.RenderTransform>
+										<RotateTransform
+											Angle="{Binding Rot}"
+											CenterX="{Binding Height, Converter={StaticResource imagesizeconverter}}"
+											CenterY="{Binding Height, Converter={StaticResource imagesizeconverter}}"></RotateTransform>
+									</Image.RenderTransform>
+								</Image>
+							</ControlTemplate>
+						</Thumb.Template>
+					</Thumb>
+				</DataTemplate>
+			</ItemsControl.ItemTemplate>
+			<ItemsControl.ItemContainerStyle>
+				<Style>
+					<Setter
+						Property="Canvas.Left"
+						Value="{Binding X}" />
+					<Setter
+						Property="Canvas.Top"
+						Value="{Binding Y}" />
+				</Style>
+			</ItemsControl.ItemContainerStyle>
+		</ItemsControl>
+	</Grid>
 </UserControl>

@@ -1,8 +1,8 @@
 ﻿/*
  * Created by SharpDevelop.
  * User: Miguel
- * Date: 12/30/2016
- * Time: 9:33 PM
+ * Date: 01/18/2017
+ * Time: 15:18
  * 
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
@@ -19,32 +19,28 @@ using System.Windows.Media;
 namespace CavernaWPF
 {
 	/// <summary>
-	/// Interaction logic for Window2.xaml
+	/// Interaction logic for BoardTile.xaml
 	/// </summary>
-	public partial class Window2 : Window
+	public partial class Board_Tile : UserControl
 	{
-		public Window2()
+		public Board_Tile()
 		{
 			InitializeComponent();
 		}
 		
-		private void OKButtonClick(object sender, RoutedEventArgs e)
+		private void dragEnter(object sender, DragEventArgs e)
+		{
+			e.Effects = DragDropEffects.All;
+		}
+		
+		private void drapDrop(object sender, DragEventArgs e)
 		{
 			
 		}
 		
-		private void test_MouseMove(object sender, MouseEventArgs e)
+		private void dragOver(object sender, DragEventArgs e)
 		{
-			if(e.LeftButton == MouseButtonState.Pressed)
-			{
-				DataObject dragData = new DataObject();
-				//DragDrop.DoDragDrop(test, 
-			}
-		}
-		
-		private void test_MouseDown(object sender, MouseEventArgs e)
-		{
-			
+			grid.Background = new SolidColorBrush();
 		}
 	}
 }

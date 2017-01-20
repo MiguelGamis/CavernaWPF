@@ -32,7 +32,7 @@ namespace CavernaWPF
 		{
 			InitializeComponent();
 		}
-
+		
 	    private void Thumb_DragDelta(object sender, DragDeltaEventArgs e)
 	    {
 	    	object obj = ((FrameworkElement)sender).DataContext;

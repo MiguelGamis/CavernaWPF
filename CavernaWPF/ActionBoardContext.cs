@@ -189,28 +189,48 @@ namespace CavernaWPF
 		
 		int Round = 0;
 		
+		public bool Sow;
+		
 		private bool ConfirmEndTurn()
 		{
 			var deleteList = currentPlayer.Value.town.Tiles.ToList().Where(layable => layable.row == 0 && layable.column == 0).ToList();
 			
 			if(deleteList.Count> 0)
 			{
-				MessageBoxResult result = MessageBox.Show("Are you sure you want to throw the tiles away", "There are tiles not placed", MessageBoxButton.YesNo, MessageBoxImage.Question);
-				if (result == MessageBoxResult.No)
+				if(!deleteList.All(d => d is Sowable))
 				{
-				    return false;
+					MessageBoxResult result = MessageBox.Show("Are you sure you want to throw the tiles away", "There are tiles not placed", MessageBoxButton.YesNo, MessageBoxImage.Question);
+					if (result == MessageBoxResult.No)
+					{
+					    return false;
+					}
 				}
-				else
+				deleteList.ForEach(l => currentPlayer.Value.town.Tiles.Remove(l));
+			}
+			
+			//var unlockedTiles = currentPlayer.Value.town.Tiles.OfType<Tile>().Where(t => !t.Locked).ToList();
+			
+			if(Sow == true)
+			{
+				Sow = false;
+				
+				List<Sowable> newlyPlanted = currentPlayer.Value.town.Tiles.OfType<Sowable>().Where(t => !t.Locked).ToList();
+				
+				foreach(Sowable sw in newlyPlanted)
 				{
-					deleteList.ForEach(l => currentPlayer.Value.town.Tiles.Remove(l));
+					if(sw.type == Sowable.Type.Grain)
+					{
+						currentPlayer.Value.town.Tiles.Add(new Sowable(Sowable.Type.Grain){row = sw.row, column = sw.column, X = sw.X, Y = sw.Y - 8});
+						currentPlayer.Value.town.Tiles.Add(new Sowable(Sowable.Type.Grain){row = sw.row, column = sw.column, X = sw.X, Y = sw.Y - 16});
+					}
+					else if(sw.type == Sowable.Type.Vegetable)
+					{
+						currentPlayer.Value.town.Tiles.Add(new Sowable(Sowable.Type.Vegetable){row = sw.row, column = sw.column, X = sw.X, Y = sw.Y - 8});
+					}
 				}
 			}
 			
-			var unlockedTiles = currentPlayer.Value.town.Tiles.OfType<Tile>().Where(t => !t.Locked).ToList();
-			
-			//var unlockedTwinTiles = unlockedTiles.Where(t => t.Twin).ToList();
-			
-			unlockedTiles.ForEach(t => t.Locked = true);
+			currentPlayer.Value.town.Tiles.ToList().ForEach(t => t.Locked = true);
 			
 //			foreach(Tile tt in unlockedTwinTiles)
 //			{
@@ -245,6 +265,28 @@ namespace CavernaWPF
 		
 		private void Harvest()
 		{
+			
+		}
+		
+		private void FieldPhase()
+		{
+			foreach(Player p in players)
+			{
+				var fields = p.town.Tiles.OfType<Tile>().Where(t => t.type == Tile.Type.Field || t.type == Tile.Type.FieldDummy).ToList();
+				Sowable ripe;
+				foreach(Tile field in fields)
+				{
+					ripe = p.town.Tiles.OfType<Sowable>().Where(s => s.row == field.row && s.column == field.column).ToList().Last();
+					if(ripe != null)
+					{
+						if(ripe.type == Sowable.Type.Grain)
+							p.Resources[Resource.Type.Grain].Amount++;
+						if(ripe.type == Sowable.Type.Vegetable)
+							p.Resources[Resource.Type.Vegetable].Amount++;
+						p.town.Tiles.Remove(ripe);
+					}
+				}
+			}
 		}
 		
 		private void NextRound()
@@ -314,8 +356,7 @@ namespace CavernaWPF
 			
 			AddActionCard(GetActionCard("Housework"));
 			
-			AddActionCard(GetActionCard("Donkey farming"));
-			//AddActionCard(GetActionCard("Slash-and-burn"));
+			AddActionCard(GetActionCard("Slash-and-burn"));
 			
 			List<string> round1ActionCards = new List<string> { "Blacksmithing", "Sheep farming", "Ore mine construction" };
 			ShuffleList(round1ActionCards);

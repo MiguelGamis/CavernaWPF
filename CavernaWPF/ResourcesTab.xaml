@@ -1,7 +1,12 @@
 ﻿<UserControl x:Class="CavernaWPF.ResourcesTab"
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-	<Grid>
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:Converters="clr-namespace:CavernaWPF.Converters"
+	xmlns:custom="clr-namespace:CavernaWPF">
+	<UserControl.Resources>
+		<Converters:ResourceToIconConverter x:Key="resourceToIconConverter"/>
+	</UserControl.Resources>
+	<StackPanel Orientation="Horizontal">
 		<ItemsControl ItemsSource="{Binding Resources}">
 			<ItemsControl.ItemsPanel>
 				<ItemsPanelTemplate>
@@ -11,14 +16,14 @@
 			<ItemsControl.ItemTemplate>
 				<DataTemplate>
 					<StackPanel>
-						<TextBlock Text="{Binding Value.ResourceType}"/>
+						<!--<TextBlock Text="{Binding Value.ResourceType}"/>-->
+						<Image Height="40" Width="40" Source="{Binding Value.ResourceType, Converter={StaticResource resourceToIconConverter}}"></Image>
 						<TextBlock Text="{Binding Value.Amount}"/>
 					</StackPanel>
 				</DataTemplate>
 			</ItemsControl.ItemTemplate>
 		</ItemsControl>
-	
-		<ItemsControl ItemsSource="{Binding Sowables}">
+<!--		<ItemsControl ItemsSource="{Binding Sowables}">
 			<ItemsControl.ItemsPanel>
 				<ItemsPanelTemplate>
 					<StackPanel Orientation="Horizontal"/>
@@ -26,12 +31,12 @@
 			</ItemsControl.ItemsPanel>
 			<ItemsControl.ItemTemplate>
 				<DataTemplate>
-					<StackPanel>
-						<TextBlock Text="{Binding Value.ResourceType}"/>
+					<Grid>
+						<custom:SowableSource></custom:SowableSource>
 						<TextBlock Text="{Binding Value.Amount}"/>
-					</StackPanel>
+					</Grid>
 				</DataTemplate>
 			</ItemsControl.ItemTemplate>
-		</ItemsControl>
-	</Grid>
+		</ItemsControl>-->
+	</StackPanel>
 </UserControl>

@@ -58,6 +58,16 @@ namespace CavernaWPF
 			Tiles.Add(dwellingdummy);
 		}
 		
+		public void PositionLayable(Layable l, int row, int col)
+		{
+			Tiles.Add(l);
+			l.column = col;
+			l.row = row;
+			if(col > 3) col++;
+			l.X = control.board.ColumnDefinitions.ToList().GetRange(0, col).Sum(c => c.ActualWidth);
+	    	l.Y = control.board.RowDefinitions.ToList().GetRange(0, row).Sum(r => r.ActualHeight);
+		}
+		
 		public Village control;
 		
 		private ObservableCollection<Layable> tiles = new ObservableCollection<Layable>();

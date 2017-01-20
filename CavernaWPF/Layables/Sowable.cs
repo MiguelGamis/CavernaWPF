@@ -21,6 +21,7 @@ namespace CavernaWPF.Layables
 		
 		public Sowable(Type type)
 		{
+			this.type = type;
 			switch(type)
 			{
 				case Type.Grain:
@@ -30,8 +31,8 @@ namespace CavernaWPF.Layables
 					Img = "C:\\Users\\Miguel\\Desktop\\Caverna\\Vegetable.png"; 
 					break;
 			}
-			Width=45;
-			Height=35;
+			Width=40;
+			Height=40;
 		}
 	}
 }

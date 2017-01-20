@@ -29,10 +29,11 @@ namespace CavernaWPF
 		
 		private LayoutManager()
 		{
-			map = new Dictionary<Player, StackPanel>();
+			map = new Dictionary<Player, Grid>();
+			Grid.SetRow(startingPlayerPiece, 3);
 		}
 		
-		public Dictionary<Player, StackPanel> map;
+		public Dictionary<Player, Grid> map;
 		
 		public Image startingPlayerPiece = new Image() { Height=30, Width=15, Source = new BitmapImage(new Uri("C:\\Users\\Miguel\\Desktop\\Caverna\\StartingPlayer.png"))};
 	}
