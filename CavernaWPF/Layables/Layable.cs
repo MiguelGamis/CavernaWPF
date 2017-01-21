@@ -18,6 +18,7 @@ namespace CavernaWPF.Layables
 	{
 		private double x;
     	private double y;
+    	private int z;
     	private string img;
 		
 		public double Y
@@ -37,6 +38,16 @@ namespace CavernaWPF.Layables
 	        {
 	            x = value;
 	            if (PropertyChanged != null) PropertyChanged(this, new PropertyChangedEventArgs("X"));
+	        }
+	    }
+	    
+	  	public int Z
+	    {
+	        get { return z; }
+	        set
+	        {
+	            z = value;
+	            if (PropertyChanged != null) PropertyChanged(this, new PropertyChangedEventArgs("Z"));
 	        }
 	    }
 	    

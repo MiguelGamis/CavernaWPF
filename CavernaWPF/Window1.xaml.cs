@@ -124,10 +124,35 @@ namespace CavernaWPF
 		
 		private void Test(object sender, RoutedEventArgs e)
 		{
-			Tile test = new Tile(Tile.Type.Field){Locked = true};
+			Tile test = new Tile(Tile.Type.BigFence){Locked = true, Rot = 90};
 			ActionBoardContext.Instance.players[1].town.PositionLayable(test, 1, 1);
-			Tile test2 = new Tile(Tile.Type.Field){Locked = true};
+			FarmAnimal fa = new FarmAnimal(FarmAnimal.Type.Sheep){Locked = true};
+			ActionBoardContext.Instance.players[1].town.PositionLayable(fa, 1, 1);
+			FarmAnimal fa2 = new FarmAnimal(FarmAnimal.Type.Sheep){Locked = true};
+			ActionBoardContext.Instance.players[1].town.PositionLayable(fa2, 1, 1);
+			
+			Tile test2 = new Tile(Tile.Type.Fence){Locked = true};
 			ActionBoardContext.Instance.players[1].town.PositionLayable(test2, 2, 1);
+			FarmAnimal fa3 = new FarmAnimal(FarmAnimal.Type.Donkey){Locked = true};
+			ActionBoardContext.Instance.players[1].town.PositionLayable(fa3, 2, 1);
+			FarmAnimal fa4 = new FarmAnimal(FarmAnimal.Type.Donkey){Locked = true};
+			ActionBoardContext.Instance.players[1].town.PositionLayable(fa4, 2, 1);
+			
+			Tile test3 = new Tile(Tile.Type.Fence){Locked = true};
+			ActionBoardContext.Instance.players[1].town.PositionLayable(test3, 2, 2);
+			Stable stable = new Stable(){Locked = true};
+			ActionBoardContext.Instance.players[1].town.PositionLayable(stable, 2, 2);
+			FarmAnimal fa5 = new FarmAnimal(FarmAnimal.Type.Boar){Locked = true};
+			ActionBoardContext.Instance.players[1].town.PositionLayable(fa5, 2, 2);
+			FarmAnimal fa6 = new FarmAnimal(FarmAnimal.Type.Boar){Locked = true};
+			ActionBoardContext.Instance.players[1].town.PositionLayable(fa6, 2, 2);
+			
+			Tile test4 = new Tile(Tile.Type.Fence){Locked = true};
+			ActionBoardContext.Instance.players[1].town.PositionLayable(test4, 3, 1);
+			FarmAnimal fa7 = new FarmAnimal(FarmAnimal.Type.Boar){Locked = true};
+			ActionBoardContext.Instance.players[1].town.PositionLayable(fa7, 3, 1);
+			FarmAnimal fa8 = new FarmAnimal(FarmAnimal.Type.Boar){Locked = true};
+			ActionBoardContext.Instance.players[1].town.PositionLayable(fa8, 3, 1);
 		}
 		
 	}

@@ -31,48 +31,72 @@ namespace CavernaWPF.Layables
 			this.type = type;
 			switch(type)
 			{
-				case Type.Field: 
+				case Type.Field:
+					Z = 0;
 					Img = "C:\\Users\\Miguel\\Desktop\\Caverna\\Field.png";
 					break;
-				case Type.Cave: 
+				case Type.Cave:
+					Z = 0;
 					Img = "C:\\Users\\Miguel\\Desktop\\Caverna\\Cave.png";
 					break;
-				case Type.Tunnel: 
+				case Type.Tunnel:
+					Z = 0;					
 					Img = "C:\\Users\\Miguel\\Desktop\\Caverna\\Tunnel.png";
 					break;
-				case Type.Meadow: 
+				case Type.Meadow:
+					Z = 0;					
 					Img = "C:\\Users\\Miguel\\Desktop\\Caverna\\Meadow.png";
 					break;								
-				case Type.Fence: 
+				case Type.Fence:
+					Z = 1;					
 					Img = "C:\\Users\\Miguel\\Desktop\\Caverna\\Fence.png";
 					break;
-				case Type.RubyMine: 
+				case Type.RubyMine:
+					Z = 2;
 					Img = "C:\\Users\\Miguel\\Desktop\\Caverna\\RubyMine.png";
 					break;
-				case Type.BigFence: 
+				case Type.BigFence:
+					Z = 1;					
 					Img = "C:\\Users\\Miguel\\Desktop\\Caverna\\BigFence.png";
 					twinTile = new Tile(Type.BigFenceDummy);
 					twinTile.twinTile = this;
 					break;
-				case Type.CaveTunnel: 
+				case Type.CaveTunnel:
+					Z = 0;
 					Img = "C:\\Users\\Miguel\\Desktop\\Caverna\\CaveTunnel.png";
 					twinTile = new Tile(Type.TunnelDummy);
 					twinTile.twinTile = this;
 					break;
-				case Type.CaveCave: 
+				case Type.CaveCave:
+					Z = 0;
 					Img = "C:\\Users\\Miguel\\Desktop\\Caverna\\CaveCave.png";
 					twinTile = new Tile(Type.CaveDummy);
 					twinTile.twinTile = this;
 					break;
-				case Type.MeadowField: 
+				case Type.MeadowField:
+					Z = 0;
 					Img = "C:\\Users\\Miguel\\Desktop\\Caverna\\MeadowField.png";
 					twinTile = new Tile(Type.FieldDummy);
 					twinTile.twinTile = this;
 					break;								
-				case Type.OreMine: 
+				case Type.OreMine:
+					Z = 1;
 					Img = "C:\\Users\\Miguel\\Desktop\\Caverna\\OreMine.png";
 					twinTile = new Tile(Type.DeepTunnelDummy);
 					twinTile.twinTile = this;
+					break;
+				case Type.Dwelling:
+					Z = 1;
+					break;
+				case Type.CaveDummy:
+				case Type.FieldDummy:
+				case Type.TunnelDummy:
+					Z = 0;
+					break;
+				case Type.BigFenceDummy:
+				case Type.DwellingDummy:
+				case Type.DeepTunnelDummy:
+					Z = 1;
 					break;
 				default: break;
 			}
@@ -99,36 +123,6 @@ namespace CavernaWPF.Layables
 			Height = 70;
 		}
 		
-//		public double Y
-//	    {
-//	        get { return y; }
-//	        set
-//	        {
-//	            y = value;
-//	            if (PropertyChanged != null) PropertyChanged(this, new PropertyChangedEventArgs("Y"));
-//	        }
-//	    }
-//	
-//	    public double X
-//	    {
-//	        get { return x; }
-//	        set
-//	        {
-//	            x = value;
-//	            if (PropertyChanged != null) PropertyChanged(this, new PropertyChangedEventArgs("X"));
-//	        }
-//	    }
-//	    
-//	    public string Img
-//	    {
-//	    	get { return img; }
-//	    	set
-//	        {
-//	            img = value;
-//	            if (PropertyChanged != null) PropertyChanged(this, new PropertyChangedEventArgs("Img"));
-//	        }
-//	    }
-		
 	    private int rot;
 		
 		public int Rot
@@ -151,7 +145,7 @@ namespace CavernaWPF.Layables
 		{
 			return twinTile;
 		}
-	    
-//	    public event PropertyChangedEventHandler PropertyChanged;
+		
+		private int rank;
 	}
 }

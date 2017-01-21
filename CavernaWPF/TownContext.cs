@@ -58,7 +58,7 @@ namespace CavernaWPF
 			Tiles.Add(dwellingdummy);
 		}
 		
-		public void PositionLayable(Layable l, int row, int col)
+		public void PositionLayable(Layable l, int col, int row)
 		{
 			Tiles.Add(l);
 			l.column = col;
@@ -66,6 +66,32 @@ namespace CavernaWPF
 			if(col > 3) col++;
 			l.X = control.board.ColumnDefinitions.ToList().GetRange(0, col).Sum(c => c.ActualWidth);
 	    	l.Y = control.board.RowDefinitions.ToList().GetRange(0, row).Sum(r => r.ActualHeight);
+	    	if(l is Tile)
+	    	{
+	    		Tile t = (l as Tile);
+	    		Tile tt = t.GetTwinTile();
+	    		if(tt != null)
+	    		{
+		    		switch((l as Tile).Rot)
+		    		{
+		    			case 0:
+		    				col++;
+		    				break;
+		    			case 90:
+		    				row++;
+		    				break;
+		    			case 180:
+		    				col--;
+		    				break;
+		    			case 270:
+		    				row--;
+		    				break;
+		    		}
+		    		tt.row = row;
+		    		tt.column = col;
+		    		Tiles.Add(tt);
+	    		}
+	    	}
 		}
 		
 		public Village control;
@@ -86,22 +112,72 @@ namespace CavernaWPF
 		
 		public BoardTile[,] boardtiles = new BoardTile[8,6];
 		
-		public int HowManyBoardTilesOfType(BoardTile.Type type)
-		{
-			var query = from BoardTile item in boardtiles
-						where item != null
-						where item.state == BoardTile.Type.Cave
-						select item;
-			return query == null ? 0 : query.Count();
+		public int GetCapacity(int col, int row, FarmAnimal.Type animalType)
+		{		
+			List<Tile> occupyingTiles = Tiles.OfType<Tile>().Where(t => t.row == row && t.column == col).ToList();
+			
+			List<Tile> fenced = occupyingTiles.Where(t => t.type == Tile.Type.Fence || t.type == Tile.Type.BigFence || t.type == Tile.Type.BigFenceDummy).ToList();
+			List<Stable> occupyingStable = Tiles.OfType<Stable>().Where(s => s.row == row && s.column == col).ToList();
+			if(fenced.Count == 1)
+	 	    {
+				int cap = 0;
+				Tile enclosure = fenced[0];
+		 	    switch(enclosure.type)
+    			{
+    				case Tile.Type.BigFence:
+    				case Tile.Type.BigFenceDummy:
+    					Tile extraEnclosure = enclosure.GetTwinTile();
+    					cap = 4;
+    					break;
+					case Tile.Type.Fence:
+    					cap = 2;
+    					break;
+    			}
+    			
+    			if(occupyingStable.Count == 1)
+    			{
+    				cap *= 2;
+    			}
+    			return cap;
+			}
+			
+			List<Tile> meadows = occupyingTiles.Where(t => t.type == Tile.Type.Meadow || t.type == Tile.Type.MeadowField).ToList();
+    		if(meadows.Count == 1)
+    		{
+    			if(animalType == FarmAnimal.Type.Sheep)
+    			{
+    				List<Dog> occupyingDogs = Tiles.OfType<Dog>().Where(d => d.row == row && d.column == col).ToList();
+    				int cap = occupyingDogs.Count > 0 ? occupyingDogs.Count + 1 : 0;
+    				if(cap > 0) return cap;
+    			}
+    		}
+    		
+    		if(occupyingStable.Count == 1 && animalType == FarmAnimal.Type.Donkey)
+    			return 1;
+    		
+    		List<Tile> mines = occupyingTiles.Where(t => t.type == Tile.Type.OreMine || t.type == Tile.Type.RubyMine).ToList();
+    		if(mines.Count == 1 && animalType == FarmAnimal.Type.Donkey)
+    			return 1;
+    		
+			return 0;
 		}
 		
-		public int HasAdjacent(BoardTile.Type type)
+		public List<FarmAnimal> GetFarmAnimals(int col, int row)
 		{
-			var query = from BoardTile item in boardtiles
-						where item.state == type
-						select item;
+			List<Tile> occupyingTiles = Tiles.OfType<Tile>().Where(t => t.row == row && t.column == col).ToList();
 			
-			return -1;
+			List<FarmAnimal> occupyingFarmAnimals = new List<FarmAnimal>();
+			
+			if(occupyingTiles.Count == 1)
+			{
+				Tile enclosure = occupyingTiles[0]; 
+				Tile extraEnclosure = enclosure.GetTwinTile();
+				if(extraEnclosure != null)
+					occupyingFarmAnimals = Tiles.OfType<FarmAnimal>().Where(s => (s.row == row && s.column == col) || (s.row == extraEnclosure.row && s.column == extraEnclosure.column)).ToList();
+				else
+					occupyingFarmAnimals = Tiles.OfType<FarmAnimal>().Where(s => s.row == row && s.column == col).ToList();
+			}
+ 	        return occupyingFarmAnimals;
 		}
 		
 		public event PropertyChangedEventHandler PropertyChanged;

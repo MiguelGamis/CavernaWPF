@@ -33,6 +33,7 @@ namespace CavernaWPF.Layables
 			}
 			Width=40;
 			Height=40;
+			Z = 6;
 		}
 	}
 }

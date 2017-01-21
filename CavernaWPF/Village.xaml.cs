@@ -134,7 +134,7 @@ namespace CavernaWPF
 	 	       			}
 					}
 					
-					if(1 <= col && col <= 6 && 1 <= row && row <= 4 && t.Twin ? (1 <= twincol && twincol <= 6 && 1 <= twinrow && twinrow <= 4) : true)
+					if(1 <= col && col <= 6 && 1 <= row && row <= 4 && (t.Twin ? (1 <= twincol && twincol <= 6 && 1 <= twinrow && twinrow <= 4) : true))
 					{
 						//if changing positions remove farm animals and stables 
 						if(col != t.column || row != t.row)
@@ -172,69 +172,33 @@ namespace CavernaWPF
 				
 				if(n is FarmAnimal)
  	        	{
-					if(1 <= col && col <= 6 && 1 <= row && row <= 4)
-	 	        	{
-	 	        		TownContext tc = this.DataContext as TownContext;
-	 	        		
-	 	        		FarmAnimal fa = n as FarmAnimal;
-						
-	 	        		if(fa.column == col && fa.row == row)
-	 	        			return;
-	 	        		
-	 	        		List<FarmAnimal> occupyingFarmAnimals = tc.Tiles.OfType<FarmAnimal>().Where(s => s.row == row && s.column == col).ToList();
-	 	        		if(occupyingFarmAnimals.Count > 0)
-	 	        		{
-	 	        			if(occupyingFarmAnimals[0].type != fa.type)
-	 	        			{
-	 	        				ResetLayable(n);
-	 	        				return;
-	 	        			}
-	 	        		}
-	 	        		
-	 	        		List<Tile> intersectingTiles  = tc.Tiles.OfType<Tile>().Where(t => t.row == row && t.column == col).ToList();
-	 	        		List<Stable> intersectingStable = tc.Tiles.OfType<Stable>().Where(s => s.row == row && s.column == col).ToList();
-	 	        		List<Tile> fenced= intersectingTiles.Where(t => t.type == Tile.Type.Fence || t.type == Tile.Type.BigFence).ToList();
-	 	        		if(fenced.Count == 1)
-	 	        		{
-	 	        			int cap = 0;
-	 	        			switch(fenced[0].type)
-	 	        			{
-	 	        				case Tile.Type.Fence:
-	 	        					cap = 2;
-	 	        					break;
-	 	        				case Tile.Type.BigFence:
-	 	        					cap = 4;
-	 	        					break;
-	 	        			}
-	 	        			if(intersectingStable.Count == 1)
-	 	        			{
-	 	        				cap *= 2;
-	 	        			}
-	 	        			if(occupyingFarmAnimals.Count + 1 <= cap)
-	 	        			{
-	 	        				occupyingFarmAnimals.Add(fa);
-	 	        				PlaceFarmAnimals(occupyingFarmAnimals, row, col, _x, _y);
-			 	        		
-			 	        		return;
-	 	        			}
-	 	        		}
-	 	        		List<Tile> meadows= intersectingTiles.Where(t => t.type == Tile.Type.Meadow || t.type == Tile.Type.MeadowField).ToList();
-	 	        		if(meadows.Count == 1)
-	 	        		{
-	 	        			if(fa.type == FarmAnimal.Type.Sheep)
-	 	        			{
-	 	        				List<Dog> intersectingDogs = tc.Tiles.OfType<Dog>().Where(d => d.row == row && d.column == col).ToList();
-	 	        				if(intersectingDogs.Count > 0 ? intersectingDogs.Count + 1 >= occupyingFarmAnimals.Count : false)
-	 	        				{
-									occupyingFarmAnimals.Add(fa);
-	 	        					PlaceFarmAnimals(occupyingFarmAnimals, row, col, _x, _y);
-				 	        		return;
-	 	        				}
-	 	        			}
-	 	        		}
+					FarmAnimal fa = n as FarmAnimal;
+					
+					if(fa.column == col && fa.row == row)
+	 	        		return;
+					
+					TownContext tc = this.DataContext as TownContext;
+					
+					int cap = tc.GetCapacity(col, row, fa.type);
+					List<FarmAnimal> occupyingFarmAnimals = tc.GetFarmAnimals(col, row);
+					
+					if(occupyingFarmAnimals.Count > 0)
+					{
+						if(occupyingFarmAnimals[0].type != fa.type)
+						{
+							ResetLayable(n);
+		 	        		return;
+						}
 					}
- 	        		ResetLayable(n);
- 	        		return;
+					
+					if(occupyingFarmAnimals.Count + 1 <= cap)
+					{
+						occupyingFarmAnimals.Add(fa);
+	 	        		PlaceFarmAnimals(occupyingFarmAnimals, row, col, _x, _y);
+				 	    return;
+					}
+					ResetLayable(n);
+		 	        return;
  	        	}
 				if(n is Sowable)
  	        	{
@@ -305,8 +269,6 @@ namespace CavernaWPF
 	    
 	    private void ResetLayable(Layable l)
 	    {
-	    	if(l.row == 0 && l.column == 0)
-	    		return;
 	    	int col = l.column;
 	    	if(col > 3) col++;
 	    	l.X = board.ColumnDefinitions.ToList().GetRange(0, col).Sum(c => c.ActualWidth);

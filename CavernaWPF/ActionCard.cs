@@ -323,7 +323,7 @@ namespace CavernaWPF
 				if(acwc.Options[0].Selected)
 				{
 					CollectAccumulatingResource(d.player);
-					d.player.Resources[Resource.Type.Grain].Amount = 1;
+					d.player.Resources[Resource.Type.Grain].Amount++;
 				}
 				if(acwc.Options[1].Selected)
 				{
@@ -353,7 +353,7 @@ namespace CavernaWPF
 		{
 			ActionCardWindowContext acwc = new ActionCardWindowContext();
 			acwc.Options.Add(new ActionCardCheckBox(){ Selected = true, Text = "Collect Dog", Able = true});
-			bool roomForCavern = d.player.town.HowManyBoardTilesOfType(BoardTile.Type.Cave) > 0;
+			bool roomForCavern = false;
 			acwc.Options.Add(new ActionCardCheckBox(){ Selected = roomForCavern, Text = "Furnish a cavern", Able = roomForCavern});
 			acwc.Control.ShowDialog();
 			
@@ -415,7 +415,7 @@ namespace CavernaWPF
 		{
 			ActionCardWindowContext acwc = new ActionCardWindowContext();
 			int numWood = d.player.Resources[Resource.Type.Wood].Amount;
-			bool hasMeadow = d.player.town.HowManyBoardTilesOfType(BoardTile.Type.Meadow) > 0;
+			bool hasMeadow = true;
 			int numStone = d.player.Resources[Resource.Type.Stone].Amount;
 			//TODO:must query boardtiles for adjacent meadows
 			acwc.Options.Add(new ActionCardCheckBox() {Text = "Build small fenced area", Selected = numWood > 1 && hasMeadow, Able = numWood > 0});
@@ -483,7 +483,7 @@ namespace CavernaWPF
 		{
 			ActionCardWindowContext acwc = new ActionCardWindowContext();
 			int numWood = d.player.Resources[Resource.Type.Wood].Amount;
-			bool hasMeadow = d.player.town.HowManyBoardTilesOfType(BoardTile.Type.Meadow) > 0;
+			bool hasMeadow = true;
 			int numStone = d.player.Resources[Resource.Type.Stone].Amount;
 			//TODO:must query boardtiles for adjacent meadows
 			acwc.Options.Add(new ActionCardCheckBox() {Text = "Build small fenced area", Selected = numWood > 1 && hasMeadow, Able = numWood > 0});

@@ -26,7 +26,7 @@ namespace CavernaWPF.Layables
 			switch(type)
 			{
 				case Type.Sheep:
-					Img = "C:\\Users\\Miguel\\Desktop\\Caverna\\Sheep2.png"; 
+					Img = "C:\\Users\\Miguel\\Desktop\\Caverna\\Sheep.png"; 
 					break;
 				case Type.Donkey:
 					Img = "C:\\Users\\Miguel\\Desktop\\Caverna\\Donkey.png"; 
@@ -40,6 +40,7 @@ namespace CavernaWPF.Layables
 			}
 			Width=40;
 			Height=40;
+			Z = 7;
 		}
 		
 //		private double y;

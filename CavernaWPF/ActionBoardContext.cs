@@ -119,6 +119,8 @@ namespace CavernaWPF
 		
 		public void NextTurn()
 		{
+			BreedingPhase();
+			
 			if(!readyForNextDwarf || promptingPlacement)
 			{
 				return;
@@ -208,8 +210,6 @@ namespace CavernaWPF
 				deleteList.ForEach(l => currentPlayer.Value.town.Tiles.Remove(l));
 			}
 			
-			//var unlockedTiles = currentPlayer.Value.town.Tiles.OfType<Tile>().Where(t => !t.Locked).ToList();
-			
 			if(Sow == true)
 			{
 				Sow = false;
@@ -230,42 +230,26 @@ namespace CavernaWPF
 				}
 			}
 			
-			currentPlayer.Value.town.Tiles.ToList().ForEach(t => t.Locked = true);
+			var unlockedTiles = currentPlayer.Value.town.Tiles.OfType<Tile>().Where(t => !t.Locked).ToList();
+			foreach(var unlockedTile in unlockedTiles)
+			{
+				List<Tile> tiles = currentPlayer.Value.town.Tiles.OfType<Tile>().Where(t => t.column == unlockedTile.column && t.row == unlockedTile.row).OrderBy(t => t.Z).ToList();
+				if(tiles.Count > 1)
+				{
+					tiles.GetRange(0,tiles.Count - 2).ForEach(t => currentPlayer.Value.town.Tiles.Remove(t));
+				}
+			}
 			
-//			foreach(Tile tt in unlockedTwinTiles)
-//			{
-//				int row = tt.row; int col = tt.column;
-//				switch(tt.Rot)
-//				{
-//					case 0:
-//						col++;
-//						break;
-//					case 90:
-//						row++;
-//						break;
-//					case 180:
-//						col--;
-//						break;
-//					case 270:
-//						row--;
-//						break;
-//				}
-//				switch(tt.type)
-//				{
-//					case Tile.Type.MeadowField:
-//						Tile dummy = new Tile(Tile.Type.FieldDummy) { Locked = true };
-//						dummy.row = row; dummy.column = col;
-//						currentPlayer.Value.town.Tiles.Add(dummy);
-//						break;
-//				}
-//			}
+			currentPlayer.Value.town.Tiles.ToList().ForEach(t => t.Locked = true);
 			
 			return true;
  		}
 		
 		private void Harvest()
 		{
-			
+			FieldPhase();
+			FeedingPhase();
+			BreedingPhase();
 		}
 		
 		private void FieldPhase()
@@ -273,17 +257,54 @@ namespace CavernaWPF
 			foreach(Player p in players)
 			{
 				var fields = p.town.Tiles.OfType<Tile>().Where(t => t.type == Tile.Type.Field || t.type == Tile.Type.FieldDummy).ToList();
-				Sowable ripe;
 				foreach(Tile field in fields)
 				{
-					ripe = p.town.Tiles.OfType<Sowable>().Where(s => s.row == field.row && s.column == field.column).ToList().Last();
-					if(ripe != null)
+					List<Sowable> occupyingSowables = p.town.Tiles.OfType<Sowable>().Where(s => s.row == field.row && s.column == field.column).ToList();
+					if(occupyingSowables.Count > 0)
 					{
+						Sowable ripe = occupyingSowables.Last();
 						if(ripe.type == Sowable.Type.Grain)
 							p.Resources[Resource.Type.Grain].Amount++;
 						if(ripe.type == Sowable.Type.Vegetable)
 							p.Resources[Resource.Type.Vegetable].Amount++;
 						p.town.Tiles.Remove(ripe);
+					}
+				}
+			}
+		}
+		
+		private void FeedingPhase()
+		{
+			foreach(Player p in players)
+			{
+				
+			}
+		}
+		
+		private void BreedingPhase()
+		{
+			foreach(Player p in players)
+			{
+				var animalGroups = p.town.Tiles.OfType<FarmAnimal>().GroupBy( t => t.type, t => t, (key, g) => new { 
+                                                 Type = key, 
+                                                 FarmAnimals = g.ToList()
+                                               });
+				foreach(var animalGroup in animalGroups)
+				{
+					if(animalGroup.FarmAnimals.Count > 1)
+					{
+						p.town.Tiles.Add(new FarmAnimal(animalGroup.Type));
+						
+						//Try and accomodate new babies if possible
+//						var animalLocations = animalGroup.FarmAnimals.GroupBy(f => new {f.column, f.row},  f => f, (key, v) => new { 
+//                                                 Location = key, 
+//                                                 Count = v.Count()
+//                                               });
+//						foreach(var animalLocation in animalLocations)
+//						{
+//							int cap = GetCapacity(animalLocation.Key.column, animalLocation.Key.row, animalGroup.Type);
+//							animalLocation.
+//						}
 					}
 				}
 			}
