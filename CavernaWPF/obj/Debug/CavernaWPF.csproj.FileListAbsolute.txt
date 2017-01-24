@@ -46,3 +46,9 @@ C:\Users\Miguel\Documents\SharpDevelop Projects\CavernaWPF\CavernaWPF\obj\Debug\
 C:\Users\Miguel\Documents\SharpDevelop Projects\CavernaWPF\CavernaWPF\obj\Debug\PlayerBoard.g.cs
 C:\Users\Miguel\Documents\SharpDevelop Projects\CavernaWPF\CavernaWPF\obj\Debug\SowableSource.baml
 C:\Users\Miguel\Documents\SharpDevelop Projects\CavernaWPF\CavernaWPF\obj\Debug\SowableSource.g.cs
+C:\Users\Miguel\Documents\SharpDevelop Projects\CavernaWPF\CavernaWPF\obj\Debug\HarvestEventsCard.baml
+C:\Users\Miguel\Documents\SharpDevelop Projects\CavernaWPF\CavernaWPF\obj\Debug\HarvestEventsCard.g.cs
+C:\Users\Miguel\Documents\SharpDevelop Projects\CavernaWPF\CavernaWPF\obj\Debug\SkipFieldOrBreedWindow.baml
+C:\Users\Miguel\Documents\SharpDevelop Projects\CavernaWPF\CavernaWPF\obj\Debug\SkipFieldOrBreedWindow.g.cs
+C:\Users\Miguel\Documents\SharpDevelop Projects\CavernaWPF\CavernaWPF\obj\Debug\GameStatusBar.g.cs
+C:\Users\Miguel\Documents\SharpDevelop Projects\CavernaWPF\CavernaWPF\obj\Debug\GameStatusBar.baml

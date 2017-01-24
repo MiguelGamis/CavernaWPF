@@ -1,0 +1,20 @@
+﻿<UserControl x:Class="CavernaWPF.GameStatusBar"
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:Converters="clr-namespace:CavernaWPF.Converters">
+	<UserControl.Resources>
+		<Converters:PhaseToGameStatusConverter x:Key="phaseToGameStatusConverter"/>
+	</UserControl.Resources>
+	<TextBlock>
+		<TextBlock.Style>
+			<Style TargetType="TextBlock">
+				<Setter Property="Text" Value="{Binding CurrentPhase}"/>
+				<Style.Triggers>
+					<DataTrigger Binding="{Binding CurrentPhase, Converter={StaticResource phaseToGameStatusConverter}}" Value="Action Phase">
+						<Setter Property="Text" Value="Action Phase"/>
+					</DataTrigger>
+				</Style.Triggers>
+			</Style>
+		</TextBlock.Style>
+	</TextBlock>
+</UserControl>

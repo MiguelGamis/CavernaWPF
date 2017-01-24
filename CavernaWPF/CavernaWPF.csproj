@@ -111,6 +111,7 @@
     <Compile Include="Converters\HarvestMarkerConverter.cs" />
     <Compile Include="Converters\ImageSizeConverter.cs" />
     <Compile Include="Converters\LevelToWeaponConverter.cs" />
+    <Compile Include="Converters\PhaseToGameStatusConverter.cs" />
     <Compile Include="Converters\ResourceToIconConverter.cs" />
     <Compile Include="Converters\StageToCardbackConverter.cs" />
     <Compile Include="Dwarf.cs" />
@@ -123,12 +124,20 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="FurnishedBoardTile.cs" />
+    <Compile Include="FurnishingTile.cs" />
     <Compile Include="FurnishingWindow.xaml.cs">
       <DependentUpon>FurnishingWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="GameStatusBar.xaml.cs">
+      <DependentUpon>GameStatusBar.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="HarvestEventsCard.xaml.cs">
+      <DependentUpon>HarvestEventsCard.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="HarvestMarker.cs" />
-    <Compile Include="Helpers.cs" />
     <Compile Include="Layables\Dog.cs" />
     <Compile Include="Layables\FarmAnimal.cs" />
     <Compile Include="Layables\Layable.cs" />
@@ -152,6 +161,11 @@
     <Compile Include="Resources\Resource.cs" />
     <Compile Include="Resources\Tradable.cs" />
     <Compile Include="ResourceTab.cs" />
+    <Compile Include="ResourceTracker.cs" />
+    <Compile Include="SkipFieldOrBreedWindow.xaml.cs">
+      <DependentUpon>SkipFieldOrBreedWindow.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="SowableSource.xaml.cs">
       <DependentUpon>SowableSource.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -191,8 +205,11 @@
     <Page Include="CDwarf.xaml" />
     <Page Include="DwarfQueue.xaml" />
     <Page Include="FurnishingWindow.xaml" />
+    <Page Include="GameStatusBar.xaml" />
+    <Page Include="HarvestEventsCard.xaml" />
     <Page Include="PlayerBoard.xaml" />
     <Page Include="ResourcesTab.xaml" />
+    <Page Include="SkipFieldOrBreedWindow.xaml" />
     <Page Include="SowableSource.xaml" />
     <Page Include="Town.xaml" />
     <Page Include="TradeWindow.xaml" />

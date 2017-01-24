@@ -28,16 +28,22 @@ namespace CavernaWPF
 	{
 		public Window1()
 		{	
+			LayoutManager.Instance.appWindow = this;
+			
 			StackPanel rootPanel = new StackPanel() { Orientation = Orientation.Vertical };
 			rootPanel.Height = this.Height;
 			rootPanel.Width = this.Width;
-		
+			
 			Grid.SetRow(ActionBoardContext.Instance.control, 0);
 			StackPanel publicPanel = new StackPanel() { Orientation = Orientation.Horizontal };
 			publicPanel.Children.Add(ActionBoardContext.Instance.control);
+			publicPanel.Children.Add(ActionBoardContext.Instance.harvesteventscard);
 			publicPanel.Children.Add(ActionBoardContext.Instance.furnishingWindow);
 			ActionBoardContext.Instance.startButton.Click += new RoutedEventHandler(StartGame);
-			publicPanel.Children.Add(ActionBoardContext.Instance.startButton);
+			StackPanel gameProgressBar = new StackPanel();
+			gameProgressBar.Children.Add(ActionBoardContext.Instance.startButton);
+			gameProgressBar.Children.Add(ActionBoardContext.Instance.statusControl);
+			publicPanel.Children.Add(gameProgressBar);
 			rootPanel.Children.Add(publicPanel);
 			
 			StackPanel playerPanels = new StackPanel() { Orientation = Orientation.Horizontal };
@@ -65,37 +71,42 @@ namespace CavernaWPF
 				Grid.SetZIndex(tc.control,1);
 				playerPanel.Children.Add(tc.control);
 				
+				StackPanel bottomBoard = new StackPanel() {Orientation = Orientation.Horizontal};
+				Grid.SetRow(bottomBoard,1);
+				Grid.SetZIndex(bottomBoard,0);
+				playerPanel.Children.Add(bottomBoard);
+				
+				Grid piecesPool = new Grid() { Width = 220, Height = 100 };
+				bottomBoard.Children.Add(piecesPool);
+				
+				StackPanel southEastPanel = new StackPanel();
+				bottomBoard.Children.Add(southEastPanel);
+				
 				StackPanel resourcesPanel = new StackPanel() {Orientation = Orientation.Horizontal};
 				resourcesPanel.Children.Add(p.tab); 
 				Button tradeButton = new Button() { Height = 30, Width = 60, Content = "Trade", Tag = p}; tradeButton.Click += new RoutedEventHandler(Trade);
 				resourcesPanel.Children.Add(tradeButton);
-				Grid.SetRow(resourcesPanel,1);
-				Grid.SetZIndex(resourcesPanel,0);
-				playerPanel.Children.Add(resourcesPanel);
-//				Button grainButton = new Button() { Height = 30, Width = 60, Content = "Grain", Tag = p };
-//				playerPanel.Children.Add(grainButton);
-//				grainButton.Click += Grain;
-				
-				LayoutManager.Instance.map.Add(p, playerPanel);
+				southEastPanel.Children.Add(resourcesPanel);
 				
 				DwarfQueue dwarfLineUp = new DwarfQueue();
 				dwarfLineUp.ItemsSource = p.Dwarfs;
 				Grid.SetRow(dwarfLineUp,2);
-				playerPanel.Children.Add(dwarfLineUp);
+				southEastPanel.Children.Add(dwarfLineUp);
+				
+				LayoutManager.Instance.map.Add(p, playerPanel);
 				
 				playerPanels.Children.Add(playerPanel);
 			}
 			Grid.SetRow(playerPanels, 1);
 			rootPanel.Children.Add(playerPanels);
-		
-//			ActionBoardContext.Instance.startButton.Click += new RoutedEventHandler(StartGame);
-//			Grid.SetRow(ActionBoardContext.Instance.startButton,2);
-//			rootPanel.Children.Add(ActionBoardContext.Instance.startButton);
 			
 			this.Content = rootPanel;
 			InitializeComponent();
 			
 			ActionBoardContext.Instance.StartingPlayer = ActionBoardContext.Instance.players[1];
+//			ActionBoardContext.Instance.startButton.Click += new RoutedEventHandler(StartGame);
+//			Grid.SetRow(ActionBoardContext.Instance.startButton,2);
+//			rootPanel.Children.Add(ActionBoardContext.Instance.startButton);
 			ActionBoardContext.Instance.StartGame();
 			
 			this.Loaded += Test;
@@ -110,16 +121,6 @@ namespace CavernaWPF
 		{
 			TradeManager tm = new TradeManager();
 			tm.PlayerTrading((sender as Button).Tag as Player);
-		}
-		
-		private void Grain(object sender, RoutedEventArgs e)
-		{
-			Player p = ((sender as Button).Tag as Player);
-			//if(p.Resources[Resource.Type.Grain].Amount > 0)
-			{
-				p.Resources[Resource.Type.Grain].Amount--;
-				((sender as Button).Tag as Player).town.Tiles.Add(new Sowable(Sowable.Type.Grain));
-			}
 		}
 		
 		private void Test(object sender, RoutedEventArgs e)
@@ -153,6 +154,11 @@ namespace CavernaWPF
 			ActionBoardContext.Instance.players[1].town.PositionLayable(fa7, 3, 1);
 			FarmAnimal fa8 = new FarmAnimal(FarmAnimal.Type.Boar){Locked = true};
 			ActionBoardContext.Instance.players[1].town.PositionLayable(fa8, 3, 1);
+			
+			FurnishingTile ft = new FurnishingTile();
+			ft.Seam(ActionBoardContext.Instance.players[1]);
+			
+			ActionBoardContext.Instance.FurnishingTiles["Seam"].player = ActionBoardContext.Instance.players[1];
 		}
 		
 	}

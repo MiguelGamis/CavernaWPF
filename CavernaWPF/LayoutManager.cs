@@ -35,6 +35,8 @@ namespace CavernaWPF
 		
 		public Dictionary<Player, Grid> map;
 		
+		public Window appWindow;
+		
 		public Image startingPlayerPiece = new Image() { Height=30, Width=15, Source = new BitmapImage(new Uri("C:\\Users\\Miguel\\Desktop\\Caverna\\StartingPlayer.png"))};
 	}
 }

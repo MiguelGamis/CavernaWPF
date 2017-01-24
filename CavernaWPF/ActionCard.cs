@@ -59,7 +59,7 @@ namespace CavernaWPF
 		{
 			foreach(ResourceAccumulator ra in Accumulators)
 			{
-				p.Resources[ra.ResourceType].Amount += ra.Amount;
+				p.Resources[ra.ResourceType].Increment(ra.Amount);
 				ra.Amount = 0;
 			}
 		}
@@ -386,10 +386,12 @@ namespace CavernaWPF
 				if(acwc.Options[1].Selected)
 				{
 					ActionBoardContext.Instance.Sow = true;
+					//hardcode
 					for(int i = 0; i < Math.Min(numGrain, 2); i++)
-						d.player.town.AddTile(new Sowable(Sowable.Type.Grain){X=40*6, Y=420, row=0, column=0});
+						d.player.town.AddTile(new Sowable(Sowable.Type.Grain){X=35*6, Y=420, row=0, column=0});
+					//hardcode
 					for(int i = 0; i < Math.Min(numVegetable, 2); i++)
-						d.player.town.AddTile(new Sowable(Sowable.Type.Vegetable){X=40*7, Y=420, row=0, column=0});
+						d.player.town.AddTile(new Sowable(Sowable.Type.Vegetable){X=35*7, Y=420, row=0, column=0});
 				}
 				
 				ActionBoardContext.Instance.readyForNextDwarf = true;

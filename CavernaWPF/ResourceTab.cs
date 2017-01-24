@@ -17,6 +17,12 @@ namespace CavernaWPF
 	/// </summary>
 	public class ResourceTab : INotifyPropertyChanged
 	{
+		public ResourceTab(Resource.Type type, int amount)
+		{
+			ResourceType = type;
+			Amount = amount;			
+		}
+		
 		public Resource.Type ResourceType {
 			get; 
 			set;
@@ -28,7 +34,7 @@ namespace CavernaWPF
 			get { return amount; }
 			set{
 				amount = value;
-				if (PropertyChanged != null) PropertyChanged(this, new PropertyChangedEventArgs("Amount"));	
+				if (PropertyChanged != null) PropertyChanged(this, new PropertyChangedEventArgs("Amount"));
 			}
 		}
 		

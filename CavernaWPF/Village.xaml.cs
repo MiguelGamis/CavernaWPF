@@ -173,12 +173,27 @@ namespace CavernaWPF
 				if(n is FarmAnimal)
  	        	{
 					FarmAnimal fa = n as FarmAnimal;
-					
-					if(fa.column == col && fa.row == row)
-	 	        		return;
-					
 					TownContext tc = this.DataContext as TownContext;
 					
+					List<Tile> tiles = tc.Tiles.OfType<Tile>().Where(t => t.column == fa.column && t.row == t.column).ToList();
+					if(tiles.Count == 1)
+					{
+						Tile tt = tiles[0].GetTwinTile();
+						if(tt != null)
+						{
+							// if new location is old location or the twin tiles location
+							if((col == fa.column && row == fa.row) || (col == tt.column && row == tt.row))
+							{
+								return;
+							}
+						}
+					}
+					if(fa.column == col && fa.row == row)
+					{
+	 	        		return;
+	 	        		
+					}
+	 	        		
 					int cap = tc.GetCapacity(col, row, fa.type);
 					List<FarmAnimal> occupyingFarmAnimals = tc.GetFarmAnimals(col, row);
 					
@@ -245,7 +260,6 @@ namespace CavernaWPF
 						if(col != st.column || row != st.row)
 						{
 							//ReleaseFarmAnimals(t);
-							//ReleaseStables(t);
 						}
 	 	        		
 	 	        		if(col > 3)

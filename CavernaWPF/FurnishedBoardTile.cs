@@ -15,6 +15,12 @@ namespace CavernaWPF
 	/// </summary>
 	public class FurnishedBoardTile
 	{
+		public string Name
+		{
+			get;
+			set;
+		}
+		
 		public int row;
 		
 		public int col;

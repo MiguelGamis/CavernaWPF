@@ -38,8 +38,8 @@ namespace CavernaWPF.Layables
 					Img = "C:\\Users\\Miguel\\Desktop\\Caverna\\Cow.png"; 
 					break;
 			}
-			Width=40;
-			Height=40;
+			Width=35;
+			Height=35;
 			Z = 7;
 		}
 		

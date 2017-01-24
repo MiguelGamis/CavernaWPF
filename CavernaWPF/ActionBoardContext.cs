@@ -24,6 +24,51 @@ namespace CavernaWPF
 	/// </summary>
 	public sealed class ActionBoardContext : INotifyPropertyChanged, INotifyCollectionChanged
 	{
+		public Dictionary<string, FurnishingTile> FurnishingTiles
+		{
+			get;
+			set;
+		}
+		
+		private void PrepareFurnishingTiles()
+		{
+			FurnishingTiles = new Dictionary<string, FurnishingTile>();
+			AddFurnishingTile("Seam");
+			AddFurnishingTile("Quarry");
+		}
+		
+		private void AddFurnishingTile(string name)
+		{
+			FurnishingTile ft = new FurnishingTile();
+			bool found = true;
+			switch(name)
+			{
+				case "Seam":
+					ft = new FurnishingTile(){ Name = "Seam", Effect = new Action<Player>((p) =>
+                         {
+                          	ft.Seam(p);
+                         }) };
+					//ft.Cost.Add(new ResourcesTab(){}
+					break;
+				case "Quarry":
+					ft = new FurnishingTile(){ Name = "Quarry", Effect = new Action<Player>((p) =>
+                         {
+                          	ft.Quarry(p);
+                         }) };
+					break;
+				default:
+					found = false;
+					break;
+			}
+			if(found)
+			{
+				ft.Img = String.Format("C:\\Users\\Miguel\\Desktop\\Caverna\\FurnishingTiles\\{0}.png", name);
+				ft.Row = 0;
+				ft.Column = FurnishingTiles.Count;
+				FurnishingTiles.Add(name, ft);
+			}
+		}
+		
 		private static ActionBoardContext instance = new ActionBoardContext();
 		
 		public static ActionBoardContext Instance {
@@ -37,8 +82,9 @@ namespace CavernaWPF
 		private ObservableCollection<Dwarf> dwarfs;
 		
 		public ActionBoard control;
-		
+		public HarvestEventsCard harvesteventscard;
 		public FurnishingWindow furnishingWindow;
+		public GameStatusBar statusControl;
 		
 		public ObservableCollection<ActionCardWrapper> ActionCards
 		{
@@ -64,6 +110,8 @@ namespace CavernaWPF
 	    }
 		
 		public List<Player> players = new List<Player>();
+		public List<Player> nonfielders = new List<Player>();
+		public List<Player> nonbreeders = new List<Player>();
 		
 		private ActionBoardContext()
 		{
@@ -77,9 +125,16 @@ namespace CavernaWPF
 		{
 			ActionBoard ab = new ActionBoard();
 			control = ab;
+			ab.DataContext = this;
+			HarvestEventsCard hec = new HarvestEventsCard();
+			harvesteventscard = hec;
+			hec.DataContext = this;
 			FurnishingWindow fw = new FurnishingWindow();
 			furnishingWindow = fw;
-			ab.DataContext = this;
+			fw.DataContext = this;
+			GameStatusBar gsb = new GameStatusBar();
+			statusControl = gsb;
+			gsb.DataContext = this;
 		}
 		
 		public void Replenish()
@@ -95,44 +150,89 @@ namespace CavernaWPF
 			Dwarfs.Add(d);
 		}
 
-		public void StartGame()
-		{
-			PrepareActionCards();
-		
-			Replenish();	
-			
-			PrepareHarvestMarkers();
-			
-			NextRound();
-			
-			QueuePlayers();
-		}
-		
 		LinkedList<Player> playersPlaying = new LinkedList<Player>();
 		
 		public LinkedListNode<Player> currentPlayer;
 		
+		public enum Phase {ActionPhase, NoHarvest, Pay1FoodPerDwarf, FieldPhase, FeedingPhase, BreedingPhase, SkipFieldOrBreed}
+		
 		public bool readyForNextDwarf = true;
 		
-		//public Dictionary<Player, bool> playerLocks = new Dictionary<Player, bool>();
-		public bool promptingPlacement= false;
+		private Phase currentPhase;
+		
+		public Phase CurrentPhase
+		{
+			get { return currentPhase; }
+			set {
+				currentPhase = value;
+				if (PropertyChanged != null) PropertyChanged(this, new PropertyChangedEventArgs("CurrentPhase"));
+			}
+		}
+		
+		public void StartGame()
+		{
+			PrepareActionCards();	
+			
+			PrepareHarvestMarkers();
+			
+			PrepareFurnishingTiles();
+			
+			NextRound();
+			
+			Replenish();
+			
+			QueuePlayers();
+		}
 		
 		public void NextTurn()
 		{
-			BreedingPhase();
-			
-			if(!readyForNextDwarf || promptingPlacement)
+			if(CurrentPhase == Phase.ActionPhase)
 			{
-				return;
-			}
-			
-			if(currentPlayer != null && !ConfirmEndTurn())
-				return;
-			
-			if(currentPlayer == null)
-				currentPlayer = playersPlaying.Find(startingPlayer);
-			else
-			{
+				if(!readyForNextDwarf)
+					return;
+				
+				if(!ConfirmEndTurn())
+					return;
+				
+				Dwarf d = null;
+				while(d == null)
+				{
+					if(currentPlayer == null)
+					{
+						ActionCards.ToList().ForEach(ac => ac.occupied = false);
+						
+						//TODO: Encapsulate -----------------
+						for(int i = ActionBoardContext.Instance.Dwarfs.Count - 1; i >= 0; i--)
+						{
+							Dwarf dw = ActionBoardContext.Instance.Dwarfs[i];
+							dw.X = 0;
+							dw.Y = 0;
+							dw.Locked = false;
+							dw.player.Dwarfs.Add(dw);
+							ActionBoardContext.Instance.Dwarfs.RemoveAt(i);
+						}
+						//------------------------------------
+						GetNextPhase();
+						return;
+					}
+					
+					Player p = currentPlayer.Value;
+					d = p.GetNextDwarf();
+					if(d == null)
+					{
+						LinkedListNode<Player> tmp = currentPlayer;
+						playersPlaying.Remove(tmp);
+						if(currentPlayer.Next == null)
+						{
+							currentPlayer = playersPlaying.First;
+						}
+						else
+						{
+							currentPlayer = currentPlayer.Next;
+						}
+					}
+				}
+				ActionBoardContext.Instance.AddDwarf(d);
 				if(currentPlayer.Next == null)
 				{
 					currentPlayer = playersPlaying.First;
@@ -142,49 +242,68 @@ namespace CavernaWPF
 					currentPlayer = currentPlayer.Next;
 				}
 			}
-			
-			Dwarf d = null;
-			while(d == null)
+			else
 			{
-				if(currentPlayer == null)
+				if(CurrentPhase == Phase.SkipFieldOrBreed)
 				{
-					ActionCards.ToList().ForEach(ac => ac.occupied = false);
-					
-					//TODO: Encapsulate -----------------
-					for(int i = ActionBoardContext.Instance.Dwarfs.Count - 1; i >= 0; i--)
-					{
-						Dwarf dw = ActionBoardContext.Instance.Dwarfs[i];
-						dw.X = 0;
-						dw.Y = 0;
-						dw.Locked = false;
-						dw.player.Dwarfs.Add(dw);
-						ActionBoardContext.Instance.Dwarfs.RemoveAt(i);
-					}
-					Harvest();
-					NextRound();
-					Replenish();
-					QueuePlayers();
+					SkipFieldOrBreed();
+					CurrentPhase = Phase.FieldPhase;
 					return;
-					//------------------------------------
 				}
-				
-				Player p = currentPlayer.Value;
-				d = p.GetNextDwarf();
-				if(d == null)
+				else if(CurrentPhase == Phase.FieldPhase)
 				{
-					LinkedListNode<Player> tmp = currentPlayer;
-					playersPlaying.Remove(tmp);
-					if(currentPlayer.Next == null)
-					{
-						currentPlayer = playersPlaying.First;
-					}
-					else
-					{
-						currentPlayer = currentPlayer.Next;
-					}
+					FieldPhase();
+					CurrentPhase = Phase.FeedingPhase;
+					return;
 				}
+				else if(CurrentPhase == Phase.FeedingPhase)
+				{
+					FeedingPhase();
+					CurrentPhase = Phase.BreedingPhase;
+					return;
+				}
+				else if(CurrentPhase == Phase.BreedingPhase)
+				{
+					BreedingPhase();
+//					if(!ConfirmLayables())
+//						return;
+				}
+				Round++;
+				NextRound();
+				Replenish();
+				QueuePlayers();
+				if(CurrentPhase == Phase.SkipFieldOrBreed)
+				{
+					nonfielders.Clear();
+					nonbreeders.Clear();
+				}
+				CurrentPhase = Phase.ActionPhase;
 			}
-			ActionBoardContext.Instance.AddDwarf(d);
+		}
+		
+		private void GetNextPhase()
+		{
+			if(HarvestMarkers[Round].type == HarvestMarker.Type.Harvest)
+			{
+				CurrentPhase = Phase.FieldPhase;
+			}
+			else if(HarvestMarkers[Round].type == HarvestMarker.Type.QuestionMark)
+			{
+				if(harvesteventscounter == 1)
+					CurrentPhase = Phase.NoHarvest;
+				else if(harvesteventscounter == 2)
+					CurrentPhase = Phase.Pay1FoodPerDwarf;
+				else if(harvesteventscounter == 3)
+					CurrentPhase = Phase.SkipFieldOrBreed;
+			}
+			else if(HarvestMarkers[Round].type == HarvestMarker.Type.Pay1FoodPerDwarf)
+			{
+				CurrentPhase = Phase.Pay1FoodPerDwarf;
+			}
+			else if(HarvestMarkers[Round].type == HarvestMarker.Type.NoHarvest)
+			{
+				CurrentPhase = Phase.NoHarvest;
+			}
 		}
 		
 		public Button startButton = new Button() { Height = 30, Width = 60, Content = "Proceed"};
@@ -245,11 +364,60 @@ namespace CavernaWPF
 			return true;
  		}
 		
-		private void Harvest()
+		private void ConfirmLayables()
 		{
-			FieldPhase();
-			FeedingPhase();
-			BreedingPhase();
+			foreach(Player p in players)
+			{
+				var deleteList = p.town.Tiles.ToList().Where(layable => layable.row == 0 && layable.column == 0).ToList();
+				
+				if(deleteList.Count> 0)
+				{
+					if(!deleteList.All(d => d is Sowable))
+					{
+						MessageBoxResult result = MessageBox.Show("Are you sure you want to throw the tiles away", "There are tiles not placed", MessageBoxButton.YesNo, MessageBoxImage.Question);
+						if (result == MessageBoxResult.No)
+						{
+							
+						}
+					}
+					deleteList.ForEach(l => currentPlayer.Value.town.Tiles.Remove(l));
+				}
+			}
+		}
+		
+		private int harvesteventscounter;
+		
+		public int HarvestEventsCounter
+		{
+			get { return harvesteventscounter; }
+			set {
+				harvesteventscounter = value;
+				if (PropertyChanged != null) PropertyChanged(this, new PropertyChangedEventArgs("HarvestEventsCounter"));
+			}
+		}
+		
+		private void SkipFieldOrBreed()
+		{
+			int index = 0;
+			foreach(Player p in players)
+			{
+				SkipFieldOrBreedWindow promptWindow = new SkipFieldOrBreedWindow();
+				promptWindow.Owner = LayoutManager.Instance.appWindow;
+				promptWindow.WindowStartupLocation = WindowStartupLocation.Manual;
+				//hardcode measurements
+				promptWindow.Top = LayoutManager.Instance.appWindow.Top + 455;
+				promptWindow.Left = LayoutManager.Instance.appWindow.Left + 590*index;
+				promptWindow.ShowDialog();
+				if( (bool) promptWindow.DialogResult)
+				{
+					nonfielders.Add(p);
+				}
+				else
+				{
+					nonbreeders.Add(p);
+				}
+				index++;
+			}
 		}
 		
 		private void FieldPhase()
@@ -294,17 +462,6 @@ namespace CavernaWPF
 					if(animalGroup.FarmAnimals.Count > 1)
 					{
 						p.town.Tiles.Add(new FarmAnimal(animalGroup.Type));
-						
-						//Try and accomodate new babies if possible
-//						var animalLocations = animalGroup.FarmAnimals.GroupBy(f => new {f.column, f.row},  f => f, (key, v) => new { 
-//                                                 Location = key, 
-//                                                 Count = v.Count()
-//                                               });
-//						foreach(var animalLocation in animalLocations)
-//						{
-//							int cap = GetCapacity(animalLocation.Key.column, animalLocation.Key.row, animalGroup.Type);
-//							animalLocation.
-//						}
 					}
 				}
 			}
@@ -315,8 +472,9 @@ namespace CavernaWPF
 			if(Round < 12)
 			{
 				HarvestMarkers[Round].Hidden = false;
+				if(HarvestMarkers[Round].type == HarvestMarker.Type.QuestionMark)
+					HarvestEventsCounter++;
 				ActionCards[Round+12].Hidden = false;
-				Round++;
 			}
 			else
 				Scoring();
@@ -346,6 +504,7 @@ namespace CavernaWPF
 				LinkedListNode<Player> pNode = new LinkedListNode<Player>(p);
 				playersPlaying.AddLast(pNode);
 			}
+			currentPlayer = playersPlaying.Find(startingPlayer);
 		}
 		
 		private void Scoring()

@@ -22,48 +22,48 @@ namespace CavernaWPF
 		
 		private Dictionary<List<ResourceTab>,List<ResourceTab>> exchanges = new Dictionary<List<ResourceTab>,List<ResourceTab>>()
 		{
-			{ new List<ResourceTab>() { new ResourceTab() {ResourceType = Resource.Type.Ruby, Amount = 1}}, 
-				new List<ResourceTab>() { new ResourceTab() {ResourceType = Resource.Type.Wood, Amount = 1} }
+			{ new List<ResourceTab>() { new ResourceTab(Resource.Type.Ruby, 1) },
+				new List<ResourceTab>() { new ResourceTab(Resource.Type.Wood, 1) }
 			},
-			{ new List<ResourceTab>() { new ResourceTab() {ResourceType = Resource.Type.Ruby, Amount = 1}}, 
-				new List<ResourceTab>() { new ResourceTab() {ResourceType = Resource.Type.Stone, Amount = 1} }
+			{ new List<ResourceTab>() { new ResourceTab(Resource.Type.Ruby, 1) },
+				new List<ResourceTab>() { new ResourceTab(Resource.Type.Stone, 1) }
 			},
-			{ new List<ResourceTab>() { new ResourceTab() {ResourceType = Resource.Type.Ruby, Amount = 1}}, 
-				new List<ResourceTab>() { new ResourceTab() {ResourceType = Resource.Type.Ore, Amount = 1} }
+			{ new List<ResourceTab>() { new ResourceTab(Resource.Type.Ruby, 1) },
+				new List<ResourceTab>() { new ResourceTab(Resource.Type.Ore, 1) }
 			},
-			{ new List<ResourceTab>() { new ResourceTab() {ResourceType = Resource.Type.Ruby, Amount = 1}}, 
-				new List<ResourceTab>() { new ResourceTab() {ResourceType = Resource.Type.Food, Amount = 2} }
+			{ new List<ResourceTab>() { new ResourceTab(Resource.Type.Ruby, 1) },
+				new List<ResourceTab>() { new ResourceTab(Resource.Type.Food, 2) }
 			},
-			{ new List<ResourceTab>() { new ResourceTab() {ResourceType = Resource.Type.Ruby, Amount = 1}}, 
-				new List<ResourceTab>() { new ResourceTab() {ResourceType = Resource.Type.Sheep, Amount = 1} }
+			{ new List<ResourceTab>() { new ResourceTab(Resource.Type.Ruby, 1) },
+				new List<ResourceTab>() { new ResourceTab(Resource.Type.Sheep, 1) }
 			},
-			{ new List<ResourceTab>() { new ResourceTab() {ResourceType = Resource.Type.Ruby, Amount = 1}}, 
-				new List<ResourceTab>() { new ResourceTab() {ResourceType = Resource.Type.Donkey, Amount = 1} }
+			{ new List<ResourceTab>() { new ResourceTab(Resource.Type.Ruby, 1) }, 
+				new List<ResourceTab>() { new ResourceTab(Resource.Type.Donkey, 1) }
 			},
-			{ new List<ResourceTab>() { new ResourceTab() {ResourceType = Resource.Type.Ruby, Amount = 1}}, 
-				new List<ResourceTab>() { new ResourceTab() {ResourceType = Resource.Type.Boar, Amount = 1} }
+			{ new List<ResourceTab>() { new ResourceTab(Resource.Type.Ruby, 1) }, 
+				new List<ResourceTab>() { new ResourceTab(Resource.Type.Boar, 1) }
 			},
-			{ new List<ResourceTab>() { new ResourceTab() {ResourceType = Resource.Type.Ruby, Amount = 1},
-										new ResourceTab() {ResourceType = Resource.Type.Food, Amount = 1}}, 
-				new List<ResourceTab>() { new ResourceTab() {ResourceType = Resource.Type.Cow, Amount = 1} }
+			{ new List<ResourceTab>() { new ResourceTab(Resource.Type.Ruby, 1),
+									new ResourceTab(Resource.Type.Food, 1)},
+				new List<ResourceTab>() { new ResourceTab( Resource.Type.Cow, 1) }
 			},
-			{ new List<ResourceTab>() { new ResourceTab() {ResourceType = Resource.Type.Sheep, Amount = 1}}, 
-				new List<ResourceTab>() { new ResourceTab() {ResourceType = Resource.Type.Food, Amount = 1} }
+			{ new List<ResourceTab>() { new ResourceTab(Resource.Type.Sheep, 1) }, 
+				new List<ResourceTab>() { new ResourceTab(Resource.Type.Food, 1) }
 			},
-			{ new List<ResourceTab>() { new ResourceTab() {ResourceType = Resource.Type.Donkey, Amount = 1}}, 
-				new List<ResourceTab>() { new ResourceTab() {ResourceType = Resource.Type.Food, Amount = 1} }
+			{ new List<ResourceTab>() { new ResourceTab(Resource.Type.Donkey, 1) }, 
+				new List<ResourceTab>() { new ResourceTab(Resource.Type.Food, 1) }
 			},
-			{ new List<ResourceTab>() { new ResourceTab() {ResourceType = Resource.Type.Donkey, Amount = 1}}, 
-				new List<ResourceTab>() { new ResourceTab() {ResourceType = Resource.Type.Food, Amount = 1} }
+			{ new List<ResourceTab>() { new ResourceTab(Resource.Type.Donkey, 1) }, 
+				new List<ResourceTab>() { new ResourceTab(Resource.Type.Food, 1) }
 			},
-			{ new List<ResourceTab>() { new ResourceTab() {ResourceType = Resource.Type.Donkey, Amount = 2}}, 
-				new List<ResourceTab>() { new ResourceTab() {ResourceType = Resource.Type.Food, Amount = 3} }
+			{ new List<ResourceTab>() { new ResourceTab(Resource.Type.Donkey, 2) }, 
+				new List<ResourceTab>() { new ResourceTab(Resource.Type.Food, 3) }
 			},
-			{ new List<ResourceTab>() { new ResourceTab() {ResourceType = Resource.Type.Boar, Amount = 1}}, 
-				new List<ResourceTab>() { new ResourceTab() {ResourceType = Resource.Type.Food, Amount = 2} }
+			{ new List<ResourceTab>() { new ResourceTab(Resource.Type.Boar, 1) }, 
+				new List<ResourceTab>() { new ResourceTab(Resource.Type.Food, 2) }
 			},
-			{ new List<ResourceTab>() { new ResourceTab() {ResourceType = Resource.Type.Cow, Amount = 1}}, 
-				new List<ResourceTab>() { new ResourceTab() {ResourceType = Resource.Type.Food, Amount = 2} }
+			{ new List<ResourceTab>() { new ResourceTab(Resource.Type.Cow, 1) }, 
+				new List<ResourceTab>() { new ResourceTab(Resource.Type.Food, 2) }
 			},
 		};
 		
