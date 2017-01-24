@@ -115,10 +115,6 @@
     <Compile Include="Converters\ResourceToIconConverter.cs" />
     <Compile Include="Converters\StageToCardbackConverter.cs" />
     <Compile Include="Dwarf.cs" />
-    <Compile Include="CDwarf.xaml.cs">
-      <DependentUpon>CDwarf.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="DwarfQueue.xaml.cs">
       <DependentUpon>DwarfQueue.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -202,7 +198,6 @@
     <Page Include="ActionCardControls\ExpeditionWindow.xaml" />
     <Page Include="ActionCardControls\WeaponForgingWindow.xaml" />
     <Page Include="Board_Tile.xaml" />
-    <Page Include="CDwarf.xaml" />
     <Page Include="DwarfQueue.xaml" />
     <Page Include="FurnishingWindow.xaml" />
     <Page Include="GameStatusBar.xaml" />

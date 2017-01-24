@@ -24,6 +24,18 @@ namespace CavernaWPF
 	/// </summary>
 	public sealed class ActionBoardContext : INotifyPropertyChanged, INotifyCollectionChanged
 	{
+		public bool FurnishingDwelling
+		{
+			get;
+			set;
+		}
+		
+		public bool FurnishingCavern
+		{
+			get;
+			set;
+		}
+		
 		public Dictionary<string, FurnishingTile> FurnishingTiles
 		{
 			get;
@@ -33,8 +45,12 @@ namespace CavernaWPF
 		private void PrepareFurnishingTiles()
 		{
 			FurnishingTiles = new Dictionary<string, FurnishingTile>();
-			AddFurnishingTile("Seam");
+			AddFurnishingTile("Wood supplier");
+			AddFurnishingTile("Stone supplier");
+			AddFurnishingTile("Ruby supplier");
+			AddFurnishingTile("Dog school");
 			AddFurnishingTile("Quarry");
+			AddFurnishingTile("Seam");
 		}
 		
 		private void AddFurnishingTile(string name)
@@ -43,18 +59,41 @@ namespace CavernaWPF
 			bool found = true;
 			switch(name)
 			{
-				case "Seam":
-					ft = new FurnishingTile(){ Name = "Seam", Effect = new Action<Player>((p) =>
+				case "Wood supplier":
+					ft.Effect = new Action<Player>((p) =>
                          {
-                          	ft.Seam(p);
-                         }) };
-					//ft.Cost.Add(new ResourcesTab(){}
+                          	ft.Woodsupplier(p);
+                         });
+					break;	
+				case "Stone supplier":
+					ft.Effect = new Action<Player>((p) =>
+                         {
+                          	ft.Stonesupplier(p);
+                         });
+					break;
+				case "Ruby supplier":
+					ft.Effect = new Action<Player>((p) =>
+                         {
+                          	ft.Rubysupplier(p);
+                         });
+					break;						
+				case "Dog school":
+					ft.Effect = new Action<Player>((p) =>
+                         {
+                          	ft.Dogschool(p);
+                         });
 					break;
 				case "Quarry":
-					ft = new FurnishingTile(){ Name = "Quarry", Effect = new Action<Player>((p) =>
+					ft.Effect = new Action<Player>((p) =>
                          {
                           	ft.Quarry(p);
-                         }) };
+                         });
+					break;
+				case "Seam":
+					ft.Effect = new Action<Player>((p) =>
+                         {
+                          	ft.Seam(p);
+                         });
 					break;
 				default:
 					found = false;
@@ -62,9 +101,12 @@ namespace CavernaWPF
 			}
 			if(found)
 			{
+				ft.Name = name;
 				ft.Img = String.Format("C:\\Users\\Miguel\\Desktop\\Caverna\\FurnishingTiles\\{0}.png", name);
-				ft.Row = 0;
-				ft.Column = FurnishingTiles.Count;
+				int index = FurnishingTiles.Count;
+				int group = index / 24;
+				ft.Row = index / 3;
+				ft.Column = (index % 3) + 4 * group;
 				FurnishingTiles.Add(name, ft);
 			}
 		}
@@ -154,7 +196,7 @@ namespace CavernaWPF
 		
 		public LinkedListNode<Player> currentPlayer;
 		
-		public enum Phase {ActionPhase, NoHarvest, Pay1FoodPerDwarf, FieldPhase, FeedingPhase, BreedingPhase, SkipFieldOrBreed}
+		public enum Phase {ActionPhase, ConfirmPhase, NoHarvest, Pay1FoodPerDwarf, FieldPhase, FeedingPhase, BreedingPhase, SkipFieldOrBreed}
 		
 		public bool readyForNextDwarf = true;
 		
@@ -189,9 +231,6 @@ namespace CavernaWPF
 			if(CurrentPhase == Phase.ActionPhase)
 			{
 				if(!readyForNextDwarf)
-					return;
-				
-				if(!ConfirmEndTurn())
 					return;
 				
 				Dwarf d = null;
@@ -233,6 +272,13 @@ namespace CavernaWPF
 					}
 				}
 				ActionBoardContext.Instance.AddDwarf(d);
+				CurrentPhase = Phase.ConfirmPhase;
+			}
+			else if(CurrentPhase == Phase.ConfirmPhase)
+			{
+				if(!ConfirmEndTurn())
+					return;
+				
 				if(currentPlayer.Next == null)
 				{
 					currentPlayer = playersPlaying.First;
@@ -241,6 +287,8 @@ namespace CavernaWPF
 				{
 					currentPlayer = currentPlayer.Next;
 				}
+				CurrentPhase = Phase.ActionPhase;
+				NextTurn();
 			}
 			else
 			{
@@ -281,6 +329,16 @@ namespace CavernaWPF
 			}
 		}
 		
+		public delegate void NewRoundEventHandler(object sender, EventArgs args);
+		
+		public event NewRoundEventHandler NewRound;
+		
+		private void OnNewRound()
+		{
+			if (NewRound != null)
+				NewRound(this, EventArgs.Empty);
+		}
+		
 		private void GetNextPhase()
 		{
 			if(HarvestMarkers[Round].type == HarvestMarker.Type.Harvest)
@@ -314,6 +372,7 @@ namespace CavernaWPF
 		
 		private bool ConfirmEndTurn()
 		{
+			var g = currentPlayer.Value.town.Tiles.OfType<Sowable>().ToList();
 			var deleteList = currentPlayer.Value.town.Tiles.ToList().Where(layable => layable.row == 0 && layable.column == 0).ToList();
 			
 			if(deleteList.Count> 0)
@@ -453,17 +512,7 @@ namespace CavernaWPF
 		{
 			foreach(Player p in players)
 			{
-				var animalGroups = p.town.Tiles.OfType<FarmAnimal>().GroupBy( t => t.type, t => t, (key, g) => new { 
-                                                 Type = key, 
-                                                 FarmAnimals = g.ToList()
-                                               });
-				foreach(var animalGroup in animalGroups)
-				{
-					if(animalGroup.FarmAnimals.Count > 1)
-					{
-						p.town.Tiles.Add(new FarmAnimal(animalGroup.Type));
-					}
-				}
+				p.town.BreedAnimals();
 			}
 		}
 		
@@ -475,6 +524,7 @@ namespace CavernaWPF
 				if(HarvestMarkers[Round].type == HarvestMarker.Type.QuestionMark)
 					HarvestEventsCounter++;
 				ActionCards[Round+12].Hidden = false;
+				OnNewRound();
 			}
 			else
 				Scoring();

@@ -1,8 +1,0 @@
-﻿<UserControl x:Class="CavernaWPF.CDwarf"
-	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-	<Image
-		Height="80"
-		Width="80"
-		Source="C:\Users\Miguel\Desktop\Caverna\Dwarf.png" />
-</UserControl>

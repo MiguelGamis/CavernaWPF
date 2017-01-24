@@ -16,6 +16,7 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using CavernaWPF.Layables;
 
 namespace CavernaWPF
 {
@@ -27,7 +28,25 @@ namespace CavernaWPF
 		public FurnishingWindow()
 		{
 			InitializeComponent();
-			//this.Loaded += BackgroundInitialize;
+		}
+		
+		private void Buy(object sender, RoutedEventArgs e)
+		{
+			ActionBoardContext abc = (DataContext as ActionBoardContext);
+			if(abc.FurnishingCavern)
+			{
+				abc.FurnishingCavern = false;
+					
+				object obj = ((FrameworkElement)sender).DataContext;
+				
+				
+				if(obj is KeyValuePair<string,FurnishingTile>)
+				{
+					FurnishingTile ft = ((KeyValuePair<string,FurnishingTile>) obj).Value;
+					ft.Effect.Invoke(abc.currentPlayer.Value);
+					abc.currentPlayer.Value.town.AddTile(new Tile(Tile.Type.FurnishingTile){ Img = ft.Img });
+				}
+			}
 		}
 		
 		private void BackgroundInitialize(object sender, RoutedEventArgs e)

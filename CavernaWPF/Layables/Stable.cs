@@ -18,8 +18,8 @@ namespace CavernaWPF.Layables
 		public Stable()
 		{
 			Img = "C:\\Users\\Miguel\\Desktop\\Caverna\\Stable.png";
-			Width=40;
-			Height=40;
+			Width=35;
+			Height=35;
 			Z = 4;
 		}
 	}

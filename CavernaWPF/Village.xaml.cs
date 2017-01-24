@@ -220,7 +220,7 @@ namespace CavernaWPF
 					Sowable sow = n as Sowable;
 					TownContext tc = this.DataContext as TownContext;
 					List<Tile> fieldsg = tc.Tiles.OfType<Tile>().ToList();
-					List<Tile> fields = tc.Tiles.OfType<Tile>().Where(t => t.row == row && t.column == col && (t as Tile).type == Tile.Type.Field || (t as Tile).type == Tile.Type.FieldDummy).ToList();
+					List<Tile> fields = tc.Tiles.OfType<Tile>().Where(t => t.row == row && t.column == col && ((t as Tile).type == Tile.Type.Field || (t as Tile).type == Tile.Type.FieldDummy)).ToList();
 					bool isSowed = tc.Tiles.OfType<Sowable>().Any(sw => sw.row == row && sw.column == col);
 					if(fields.Count == 1 && !isSowed)
 					{
@@ -308,14 +308,16 @@ namespace CavernaWPF
 	   			{
 	   				if(l.column != 0 || l.row != 0)
 	   					ActionBoardContext.Instance.currentPlayer.Value.Resources[Resource.Type.Grain].Amount++;
-	   				l.X = 40*6;
+	   				//hardcode
+	   				l.X = 220 + 35*6;
 	   				l.Y = 420;
 	   			}
 	   			else
 	   			{
 	   				if(l.column != 0 || l.row != 0)
 	   					ActionBoardContext.Instance.currentPlayer.Value.Resources[Resource.Type.Vegetable].Amount++;
-	   				l.X = 40*7;
+	   				//hardcode
+	   				l.X = 220 + 35*7;
 	   				l.Y = 420;
 	   			}
 	   		}

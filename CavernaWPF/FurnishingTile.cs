@@ -29,6 +29,8 @@ namespace CavernaWPF
 		
 		public Action<Player> Effect;
 		
+		private int roundsOfEffect;
+		
 		public Action VictoryPoints;
 		
 		public int Row
@@ -55,12 +57,55 @@ namespace CavernaWPF
 		
 		public void Woodsupplier(Player p)
 		{
-			p.Resources[Resource.Type.Stone].ResourceIncremented += delegate(object sender, EventArgs args) { p.Resources[Resource.Type.Ore].Amount++; };
+			ActionBoardContext.Instance.NewRound += delegate(object sender, EventArgs args) 
+			{
+				if(roundsOfEffect > 0)
+				{
+					p.Resources[Resource.Type.Wood].Amount++;
+					roundsOfEffect--;
+				}
+				else
+				{
+					//Unhook
+				}
+			};
+		}
+		
+		public void Stonesupplier(Player p)
+		{
+			ActionBoardContext.Instance.NewRound += delegate(object sender, EventArgs args) 
+			{ 
+				if(roundsOfEffect > 0)
+				{
+					p.Resources[Resource.Type.Stone].Amount++;
+					roundsOfEffect--;
+				}
+				else
+				{
+					//Unhook
+				}
+			};
+		}
+		
+		public void Rubysupplier(Player p)
+		{
+			ActionBoardContext.Instance.NewRound += delegate(object sender, EventArgs args) 
+			{ 
+				if(roundsOfEffect > 0)
+				{
+					p.Resources[Resource.Type.Ruby].Amount++;
+					roundsOfEffect--;
+				}
+				else
+				{
+					//Unhook
+				}
+			};
 		}
 		
 		public void Dogschool(Player p)
 		{
-			p.Resources[Resource.Type.Stone].ResourceIncremented += delegate(object sender, EventArgs args) { p.Resources[Resource.Type.Ore].Amount++; };
+			p.town.DogAdded += delegate(object sender, EventArgs args) { p.Resources[Resource.Type.Wood].Amount++; };
 		}
 		
 		public void Seam(Player p)
@@ -70,6 +115,7 @@ namespace CavernaWPF
 		
 		public void Quarry(Player p)
 		{
+			p.town.BabyDonkeyAdded += delegate(object sender, EventArgs args) { p.Resources[Resource.Type.Ore].Amount++; };
 		}
 	}
 }

@@ -31,8 +31,8 @@ namespace CavernaWPF.Layables
 					Img = "C:\\Users\\Miguel\\Desktop\\Caverna\\Vegetable.png"; 
 					break;
 			}
-			Width=40;
-			Height=40;
+			Width=35;
+			Height=35;
 			Z = 6;
 		}
 	}

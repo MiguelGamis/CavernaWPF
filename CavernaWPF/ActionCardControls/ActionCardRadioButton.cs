@@ -15,25 +15,39 @@ namespace CavernaWPF.ActionCardControls
 	/// Description of ActionCardRadio.
 	/// </summary>
 	public class ActionCardRadioButton : ActionCardOption
-	{
-		public List<string> Options
+	{		
+		public string Group
 		{
 			get;
 			set;
 		}
+//		
+//	    private void radioButton_CheckedChanged(object sender, EventArgs e)
+//	    {
+//	    	Selected = (bool) (Control as ActionCardRadioButtonControl).radiobutton.IsChecked;
+//	    }
+//	
+//	    private void radioButton_Click(object sender, EventArgs e)
+//	    {
+//	    	if ((bool) (Control as ActionCardRadioButtonControl).radiobutton.IsChecked && !Selected)
+//	            (Control as ActionCardRadioButtonControl).radiobutton.IsChecked = false;
+//	        else
+//	        {
+//	            (Control as ActionCardRadioButtonControl).radiobutton.IsChecked = true;
+//	            Selected = false;
+//	        }
+//	    }
 		
-		public bool Optional
+		public ActionCardRadioButton(bool optional = false, string group = "default")
 		{
-			get;
-			set;
-		}
-		
-		public ActionCardRadioButton(List<String> options, bool optional = false)
-		{
-			Options = options;
-			Optional = optional;
+			Group = group;
 			Control =  new ActionCardRadioButtonControl();
 			Control.DataContext = this;
+			
+//			if(optional)
+//			{
+//				(Control as ActionCardRadioButtonControl).radiobutton.Click += radioButton_Click;
+//			}
 		}
 	}
 }

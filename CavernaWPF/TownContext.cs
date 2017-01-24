@@ -105,9 +105,64 @@ namespace CavernaWPF
 			}
 		}
 		
+		public delegate void NewbornAddedEventHandler(object sender, EventArgs args);
+		
+		public event NewbornAddedEventHandler NewbornAdded;
+		
+		protected virtual void OnNewbornAdded()
+		{
+			if (NewbornAdded != null)
+				NewbornAdded(this, EventArgs.Empty);
+		}
+		
+		public delegate void BabyDonkeyAddedEventHandler(object sender, EventArgs args);
+		
+		public event BabyDonkeyAddedEventHandler BabyDonkeyAdded;
+		
+		protected virtual void OnBabyDonkeyAdded()
+		{
+			if (BabyDonkeyAdded != null)
+				BabyDonkeyAdded(this, EventArgs.Empty);
+		}
+		
+		public delegate void DogAddedEventHandler(object sender, EventArgs args);
+		
+		public event DogAddedEventHandler DogAdded;
+		
+		protected virtual void OnDogAdded()
+		{
+			if (DogAdded != null)
+				DogAdded(this, EventArgs.Empty);
+		}
+		
+		public void LayableAdded(Layable l)
+		{
+			if(l is FarmAnimal)
+			{
+				if(ActionBoardContext.Instance.CurrentPhase == ActionBoardContext.Phase.BreedingPhase)
+				{
+					OnNewbornAdded();
+					FarmAnimal fa = l as FarmAnimal;
+					if(fa.type == FarmAnimal.Type.Donkey)
+						OnBabyDonkeyAdded();
+				}
+			}
+			else if(l is Dog)
+			{
+				OnDogAdded();
+			}
+		}
+		
 		public void AddTile(Layable layable)
 		{
 			Tiles.Add(layable);
+			if(layable is Tile)
+			{
+				Tile t = layable as Tile;
+				Tile tt = t.GetTwinTile();
+				if(tt != null) Tiles.Add(tt);
+			}
+			LayableAdded(layable);
 		}
 		
 		public BoardTile[,] boardtiles = new BoardTile[8,6];
@@ -178,6 +233,21 @@ namespace CavernaWPF
 					occupyingFarmAnimals = Tiles.OfType<FarmAnimal>().Where(s => s.row == row && s.column == col).ToList();
 			}
  	        return occupyingFarmAnimals;
+		}
+		
+		public void BreedAnimals()
+		{
+			var animalGroups = Tiles.OfType<FarmAnimal>().GroupBy( t => t.type, t => t, (key, g) => new { 
+                                             Type = key, 
+                                             Count = g.Count()
+                                           });
+			foreach(var animalGroup in animalGroups)
+			{
+				if(animalGroup.Count > 1)
+				{
+					Tiles.Add(new FarmAnimal(animalGroup.Type));
+				}
+			}
 		}
 		
 		public event PropertyChangedEventHandler PropertyChanged;
