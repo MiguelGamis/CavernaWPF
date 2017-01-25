@@ -1,5 +1,0 @@
-<UserControl x:Class="CavernaWPF.SowableSource"
-	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"  Height="40" Width="40">
-	<Image Source="C:\Users\Miguel\Desktop\Caverna\Grain.png"></Image>
-</UserControl>

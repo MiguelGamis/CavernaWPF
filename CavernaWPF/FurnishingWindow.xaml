@@ -33,7 +33,7 @@
 		</ItemsControl.ItemsPanel>
 		<ItemsControl.ItemTemplate>
 			<DataTemplate>
-				<Image Height="55" Width="55" Source="{Binding Value.Img}" MouseDown="Buy"></Image>
+				<Image Height="50" Width="50" Source="{Binding Value.Img}" MouseDown="Buy"></Image>
 			</DataTemplate>
 		</ItemsControl.ItemTemplate>
 		<ItemsControl.ItemContainerStyle>

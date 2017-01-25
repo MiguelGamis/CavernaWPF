@@ -32,25 +32,12 @@ namespace CavernaWPF
 		//this is fucked...
 		void Button_Click(object sender, RoutedEventArgs e)
 		{
-			var tag = (sender as Button).Tag;
-			if(tag is Int32)
-			{
-				int tradeIndex = (int) tag;
-				TradeManager tm = (this.DataContext as TradeManager);
-				int index = 0;
-				foreach(KeyValuePair<List<ResourceTab>,List<ResourceTab>> obj in tm.Exchanges)
-				{
-					if(tradeIndex == index)
-					{
-						TradeInput.ItemsSource = obj.Key;
-						tradeInput = obj.Key;
-						TradeOutput.ItemsSource = obj.Value;
-						tradeOutput = obj.Value;
-						break;
-					}
-					index++;
-				}
-			}
+			var dc = (sender as Button).DataContext;
+			var exchange = ((KeyValuePair<List<ResourceTab>, List<ResourceTab>>) dc);
+			tradeInput = exchange.Key;
+			TradeInput.ItemsSource = exchange.Key;
+			tradeOutput = exchange.Value;
+			TradeOutput.ItemsSource = exchange.Value;
 		}
 		
 		private List<ResourceTab> tradeInput;
@@ -61,22 +48,7 @@ namespace CavernaWPF
 		{
 			TradeManager tm = (this.DataContext as TradeManager);
 			
-			bool hasEnough = true;
-			foreach(ResourceTab input in tradeInput)
-			{
-				hasEnough&=tm.player.Resources[input.ResourceType].Amount>=input.Amount;
-			}
-			if(hasEnough)
-			{
-				foreach(ResourceTab input in tradeInput)
-				{
-					tm.player.Resources[input.ResourceType].Amount-=input.Amount;
-				}
-				foreach(ResourceTab input in tradeOutput)
-				{
-					tm.player.Resources[input.ResourceType].Amount+=input.Amount;
-				}
-			}
+			tm.Trade(tradeInput, tradeOutput);
 		}
 		
 		public void CancelButton_Click(object sender, RoutedEventArgs args)

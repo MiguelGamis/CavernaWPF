@@ -17,7 +17,7 @@ namespace CavernaWPF.Resources
 	{	
 		public enum Type {Wood, Stone, Ore, Ruby, Food, Gold,
 						Grain, Vegetable,
-						Sheep, Donkey, Boar, Cow};
+						Sheep, Donkey, Boar, Cow, Meadow, Field, Tunnel, Cave};
 		
 		public Resource()
 		{

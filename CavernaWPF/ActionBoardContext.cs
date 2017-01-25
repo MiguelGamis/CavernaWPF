@@ -64,18 +64,25 @@ namespace CavernaWPF
                          {
                           	ft.Woodsupplier(p);
                          });
+					ft.roundsOfEffect = 7;
+					ft.Cost.Add(new ResourceTab(Resource.Type.Stone, 1));
 					break;	
 				case "Stone supplier":
 					ft.Effect = new Action<Player>((p) =>
                          {
                           	ft.Stonesupplier(p);
                          });
+					ft.roundsOfEffect = 5;
+					ft.Cost.Add(new ResourceTab(Resource.Type.Wood, 1));
 					break;
 				case "Ruby supplier":
 					ft.Effect = new Action<Player>((p) =>
                          {
                           	ft.Rubysupplier(p);
                          });
+					ft.roundsOfEffect = 4;
+					ft.Cost.Add(new ResourceTab(Resource.Type.Wood, 2));
+					ft.Cost.Add(new ResourceTab(Resource.Type.Stone, 2));
 					break;						
 				case "Dog school":
 					ft.Effect = new Action<Player>((p) =>
@@ -89,11 +96,13 @@ namespace CavernaWPF
                           	ft.Quarry(p);
                          });
 					break;
+					ft.Cost.Add(new ResourceTab(Resource.Type.Wood, 1));
 				case "Seam":
 					ft.Effect = new Action<Player>((p) =>
                          {
                           	ft.Seam(p);
                          });
+					ft.Cost.Add(new ResourceTab(Resource.Type.Wood, 2));
 					break;
 				default:
 					found = false;
@@ -119,7 +128,7 @@ namespace CavernaWPF
 			}
 		}
 		
-		private ObservableCollection<ActionCardWrapper> actioncards;
+		private List<ActionCardWrapper> actioncards;
 		
 		private ObservableCollection<Dwarf> dwarfs;
 		
@@ -128,7 +137,7 @@ namespace CavernaWPF
 		public FurnishingWindow furnishingWindow;
 		public GameStatusBar statusControl;
 		
-		public ObservableCollection<ActionCardWrapper> ActionCards
+		public List<ActionCardWrapper> ActionCards
 		{
 			get { return actioncards; }
 			set { actioncards = value; 
@@ -157,7 +166,7 @@ namespace CavernaWPF
 		
 		private ActionBoardContext()
 		{
-			actioncards = new ObservableCollection<ActionCardWrapper>();
+			actioncards = new List<ActionCardWrapper>();
 			dwarfs = new ObservableCollection<Dwarf>();
 			harvestmarkers = new ObservableCollection<HarvestMarker>();
 			Intitialize();
@@ -228,6 +237,10 @@ namespace CavernaWPF
 		
 		public void NextTurn()
 		{
+			Round++;
+			NextRound();
+			return;
+			
 			if(CurrentPhase == Phase.ActionPhase)
 			{
 				if(!readyForNextDwarf)
@@ -524,6 +537,11 @@ namespace CavernaWPF
 				if(HarvestMarkers[Round].type == HarvestMarker.Type.QuestionMark)
 					HarvestEventsCounter++;
 				ActionCards[Round+12].Hidden = false;
+				if(ActionCards[Round+12].actionCard.Name == "Family life")
+				{
+					ActionCardWrapper ac = ActionCards.Find(acw => acw.actionCard.Name == "Wish for children");
+					ac.actionCard = GetActionCard("Urgent wish for children");
+				}
 				OnNewRound();
 			}
 			else
@@ -775,6 +793,12 @@ namespace CavernaWPF
 					ac.PlayerAction = new Action<Dwarf>((d) =>
 			                          {
 			                          	ac.Wishforchildren(d);
+			                          });
+					break;
+				case "Urgent wish for children":
+					ac.PlayerAction = new Action<Dwarf>((d) =>
+			                          {
+			                          	ac.Urgentwishforchildren(d);
 			                          });
 					break;
 				case "Donkey farming":

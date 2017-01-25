@@ -114,6 +114,7 @@
     <Compile Include="Converters\PhaseToGameStatusConverter.cs" />
     <Compile Include="Converters\ResourceToIconConverter.cs" />
     <Compile Include="Converters\StageToCardbackConverter.cs" />
+    <Compile Include="Converters\TradeExchangeConverter.cs" />
     <Compile Include="Dwarf.cs" />
     <Compile Include="DwarfQueue.xaml.cs">
       <DependentUpon>DwarfQueue.xaml</DependentUpon>
@@ -162,10 +163,6 @@
       <DependentUpon>SkipFieldOrBreedWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="SowableSource.xaml.cs">
-      <DependentUpon>SowableSource.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Town.xaml.cs">
       <DependentUpon>Town.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -205,7 +202,6 @@
     <Page Include="PlayerBoard.xaml" />
     <Page Include="ResourcesTab.xaml" />
     <Page Include="SkipFieldOrBreedWindow.xaml" />
-    <Page Include="SowableSource.xaml" />
     <Page Include="Town.xaml" />
     <Page Include="TradeWindow.xaml" />
     <Page Include="Village.xaml" />

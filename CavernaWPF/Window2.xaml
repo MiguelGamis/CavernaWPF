@@ -14,7 +14,6 @@
 		</Grid.RowDefinitions>
 		<Grid Grid.Row="0" MouseDown="test_MouseDown" MouseMove="test_MouseMove">
 			<custom:PlayerBoard></custom:PlayerBoard>
-			<custom:SowableSource x:Name="test"></custom:SowableSource>
 		</Grid>
 		<Grid
 			Grid.Row="1"

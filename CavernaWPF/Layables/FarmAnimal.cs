@@ -18,7 +18,11 @@ namespace CavernaWPF.Layables
 	{
 		public enum Type {Sheep, Donkey, Boar, Cow};
 		
-		public Type type;
+		public Type type
+		{
+			get;
+			set;
+		}
 		
 		public FarmAnimal(Type type)
 		{

@@ -247,17 +247,15 @@ namespace CavernaWPF
 	 	        {
 	 	        	if(n is Dog)
 	 	        	{
-	 	        		TownContext tc = this.DataContext as TownContext;
-
+	 	        		PlaceLayable(n, row, col, _x, _y);
+	 	        		return;
 	 	        	}
 	 	        	else if(n is Stable)
 	 	        	{
 	 	        		TownContext tc = this.DataContext as TownContext;
 	 	        		
-	 	        		Stable st = n as Stable;
-	 	        		
 	 	        		//if changing positions remove farm animals and stables 
-						if(col != st.column || row != st.row)
+						if(col != n.column || row != n.row)
 						{
 							//ReleaseFarmAnimals(t);
 						}
@@ -265,15 +263,18 @@ namespace CavernaWPF
 	 	        		if(col > 3)
 	 	        		{
 	 	        			ReleaseLayable(n);
+	 	        			return;
 	 	        		}
 	 	        		
 	 	        		bool otherStables = tc.Tiles.OfType<Stable>().Any(t => t.row == row && t.column == col);
 	 	        		if(otherStables)
 	 	        		{
 	 	        			ReleaseLayable(n);
+	 	        			return;
 	 	        		}
 	 	        		
 						PlaceLayable(n, row, col, _x, _y);
+						return;
 	 	        	}
 	 	        }
  	        	ReleaseLayable(n);
@@ -334,7 +335,8 @@ namespace CavernaWPF
 	   	{
 			l.column = col;
 			l.row = row;
-			l.X = x;
+			if(l is Dog) l.X = x + 20; 
+			else l.X = x;
 			l.Y = y;
 	   	}
 	   	
@@ -462,6 +464,7 @@ namespace CavernaWPF
     				acceptableTiles.Add(Tile.Type.DeepTunnelDummy);
     				break;
     			case Tile.Type.Dwelling:
+    			case Tile.Type.FurnishingTile:
     				acceptableTiles.Add(Tile.Type.Cave);
     				acceptableTiles.Add(Tile.Type.CaveCave);
     				acceptableTiles.Add(Tile.Type.CaveTunnel);

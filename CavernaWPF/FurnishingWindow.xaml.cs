@@ -34,19 +34,34 @@ namespace CavernaWPF
 		{
 			ActionBoardContext abc = (DataContext as ActionBoardContext);
 			if(abc.FurnishingCavern)
-			{
-				abc.FurnishingCavern = false;
-					
+			{		
 				object obj = ((FrameworkElement)sender).DataContext;
-				
 				
 				if(obj is KeyValuePair<string,FurnishingTile>)
 				{
+					Player p = abc.currentPlayer.Value;
 					FurnishingTile ft = ((KeyValuePair<string,FurnishingTile>) obj).Value;
-					ft.Effect.Invoke(abc.currentPlayer.Value);
-					abc.currentPlayer.Value.town.AddTile(new Tile(Tile.Type.FurnishingTile){ Img = ft.Img });
+					
+					if(CanAfford(p,ft))
+					{
+						abc.FurnishingCavern = false;
+						
+						ft.player = p;
+						ft.Effect.Invoke(abc.currentPlayer.Value);
+						abc.currentPlayer.Value.town.AddTile(new Tile(Tile.Type.FurnishingTile){ Img = ft.Img });
+					}
 				}
 			}
+		}
+		
+		public bool CanAfford(Player p, FurnishingTile ft)
+		{
+			foreach(ResourceTab rt in ft.Cost)
+			{
+				if(p.Resources[rt.type].Amount < rt.Amount)
+					return false;
+			}
+			return true;
 		}
 		
 		private void BackgroundInitialize(object sender, RoutedEventArgs e)

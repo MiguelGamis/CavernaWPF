@@ -17,13 +17,13 @@ namespace CavernaWPF
 	/// </summary>
 	public class ResourceTab : INotifyPropertyChanged
 	{
-		public ResourceTab(Resource.Type type, int amount)
+		public ResourceTab(Resource.Type resourcetype, int amount)
 		{
-			ResourceType = type;
+			type = resourcetype;
 			Amount = amount;			
 		}
 		
-		public Resource.Type ResourceType {
+		public Resource.Type type {
 			get; 
 			set;
 		}

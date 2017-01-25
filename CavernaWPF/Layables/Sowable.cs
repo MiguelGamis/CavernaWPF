@@ -17,7 +17,11 @@ namespace CavernaWPF.Layables
 	{
 		public enum Type {Grain, Vegetable};
 		
-		public Type type;
+		public Type type
+		{
+			get;
+			set;
+		}
 		
 		public Sowable(Type type)
 		{

@@ -24,7 +24,11 @@ namespace CavernaWPF.Layables
 //    	private string img;
 		public bool Twin;
     	
-		public Type type;
+		public Type type
+		{
+			get;
+			set;
+		}
 		
 		public Tile(Tile.Type type)
 		{

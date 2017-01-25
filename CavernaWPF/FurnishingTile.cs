@@ -25,11 +25,11 @@ namespace CavernaWPF
 		
 		public Player player;
 		
-		public List<ResourcesTab> Cost = new List<ResourcesTab>();
+		public List<ResourceTab> Cost = new List<ResourceTab>();
 		
 		public Action<Player> Effect;
 		
-		private int roundsOfEffect;
+		public int roundsOfEffect;
 		
 		public Action VictoryPoints;
 		
@@ -61,7 +61,7 @@ namespace CavernaWPF
 			{
 				if(roundsOfEffect > 0)
 				{
-					p.Resources[Resource.Type.Wood].Amount++;
+					p.Resources[Resource.Type.Wood].Increment(1);
 					roundsOfEffect--;
 				}
 				else
@@ -73,18 +73,23 @@ namespace CavernaWPF
 		
 		public void Stonesupplier(Player p)
 		{
-			ActionBoardContext.Instance.NewRound += delegate(object sender, EventArgs args) 
-			{ 
-				if(roundsOfEffect > 0)
+			ActionBoardContext.Instance.NewRound += Stonesupplier;
+		}
+		
+		private void Stonesupplier(object sender, EventArgs args) 
+		{
+			if(roundsOfEffect > 0)
+			{
+				if(player != null)
 				{
-					p.Resources[Resource.Type.Stone].Amount++;
+					player.Resources[Resource.Type.Stone].Increment(1);
 					roundsOfEffect--;
 				}
-				else
-				{
-					//Unhook
-				}
-			};
+			}
+			else
+			{
+				//Unhook
+			}
 		}
 		
 		public void Rubysupplier(Player p)
@@ -93,7 +98,7 @@ namespace CavernaWPF
 			{ 
 				if(roundsOfEffect > 0)
 				{
-					p.Resources[Resource.Type.Ruby].Amount++;
+					p.Resources[Resource.Type.Ruby].Increment(1);
 					roundsOfEffect--;
 				}
 				else

@@ -520,14 +520,18 @@ namespace CavernaWPF
 		public void Wishforchildren(Dwarf d)
 		{
 			ActionCardWindowContext acwc = new ActionCardWindowContext();
-//			if(ActionBoardContext.Instance.FurnishingTiles["Guest room"].player == d.player)
-//			{
-//			
-//			}
+			if(ActionBoardContext.Instance.FurnishingTiles["Guest room"].player == d.player)
+			{
+				acwc.Options.Add(new ActionCardCheckBox() {Selected = true, Able = true, Text = "Furnish a dwelling"} );
 			
-			acwc.Options.Add(new ActionCardRadioButton() {Selected = true, Able = true, Text = "Furnish a dwelling"} );
+				acwc.Options.Add(new ActionCardCheckBox() {Able = true, Text = "Make a baby"} );
+			}
+			else
+			{
+				acwc.Options.Add(new ActionCardRadioButton() {Selected = true, Able = true, Text = "Furnish a dwelling"} );
 			
-			acwc.Options.Add(new ActionCardRadioButton() {Able = true, Text = "Make a baby"} );
+				acwc.Options.Add(new ActionCardRadioButton() {Able = true, Text = "Make a baby"} );
+			}
 			
 			acwc.Control.ShowDialog();
 			
@@ -540,6 +544,39 @@ namespace CavernaWPF
 				if(acwc.Options[1].Selected)
 				{
 					MakeBaby(d);
+				}
+				ActionBoardContext.Instance.readyForNextDwarf = true;
+			}
+		}
+		
+		public void Urgentwishforchildren(Dwarf d)
+		{
+			ActionCardWindowContext acwc = new ActionCardWindowContext();
+			if(ActionBoardContext.Instance.FurnishingTiles["Guest room"].player == d.player)
+			{
+				acwc.Options.Add(new ActionCardCheckBox() {Selected = true, Able = true, Text = "Furnish a dwelling and then make a baby"} );
+			
+				acwc.Options.Add(new ActionCardCheckBox() {Able = true, Text = "Collect 3 Gold"} );
+			}
+			else
+			{
+				acwc.Options.Add(new ActionCardRadioButton() {Selected = true, Able = true, Text = "Furnish a dwelling and then make a baby"} );
+			
+				acwc.Options.Add(new ActionCardRadioButton() {Able = true, Text = "Collect 3 Gold"} );
+			}
+			
+			acwc.Control.ShowDialog();
+			
+			if((bool) acwc.Control.DialogResult)
+			{
+				if(acwc.Options[0].Selected)
+				{
+					FurnishDwelling(d);
+					MakeBaby(d);
+				}
+				if(acwc.Options[1].Selected)
+				{
+					d.player.Resources[Resource.Type.Gold].Increment(3);
 				}
 				ActionBoardContext.Instance.readyForNextDwarf = true;
 			}
