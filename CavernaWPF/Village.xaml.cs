@@ -90,7 +90,10 @@ namespace CavernaWPF
 					else
 					{	
 						if(col == 4)
+						{
 							ReleaseLayable(n);
+							return;	
+						}
 						if(col > 4)
 							col--;
 						break;
@@ -335,7 +338,7 @@ namespace CavernaWPF
 	   	{
 			l.column = col;
 			l.row = row;
-			if(l is Dog) l.X = x + 20; 
+			if(l is Dog) l.X = x + 35; 
 			else l.X = x;
 			l.Y = y;
 	   	}
@@ -455,6 +458,7 @@ namespace CavernaWPF
     				acceptableTiles.Add(Tile.Type.MeadowField);
     				break;
     			case Tile.Type.OreMine:
+    			case Tile.Type.DeepTunnelDummy:
     				acceptableTiles.Add(Tile.Type.Tunnel);
     				acceptableTiles.Add(Tile.Type.TunnelDummy);
     				break;

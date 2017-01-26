@@ -57,18 +57,42 @@
 					<Thumb Height="137" Width="101">
 						<Thumb.Template>
 							<ControlTemplate>
-								<Image>
-									<Image.Style>
-										<Style TargetType="Image">
-											<Setter Property="Source" Value="{Binding Img}"/>
-											<Style.Triggers>
-												<DataTrigger Binding="{Binding Hidden}" Value="True">
-													<Setter Property="Source" Value="{Binding actioncard.Stage, Converter={StaticResource stageconverter}}"/>
-												</DataTrigger>
-											</Style.Triggers>
-										</Style>
-									</Image.Style>
-								</Image>
+								<Grid>
+									<Image>
+										<Image.Style>
+											<Style TargetType="Image">
+												<Setter Property="Source" Value="{Binding Img}"/>
+												<Style.Triggers>
+													<DataTrigger Binding="{Binding Hidden}" Value="True">
+														<Setter Property="Source" Value="{Binding actionCard.Stage, Converter={StaticResource stageconverter}}"/>
+													</DataTrigger>
+												</Style.Triggers>
+											</Style>
+										</Image.Style>
+									</Image>
+									<ItemsControl ItemsSource="{Binding Stuff}">
+										<ItemsControl.ItemsPanel>
+											<ItemsPanelTemplate>
+												<Canvas/>
+											</ItemsPanelTemplate>
+										</ItemsControl.ItemsPanel>
+										<ItemsControl.ItemTemplate>
+											<DataTemplate>
+												<Image Source="{Binding Img}" Height="{Binding Height}" Width="{Binding Width}"></Image>
+											</DataTemplate>
+										</ItemsControl.ItemTemplate>
+										<ItemsControl.ItemContainerStyle>
+											<Style>
+												<Setter
+													Property="Canvas.Left"
+													Value="{Binding X}" />
+												<Setter
+													Property="Canvas.Top"
+													Value="{Binding Y}" />
+											</Style>
+										</ItemsControl.ItemContainerStyle>
+									</ItemsControl>
+								</Grid>
 							</ControlTemplate>
 						</Thumb.Template>
 					</Thumb>

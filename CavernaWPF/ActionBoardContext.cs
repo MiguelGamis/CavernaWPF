@@ -45,6 +45,12 @@ namespace CavernaWPF
 		private void PrepareFurnishingTiles()
 		{
 			FurnishingTiles = new Dictionary<string, FurnishingTile>();
+			AddFurnishingTile("Cuddle room");
+			AddFurnishingTile("Breakfast room");
+			AddFurnishingTile("Stubble room");
+			AddFurnishingTile("Work room");
+			AddFurnishingTile("Guest room");
+			AddFurnishingTile("Office room");
 			AddFurnishingTile("Wood supplier");
 			AddFurnishingTile("Stone supplier");
 			AddFurnishingTile("Ruby supplier");
@@ -59,6 +65,50 @@ namespace CavernaWPF
 			bool found = true;
 			switch(name)
 			{
+				case "Cuddle room":
+					ft.Effect = new Action<Player>((p) =>
+                         {
+                          	ft.Cuddleroom(p);
+                         });
+					ft.Cost.Add(new ResourceTab(Resource.Type.Wood, 1));
+					break;
+				case "Breakfast room":
+					ft.Effect = new Action<Player>((p) =>
+                         {
+                          	ft.Breakfastroom(p);
+                         });
+					ft.Cost.Add(new ResourceTab(Resource.Type.Wood, 1));
+					break;
+				case "Stubble room":
+					ft.Effect = new Action<Player>((p) =>
+                         {
+                          	ft.Stubbleroom(p);
+                         });
+					ft.Cost.Add(new ResourceTab(Resource.Type.Wood, 1));
+					ft.Cost.Add(new ResourceTab(Resource.Type.Ore, 1));
+					break;
+				case "Work room":
+					ft.Effect = new Action<Player>((p) =>
+                         {
+                          	ft.Guestroom(p);
+                         });
+					ft.Cost.Add(new ResourceTab(Resource.Type.Stone, 1));
+					break;
+				case "Guest room":
+					ft.Effect = new Action<Player>((p) =>
+                         {
+                          	ft.Guestroom(p);
+                         });
+					ft.Cost.Add(new ResourceTab(Resource.Type.Wood, 1));
+					ft.Cost.Add(new ResourceTab(Resource.Type.Stone, 1));
+					break;
+				case "Office room":
+					ft.Effect = new Action<Player>((p) =>
+                         {
+                          	ft.Officeroom(p);
+                         });
+					ft.Cost.Add(new ResourceTab(Resource.Type.Stone, 1));
+					break;
 				case "Wood supplier":
 					ft.Effect = new Action<Player>((p) =>
                          {
@@ -66,7 +116,7 @@ namespace CavernaWPF
                          });
 					ft.roundsOfEffect = 7;
 					ft.Cost.Add(new ResourceTab(Resource.Type.Stone, 1));
-					break;	
+					break;
 				case "Stone supplier":
 					ft.Effect = new Action<Player>((p) =>
                          {
@@ -192,7 +242,11 @@ namespace CavernaWPF
 		{
 			foreach(ActionCardWrapper actioncardwrapper in actioncards)
 			{
-				actioncardwrapper.actionCard.Accumulate();
+				if(!actioncardwrapper.Hidden)
+				{
+					actioncardwrapper.Accumulate();
+					actioncardwrapper.actionCard.Accumulate();
+				}
 			}
 		}
 		
@@ -237,10 +291,6 @@ namespace CavernaWPF
 		
 		public void NextTurn()
 		{
-			Round++;
-			NextRound();
-			return;
-			
 			if(CurrentPhase == Phase.ActionPhase)
 			{
 				if(!readyForNextDwarf)
@@ -541,6 +591,7 @@ namespace CavernaWPF
 				{
 					ActionCardWrapper ac = ActionCards.Find(acw => acw.actionCard.Name == "Wish for children");
 					ac.actionCard = GetActionCard("Urgent wish for children");
+					ac.setImage();
 				}
 				OnNewRound();
 			}
@@ -600,11 +651,13 @@ namespace CavernaWPF
 			
 			AddActionCard(GetActionCard("Sustenance"));
 			
-			AddActionCard(GetActionCard("Ruby mining"));
+			AddActionCard(GetActionCard("Ore delivery"));
+			//AddActionCard(GetActionCard("Ruby mining"));
 			
 			AddActionCard(GetActionCard("Housework"));
 			
-			AddActionCard(GetActionCard("Slash-and-burn"));
+			AddActionCard(GetActionCard("Sheep farming"));
+			//AddActionCard(GetActionCard("Slash-and-burn"));
 			
 			List<string> round1ActionCards = new List<string> { "Blacksmithing", "Sheep farming", "Ore mine construction" };
 			ShuffleList(round1ActionCards);
@@ -686,21 +739,21 @@ namespace CavernaWPF
 			switch(Name)
 			{
 				case "Drift mining":
-					ac.Accumulators.Add(new ResourceAccumulator(){ResourceType = Resource.Type.Stone, StartingAmount = 1, Accumulation = 1});
+					ac.Accumulators.Add(new ResourceAccumulator(){ResourceType = Resource.Type.Stone, StartingAmount = 1, Accumulation = 1, topYLimit = 10, bottomYLimit = 70, leftXLimit = 35, rightXLimit=101});
 					ac.PlayerAction = new Action<Dwarf>((d) =>
                           {
                           	ac.Driftmining(d);
                           });
 					break;
 				case "Logging":
-					ac.Accumulators.Add(new ResourceAccumulator(){ResourceType = Resource.Type.Wood, StartingAmount = 3, Accumulation = 1});
+					ac.Accumulators.Add(new ResourceAccumulator(){ResourceType = Resource.Type.Wood, StartingAmount = 3, Accumulation = 1, topYLimit = 40, bottomYLimit = 80, leftXLimit = 0, rightXLimit=101});
 					ac.PlayerAction = new Action<Dwarf>((d) =>
 					                          {
 					                          	ac.Logging(d);
 					                          });
 					break;
 				case "Wood gathering":
-					ac.Accumulators.Add(new ResourceAccumulator(){ResourceType = Resource.Type.Wood, StartingAmount = 1, Accumulation = 1});
+					ac.Accumulators.Add(new ResourceAccumulator(){ResourceType = Resource.Type.Wood, StartingAmount = 1, Accumulation = 1, topYLimit = 30, bottomYLimit = 137, leftXLimit = 0, rightXLimit=101});
 					ac.PlayerAction = new Action<Dwarf>((d) =>
 			                          {
 			                          	ac.Woodgathering(d);

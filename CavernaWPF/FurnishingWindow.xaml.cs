@@ -46,6 +46,12 @@ namespace CavernaWPF
 					{
 						abc.FurnishingCavern = false;
 						
+						foreach(ResourceTab rt in ft.Cost)
+						{
+							//TODO: Add discount checking
+							p.Resources[rt.type].Amount -= rt.Amount;
+						}
+						
 						ft.player = p;
 						ft.Effect.Invoke(abc.currentPlayer.Value);
 						abc.currentPlayer.Value.town.AddTile(new Tile(Tile.Type.FurnishingTile){ Img = ft.Img });

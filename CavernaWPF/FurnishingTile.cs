@@ -55,6 +55,48 @@ namespace CavernaWPF
 		{
 		}
 		
+		public void Cuddleroom(Player p)
+		{
+			ActionBoardContext.Instance.NewRound += delegate(object sender, EventArgs args) 
+			{
+			};
+		}
+		
+		public void Breakfastroom(Player p)
+		{
+			ActionBoardContext.Instance.NewRound += delegate(object sender, EventArgs args) 
+			{
+			};
+		}
+				
+		public void Stubbleroom(Player p)
+		{
+			ActionBoardContext.Instance.NewRound += delegate(object sender, EventArgs args) 
+			{
+			};
+		}
+		
+		public void Workroom(Player p)
+		{
+			ActionBoardContext.Instance.NewRound += delegate(object sender, EventArgs args) 
+			{
+			};
+		}
+		
+		public void Guestroom(Player p)
+		{
+			ActionBoardContext.Instance.NewRound += delegate(object sender, EventArgs args) 
+			{
+			};
+		}
+		
+		public void Officeroom(Player p)
+		{
+			ActionBoardContext.Instance.NewRound += delegate(object sender, EventArgs args) 
+			{
+			};
+		}
+		
 		public void Woodsupplier(Player p)
 		{
 			ActionBoardContext.Instance.NewRound += delegate(object sender, EventArgs args) 

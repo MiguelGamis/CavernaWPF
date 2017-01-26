@@ -16,6 +16,7 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Linq;
 
 namespace CavernaWPF
 {
@@ -96,7 +97,7 @@ namespace CavernaWPF
 			try
 			{
 				ActionCardWrapper acw = abc.ActionCards[actionCardIndex];
-				if(!acw.occupied)
+				if(!acw.occupied && !acw.Hidden)
 				{
 					ActionCard ac = acw.actionCard;
 					Action<Dwarf> action = ac.PlayerAction;
@@ -107,6 +108,7 @@ namespace CavernaWPF
 						if(ActionBoardContext.Instance.readyForNextDwarf)
 						{
 							acw.occupied = true;
+							if(!ac.Accumulators.Any(a => a.Amount > 0 )) acw.Stuff.Clear();
 							(sender as Thumb).DragDelta -= Thumb_DragDelta;
 							(sender as Thumb).DragCompleted -= Thumb_DragCompleted;
 							return;

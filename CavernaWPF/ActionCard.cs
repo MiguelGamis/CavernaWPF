@@ -105,7 +105,7 @@ namespace CavernaWPF
 						d.player.Resources[Resource.Type.Gold].Increment(2);
 						break;
 					case "FurnishCavern":
-						
+						ActionBoardContext.Instance.FurnishingCavern = true;
 						break;
 					case "Stable":
 						d.player.town.AddTile(new Stable());
@@ -126,7 +126,7 @@ namespace CavernaWPF
 						d.player.town.AddTile(new Tile(Tile.Type.Meadow));
 						break;
 					case "FurnishDwelling":
-						
+						ActionBoardContext.Instance.FurnishingDwelling = true;
 						break;
 					case "Field":
 						d.player.town.AddTile(new Tile(Tile.Type.Field));
@@ -177,7 +177,7 @@ namespace CavernaWPF
 		{
 			ActionCardWindowContext acwc = new ActionCardWindowContext();
 			
-			acwc.Options.Add(new ActionCardCheckBox(){ Selected = true, Able = true, Text = "Collect Resources"});
+			acwc.Options.Add(new ActionCardCheckBox(){ Selected = true, Able = true, Text = GetResourcesOption()});
 			
 			acwc.Options.Add(new ActionCardCheckBox(){ Selected = true, Able = true, Text = "Place Cave-Tunnel Tile"});
 			
@@ -202,7 +202,7 @@ namespace CavernaWPF
 		{
 			ActionCardWindowContext acwc = new ActionCardWindowContext();
 			
-			acwc.Options.Add(new ActionCardCheckBox(){ Selected = true, Able = true, Text = "Collect Resources"});
+			acwc.Options.Add(new ActionCardCheckBox(){ Selected = true, Able = true, Text = GetResourcesOption()});
 			
 			acwc.Options.Add(new ActionCardRadioButton(true){ Selected = true, Able = true, Text = "Place a Cave-Tunnel Tile"});
 			
@@ -235,7 +235,7 @@ namespace CavernaWPF
 		{
 			ActionCardWindowContext acwc = new ActionCardWindowContext();
 			
-			acwc.Options.Add(new ActionCardCheckBox(){ Selected = true, Able = true, Text = "Collect Resources" });
+			acwc.Options.Add(new ActionCardCheckBox(){ Selected = true, Able = true, Text = GetResourcesOption() });
 			
 			bool expeditionAble = d.Level > 0;
 			acwc.Options.Add(new ActionCardCheckBox(){ Selected = expeditionAble, Able = expeditionAble, Text = "Go on 1 Expedition"});
@@ -261,7 +261,7 @@ namespace CavernaWPF
 		public void Woodgathering(Dwarf d)
 		{
 			ActionCardWindowContext acwc = new ActionCardWindowContext();
-			acwc.Options.Add(new ActionCardCheckBox(){ Selected = true, Text = "Collect Resources"});
+			acwc.Options.Add(new ActionCardCheckBox(){ Selected = true, Text = GetResourcesOption()});
 			acwc.Control.ShowDialog();
 			
 			if((bool) acwc.Control.DialogResult)
@@ -278,7 +278,7 @@ namespace CavernaWPF
 		public void Supplies(Dwarf d)
 		{
 			ActionCardWindowContext acwc = new ActionCardWindowContext();
-			acwc.Options.Add(new ActionCardCheckBox(){ Selected = true, Text = "Collect Resources"});
+			acwc.Options.Add(new ActionCardCheckBox(){ Selected = true, Text = "Collect 1 Wood, 1 Stone, 1 Ore, 1 Food, and 2 Gold"});
 			acwc.Control.ShowDialog();
 			
 			if((bool) acwc.Control.DialogResult)
@@ -298,7 +298,7 @@ namespace CavernaWPF
 		public bool Clearing(Dwarf d)
 		{
 			ActionCardWindowContext acwc = new ActionCardWindowContext();
-			acwc.Options.Add(new ActionCardCheckBox(){ Selected = true, Text = "Collect Resources"});
+			acwc.Options.Add(new ActionCardCheckBox(){ Selected = true, Text = GetResourcesOption()});
 			acwc.Options.Add(new ActionCardCheckBox(){ Selected = true, Text = "Place Meadow-Field Tile"});
 			acwc.Control.ShowDialog();
 			
@@ -322,7 +322,7 @@ namespace CavernaWPF
 		public void Startingplayer(Dwarf d)
 		{
 			ActionCardWindowContext acwc = new ActionCardWindowContext();
-			acwc.Options.Add(new ActionCardCheckBox(){ Selected = true, Text = "Collect Resources and become the starting player"});
+			acwc.Options.Add(new ActionCardCheckBox(){ Selected = true, Text =  GetResourcesOption() + " and become the starting player"});
 			acwc.Control.ShowDialog();
 			
 			if((bool) acwc.Control.DialogResult)
@@ -340,7 +340,7 @@ namespace CavernaWPF
 		public void Oremining(Dwarf d)
 		{
 			ActionCardWindowContext acwc = new ActionCardWindowContext();
-			acwc.Options.Add(new ActionCardCheckBox(){ Selected = true, Text = "Collect Resources"});
+			acwc.Options.Add(new ActionCardCheckBox(){ Selected = true, Text = GetResourcesOption()});
 			acwc.Control.ShowDialog();
 			
 			if((bool) acwc.Control.DialogResult)
@@ -353,10 +353,29 @@ namespace CavernaWPF
 			}
 		}
 		
+		private string GetResourcesOption(bool more = false)
+		{
+			string option = "Collect ";
+			int numTypes = Accumulators.Count;
+			int i = 0;
+			foreach(ResourceAccumulator ra in Accumulators)
+			{
+				option += ra.Amount + " " + ra.ResourceType;
+				i++;
+				if(i == numTypes)
+					break;
+				else if(i == numTypes - 1 && !more)
+					option += " and ";
+				else
+					option += ", ";
+			}
+			return option;
+		}
+		
 		public void Sustenance(Dwarf d)
 		{
 			ActionCardWindowContext acwc = new ActionCardWindowContext();
-			acwc.Options.Add(new ActionCardCheckBox(){ Selected = true, Text = "Collect Resources"});
+			acwc.Options.Add(new ActionCardCheckBox(){ Selected = true, Text = GetResourcesOption(true) + " and 1 Grain"});
 			acwc.Options.Add(new ActionCardCheckBox(){ Selected = true, Text = "Place Meadow-Field Tile"});
 			acwc.Control.ShowDialog();
 			
@@ -378,7 +397,7 @@ namespace CavernaWPF
 		public void Rubymining(Dwarf d)
 		{
 			ActionCardWindowContext acwc = new ActionCardWindowContext();
-			acwc.Options.Add(new ActionCardCheckBox(){ Selected = true, Text = "Collect Resources"});
+			acwc.Options.Add(new ActionCardCheckBox(){ Selected = true, Text = GetResourcesOption()});
 			acwc.Control.ShowDialog();
 			
 			if((bool) acwc.Control.DialogResult)
@@ -394,7 +413,7 @@ namespace CavernaWPF
 		public void Housework(Dwarf d)
 		{
 			ActionCardWindowContext acwc = new ActionCardWindowContext();
-			acwc.Options.Add(new ActionCardCheckBox(){ Selected = true, Text = "Collect Dog", Able = true});
+			acwc.Options.Add(new ActionCardCheckBox(){ Selected = true, Text = "Collect 1 Dog", Able = true});
 			bool roomForCavern = true;
 			acwc.Options.Add(new ActionCardCheckBox(){ Selected = roomForCavern, Text = "Furnish a cavern", Able = roomForCavern});
 			acwc.Control.ShowDialog();
@@ -470,7 +489,7 @@ namespace CavernaWPF
 			acwc.Options.Add(new ActionCardCheckBox() {Text = "Build small fenced area", Selected = numWood > 1 && hasMeadow, Able = numWood > 0});
 			acwc.Options.Add(new ActionCardCheckBox() {Text = "Build large fenced area", Selected = numWood > 3, Able = numWood > 1});
 			acwc.Options.Add(new ActionCardCheckBox() {Selected = numStone > 1, Able = numStone > 1, Text = "Build a stable"});
-			acwc.Options.Add(new ActionCardCheckBox(true){Selected = true, Text = "Collect sheep"});
+			acwc.Options.Add(new ActionCardCheckBox(true){Selected = true, Text = GetResourcesOption()});
 			acwc.Control.ShowDialog();
 			
 			if((bool) acwc.Control.DialogResult)
@@ -492,7 +511,15 @@ namespace CavernaWPF
 				}
 				if(acwc.Options[3].Selected)
 				{
-					d.player.town.AddTile(new FarmAnimal(FarmAnimal.Type.Sheep));
+					//TODO: Make more robust
+					foreach(ResourceAccumulator ra in Accumulators)
+					{
+						for(int i = 0; i < ra.Amount; i++)
+						{
+							d.player.town.AddTile(new FarmAnimal(FarmAnimal.Type.Sheep));
+						}
+						ra.Amount = 0;
+					}
 				}
 				ActionBoardContext.Instance.readyForNextDwarf = true;
 			}
@@ -502,16 +529,21 @@ namespace CavernaWPF
 		{
 			ActionCardWindowContext acwc = new ActionCardWindowContext();
 			//TODO:must query boardtiles for adjacent tunnels
-			acwc.Options.Add(new ActionCardCheckBox(){Text = "Build a ore mine"});
-			acwc.Options.Add(new ActionCardCheckBox(){Text = "Go on two expedition"});
+			acwc.Options.Add(new ActionCardCheckBox(){Selected = true, Able = true, Text = "Build an ore mine and collect 3 Ore"});
+			bool expeditionAble = d.Level > 0;
+			acwc.Options.Add(new ActionCardCheckBox(){Selected = expeditionAble, Able = expeditionAble, Text = "Go on 2 expeditions"});
 			acwc.Control.ShowDialog();
 			
 			if((bool) acwc.Control.DialogResult)
 			{
 				if(acwc.Options[0].Selected)
 				{
-					d.player.Resources[Resource.Type.Wood].Amount-=2;
-					d.player.town.AddTile(new Tile(Tile.Type.Fence));
+					d.player.town.AddTile(new Tile(Tile.Type.OreMine));
+					d.player.Resources[Resource.Type.Ore].Increment(3);
+				}
+				if(acwc.Options[1].Selected)
+				{
+					Expedition(d,2);
 				}
 				ActionBoardContext.Instance.readyForNextDwarf = true;
 			}
@@ -592,7 +624,7 @@ namespace CavernaWPF
 			acwc.Options.Add(new ActionCardCheckBox() {Text = "Build small fenced area", Selected = numWood > 1 && hasMeadow, Able = numWood > 0});
 			acwc.Options.Add(new ActionCardCheckBox() {Text = "Build large fenced area", Selected = numWood > 3, Able = numWood > 1});
 			acwc.Options.Add(new ActionCardCheckBox() {Selected = numStone > 1, Able = numStone > 1, Text = "Build a stable"});
-			acwc.Options.Add(new ActionCardCheckBox(true){Selected = true, Text = "Collect donkey"});
+			acwc.Options.Add(new ActionCardCheckBox(true){Selected = true, Text = GetResourcesOption()});
 			acwc.Control.ShowDialog();
 			
 			if((bool) acwc.Control.DialogResult)
@@ -614,7 +646,15 @@ namespace CavernaWPF
 				}
 				if(acwc.Options[3].Selected)
 				{
-					d.player.town.AddTile(new FarmAnimal(FarmAnimal.Type.Donkey));
+					//TODO: Make more robust
+					foreach(ResourceAccumulator ra in Accumulators)
+					{
+						for(int i = 0; i < ra.Amount; i++)
+						{
+							d.player.town.AddTile(new FarmAnimal(FarmAnimal.Type.Sheep));
+						}
+						ra.Amount = 0;
+					}
 				}
 				ActionBoardContext.Instance.readyForNextDwarf = true;
 			}
@@ -638,10 +678,10 @@ namespace CavernaWPF
 		public void Familylife(Dwarf d)
 		{
 			ActionCardWindowContext acwc = new ActionCardWindowContext();
-			bool expeditionAble = d.Level > 0;
-			acwc.Options.Add(new ActionCardCheckBox(){ Selected = expeditionAble, Able = expeditionAble, Text = "Go on 4 expeditions"});
 			
-			acwc.Options.Add(new ActionCardCheckBox(){ Selected = expeditionAble, Able = expeditionAble, Text = ""});
+			acwc.Options.Add(new ActionCardCheckBox(){ Selected = true, Able = true, Text = "Make a baby"});
+			
+			acwc.Options.Add(new ActionCardCheckBox(true){ Selected = true, Able = true, Text = "... and sow crops"});
 			
 			if((bool) acwc.Control.DialogResult)
 			{

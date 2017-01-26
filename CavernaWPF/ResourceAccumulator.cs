@@ -8,19 +8,32 @@
  */
 using System;
 using CavernaWPF.Resources;
+using System.ComponentModel;
 
 namespace CavernaWPF
 {
 	/// <summary>
 	/// Description of ResourceAccumulator.
 	/// </summary>
-	public class ResourceAccumulator
+	public class ResourceAccumulator : INotifyPropertyChanged
 	{
 		public Resource.Type ResourceType;
 		public int StartingAmount;
 		public int Accumulation;
-		public int Amount;
-		public double imageTopYLimit;
-		public double imageBottomYLimit;
+		private int amount;
+		public int Amount
+		{
+			get	{ return amount; }
+			set { 
+					amount = value;
+					if (PropertyChanged != null) PropertyChanged(this, new PropertyChangedEventArgs("Amount"));
+				}
+		}
+		public double topYLimit = 0;
+		public double bottomYLimit = 137;
+		public double leftXLimit = 0;
+		public double rightXLimit = 101;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
 	}
 }

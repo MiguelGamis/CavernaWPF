@@ -114,13 +114,11 @@
     <Compile Include="Converters\PhaseToGameStatusConverter.cs" />
     <Compile Include="Converters\ResourceToIconConverter.cs" />
     <Compile Include="Converters\StageToCardbackConverter.cs" />
-    <Compile Include="Converters\TradeExchangeConverter.cs" />
     <Compile Include="Dwarf.cs" />
     <Compile Include="DwarfQueue.xaml.cs">
       <DependentUpon>DwarfQueue.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="FurnishedBoardTile.cs" />
     <Compile Include="FurnishingTile.cs" />
     <Compile Include="FurnishingWindow.xaml.cs">
       <DependentUpon>FurnishingWindow.xaml</DependentUpon>
@@ -138,6 +136,7 @@
     <Compile Include="Layables\Dog.cs" />
     <Compile Include="Layables\FarmAnimal.cs" />
     <Compile Include="Layables\Layable.cs" />
+    <Compile Include="Layables\ResourceItem.cs" />
     <Compile Include="Layables\Sowable.cs" />
     <Compile Include="Layables\Stable.cs" />
     <Compile Include="LayoutManager.cs" />
