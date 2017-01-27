@@ -58,7 +58,7 @@ namespace CavernaWPF
 			{ new List<ResourceTab>() { new ResourceTab(Resource.Type.Ruby, 1) }, 
 				new List<ResourceTab>() { new ResourceTab(Resource.Type.Tunnel, 1) }
 			},
-			{ new List<ResourceTab>() { new ResourceTab(Resource.Type.Ruby, 1) }, 
+			{ new List<ResourceTab>() { new ResourceTab(Resource.Type.Ruby, 2) }, 
 				new List<ResourceTab>() { new ResourceTab(Resource.Type.Cave, 1) }
 			},
 			{ new List<ResourceTab>() { new ResourceTab(Resource.Type.Sheep, 1) }, 

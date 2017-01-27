@@ -156,20 +156,25 @@ namespace CavernaWPF
 						if(!isAllowed(t, col, row) || (twinTile != null && !isAllowed(twinTile, twincol, twinrow)) )
 			        	{
 			  	        	ReleaseLayable(n);
+			  	        	isAdjacent();
 		 	        		return;
 			        	}
 						
-						if(!isAdjacent(t, col, row) && (twinTile != null && !isAdjacent(twinTile, twincol, twinrow)))
-				        {
-		 	       			ReleaseLayable(n);
-		 	        		return;
-				        }
+//						if(!isAdjacent(t, col, row) && (twinTile != null && !isAdjacent(twinTile, twincol, twinrow)))
+//				        {
+//		 	       			ReleaseLayable(n);
+//		 	        		return;
+//				        }
 						
 						PlaceLayable(t, row, col, _x, _y);
 						if(twinTile != null) PlaceLayable(twinTile, twinrow, twincol, 0, 0);
+						
+						isAdjacent();
+						
 						return;
 					}
 					ReleaseLayable(n);
+					isAdjacent();
 		 	        return;
 				}
 				
@@ -245,15 +250,36 @@ namespace CavernaWPF
 					ResetLayable(sow);
  	        	}
 				
+				if(n is Dog)
+ 	        	{
+					if(1 <= col && col <= 6 && 1 <= row && row <= 4)
+					{
+	 	        		Dog d = n as Dog;
+	 	      			
+	 	        		TownContext tc = this.DataContext as TownContext;
+	 	        		
+	 	        		List<FarmAnimal> fas = tc.Tiles.OfType<FarmAnimal>().Where(fa => fa.column == d.column && fa.row == d.row).ToList();
+	 	        		int dogCount= tc.Tiles.OfType<Dog>().Where(dog => dog.column == d.column && dog.row == d.row).Count();
+	 	        		if(dogCount > 1)
+	 	        		{
+	 	        			if(dogCount + 1  < fas.Count)
+	 	        				ReleaseLayable(fas.Last());
+	 	        		}
+	 	        		else
+	 	        		{
+	 	        			fas.ForEach(fa => ReleaseLayable(fa));
+	 	        		}
+	 	        		
+	 	        		PlaceLayable(n, row, col, _x, _y);
+	 	        		
+	 	        		return;
+					}
+					ResetLayable(n);
+ 	        	}
 				
 	 	        if(1 <= col && col <= 6 && 1 <= row && row <= 4)
 	 	        {
-	 	        	if(n is Dog)
-	 	        	{
-	 	        		PlaceLayable(n, row, col, _x, _y);
-	 	        		return;
-	 	        	}
-	 	        	else if(n is Stable)
+	 	        	if(n is Stable)
 	 	        	{
 	 	        		TownContext tc = this.DataContext as TownContext;
 	 	        		
@@ -297,15 +323,29 @@ namespace CavernaWPF
 	    {
 	   		if(l is Tile)
 	    	{
+	   			Tile t = l as Tile;
 	   			ReleaseFarmAnimals(l.row, l.column);
-	   			//DON'T ASK IF Twintile is null
-	   			if((l as Tile).Twin)
-	   			{
-	   				ReleaseLayable((l as Tile).GetTwinTile());
+	   			
+	   			bool forestSide = t.column < 4;
+//	   			//DON'T ASK IF Twintile is null
+//	   			if((l as Tile).Twin)
+//	   			{
+//	   				ReleaseLayable((l as Tile).GetTwinTile());
+//	   			}
+	   			Tile tt = t.GetTwinTile();
+	   			if(tt != null)
+	   			{ 	
+			    	tt.column = 0;
+		    		tt.row = 0;
 	   			}
+	   			
+	   			l.X = 0;
+		    	l.Y = 0;	    	
+		    	l.column = 0;
+	    		l.row = 0;
+	   			return;
 	    	}
-	   		
-	   		if(l is Sowable)
+	   		else if(l is Sowable)
 	   		{
 	   			Sowable s = l as Sowable;
 	   			if(s.type == Sowable.Type.Grain)
@@ -324,14 +364,17 @@ namespace CavernaWPF
 	   				l.X = 220 + 35*7;
 	   				l.Y = 420;
 	   			}
+	   			l.column = 0;
+	    		l.row = 0;
+	    		return;
 	   		}
 	   		else
 	   		{
 		    	l.X = 0;
-		    	l.Y = 0;
+		    	l.Y = 0;	    	
+		    	l.column = 0;
+	    		l.row = 0;
 	   		}
-	    	l.column = 0;
-	    	l.row = 0;
 	    }
 	    
 	   	private void PlaceLayable(Layable l, int row, int col, double x, double y)
@@ -416,6 +459,10 @@ namespace CavernaWPF
 		        	{
 			        	t.Rotate();
 		        	}
+		        	
+		        	ReleaseLayable(l);
+		        	isAdjacent();
+		        	return;
 		        }
 		        ReleaseLayable(l);
 	        }
@@ -488,146 +535,68 @@ namespace CavernaWPF
    				return rightPreTiles.Count > 0;
    			}
 	   	}
-	   	
-//	   	private bool isAllowed(Tile tile, int col, int row)
-//	   	{
-//	   		List<Tile.Type> acceptableTiles = new List<Tile.Type>();
-//	   		
-//	   		bool isPreTile = false;
-//	   		
-//	   		switch(tile.type)
-//	   		{
-//    			case Tile.Type.CaveCave:
-//    			case Tile.Type.CaveTunnel:
-//    			case Tile.Type.Cave:
-//    			case Tile.Type.Tunnel:
-//	   				if(col < 4)
-//	   				{
-//	   					return false;
-//	   				}
-//	   				isPreTile = true;
-//	   				break;
-//    			case Tile.Type.MeadowField:
-//    			case Tile.Type.Field:
-//    			case Tile.Type.Meadow:
-//	   				if(col > 3)
-//	   				{
-//	   					return false;
-//	   				}
-//	   				isPreTile = true;
-//    				break;
-//    			case Tile.Type.BigFence:
-//    			case Tile.Type.Fence:
-//    				acceptableTiles.Add(Tile.Type.Meadow);
-//    				acceptableTiles.Add(Tile.Type.MeadowField);
-//    				break;
-//    			case Tile.Type.OreMine:
-//    				acceptableTiles.Add(Tile.Type.Tunnel);
-//    				acceptableTiles.Add(Tile.Type.TunnelDummy);
-//    				break;
-//    			case Tile.Type.RubyMine:
-//    				acceptableTiles.Add(Tile.Type.Tunnel);
-//    				acceptableTiles.Add(Tile.Type.TunnelDummy);
-//    				acceptableTiles.Add(Tile.Type.DeepTunnelDummy);
-//    				break;
-//	   		}
-//	   		TownContext tc = (DataContext as TownContext);
-//	   		
-//	   		List<Tile> intersectingTiles = tc.Tiles.OfType<Tile>().Where(t => t.row == row && t.column == col && t != tile && t != tile.GetTwinTile()).ToList();
-//	   		List<Tile> rightPreTiles = intersectingTiles.Where(t => acceptableTiles.Any(type => type == t.type)).ToList();
-//	   		
-//	   		if(tile.Twin)
-//	   		{
-//    			switch(tile.Rot)
-//    			{
-//    				case 0:
-//    					col++;
-//    					break;
-//    				case 90:
-//    					row++;
-//    					break;
-//    				case 180:
-//    					col--;
-//    					break;
-//    				case 270:
-//    					row--;
-//    					break;
-//    				default:
-//    					break;
-//    			}
-//	   			
-//    			switch(tile.type)
-//	   			{
-//	    			case Tile.Type.CaveCave:
-//	    			case Tile.Type.CaveTunnel:
-//	    			case Tile.Type.Cave:
-//	    			case Tile.Type.Tunnel:
-//		   				if(col < 4)
-//		   				{
-//		   					return false;
-//		   				}
-//		   				break;
-//	    			case Tile.Type.MeadowField:
-//	    			case Tile.Type.Field:
-//	    			case Tile.Type.Meadow:
-//		   				if(col > 3)
-//		   				{
-//		   					return false;
-//		   				}
-//		   				break;
-//    			}
-//    			
-//	   			List<Tile> intersectingTiles2 = tc.Tiles.OfType<Tile>().Where(t => t.row == row && t.column == col && t != tile && t != tile.GetTwinTile()).ToList();
-//	   			List<Tile> rightPreTiles2 = intersectingTiles2.Where(t => acceptableTiles.Any(type => type == t.type)).ToList();
-//	   			
-//	   			if(isPreTile)
-//	   				return intersectingTiles.Count == 0 && intersectingTiles2.Count == 0;
-//	   			else
-//	   				return rightPreTiles.Count > 0 && rightPreTiles2.Count > 0;
-//	   		}
-//	   		else
-//	   		{
-//	   			if(isPreTile)
-//	   				return intersectingTiles.Count == 0;
-//	   			else
-//	   				return rightPreTiles.Count > 0;
-//	   		}
-//	   	}
 
-	   	private bool isAdjacent(Tile tile, int col, int row)
+	   	private class Coord
+	   	{
+	   		public int column;
+	   		public int row;
+	   	}
+	   	
+	   	private void isAdjacent()
 	   	{
 	   		TownContext tc = (DataContext as TownContext);
-	   		var adjacentTiles = tc.Tiles.Where(t => ((t.row == row && Math.Abs(t.column - col) == 1 ) || (t.column == col && Math.Abs(t.row - row) == 1)) && t != tile && t != tile.GetTwinTile() ).ToList();
-	   		return adjacentTiles.Count > 0;
+	   		if(true)
+	   		{
+	   			List<Tile> forestTiles = tc.Tiles.OfType<Tile>().Where(t => t.column < 4).ToList();
+	   			
+	   			Queue<Coord> coords = new Queue<Coord>(); coords.Enqueue(new Coord(){ column = 3, row = 4} );
+	   			
+	   			while(coords.Count > 0)
+	   			{
+	   				Coord coord = coords.Dequeue();
+	   				if(coord.column > 3 || coord.column < 0 || coord.row > 5 || coord.row < 0)  continue;
+	   				List<Tile> connectedTiles = forestTiles.Where(t => t.column == coord.column && t.row == coord.row).ToList();
+	   				if(connectedTiles.Count > 0)
+	   				{
+	   					connectedTiles.ForEach(ct => forestTiles.Remove(ct));
+		   				coords.Enqueue(new Coord(){column = coord.column - 1, row = coord.row}); 
+		   				coords.Enqueue(new Coord(){column = coord.column + 1, row = coord.row}); 
+		   				coords.Enqueue(new Coord(){column = coord.column, row = coord.row - 1}); 
+		   				coords.Enqueue(new Coord(){column = coord.column, row = coord.row + 1});
+	   				}
+	   			}
+	   			
+	   			forestTiles.ForEach(ft => ReleaseLayable(ft));
+	   		}
+	   		if(true)
+	   		{
+	   			List<Tile> caveTiles = tc.Tiles.OfType<Tile>().Where(t => t.column > 3).ToList();
+	   			
+	   			Queue<Coord> coords = new Queue<Coord>(); coords.Enqueue(new Coord(){ column = 4, row = 4} );
+	   			
+	   			while(coords.Count > 0)
+	   			{
+	   				Coord coord = coords.Dequeue();
+	   				if(coord.column > 7 || coord.column < 4 || coord.row > 5 || coord.row < 0)  continue;
+	   				List<Tile> connectedTiles = caveTiles.Where(t => t.column == coord.column && t.row == coord.row).ToList();
+	   				if(connectedTiles.Count > 0)
+	   				{
+		   				connectedTiles.ForEach(ct => caveTiles.Remove(ct));
+		   				coords.Enqueue(new Coord(){column = coord.column - 1, row = coord.row}); 
+		   				coords.Enqueue(new Coord(){column = coord.column + 1, row = coord.row}); 
+		   				coords.Enqueue(new Coord(){column = coord.column, row = coord.row - 1}); 
+		   				coords.Enqueue(new Coord(){column = coord.column, row = coord.row + 1});
+	   				}
+	   			}
+	   			caveTiles.ForEach(ct => ReleaseLayable(ct));
+	   		}
 	   	}
-
+	   	
 //	   	private bool isAdjacent(Tile tile, int col, int row)
 //	   	{
 //	   		TownContext tc = (DataContext as TownContext);
-//	   		var adjs1 = tc.Tiles.Where(t => ((t.row == row && Math.Abs(t.column - col) == 1 ) || (t.column == col && Math.Abs(t.row - row) == 1)) && t != tile && t != tile.GetTwinTile() ).ToList();
-//	   		bool bool1 = adjs1.Count > 0;
-//	   		if(tile.Twin)
-//	   		{
-//	   			switch(tile.Rot)
-//    			{
-//    				case 0:
-//    					col++;
-//    					break;
-//    				case 90:
-//    					row++;
-//    					break;
-//    				case 180:
-//    					col--;
-//    					break;
-//    				case 270:
-//    					row--;
-//    					break;
-//    			}
-//	   			var adjs2 = tc.Tiles.Where(t => ((t.row == row && Math.Abs(t.column - col) == 1 ) || (t.column == col && Math.Abs(t.row - row) == 1)) && t != tile && t != tile.GetTwinTile() ).ToList();
-//	   			bool bool2 = adjs2.Count > 0;
-//	   			return bool1 || bool2;
-//	   		}
-//	   		return bool1;
+//	   		var adjacentTiles = tc.Tiles.Where(t => ((t.row == row && Math.Abs(t.column - col) == 1 ) || (t.column == col && Math.Abs(t.row - row) == 1)) && t != tile && t != tile.GetTwinTile() ).ToList();
+//	   		return adjacentTiles.Count > 0;
 //	   	}
 	}
 }

@@ -79,10 +79,5 @@ namespace CavernaWPF
 			//var bm = new Bitmap(bimage, new Size(this.Width, this.Height));
 			this.Background = new ImageBrush(bimage);
 		}
-		
-		private void MakeTiles(object sender, RoutedEventArgs e)
-		{
-			DockPanel dp = new DockPanel();
-		}
 	}
 }
