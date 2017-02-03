@@ -108,7 +108,7 @@ namespace CavernaWPF
 						ActionBoardContext.Instance.FurnishingCavern = true;
 						break;
 					case "Stable":
-						d.player.town.AddTile(new Stable());
+						d.player.town.AddTile(new Stable(d.player.Color));
 						break;
 					case "Tunnel":
 						d.player.town.AddTile(new Tile(Tile.Type.Tunnel));
@@ -144,6 +144,7 @@ namespace CavernaWPF
 						break;
 				}
 			}
+			d.Level = Math.Min(d.Level + 1, 14);
 		}
 		
 		private void Sow(Dwarf d)
@@ -462,9 +463,16 @@ namespace CavernaWPF
 		public void Blacksmithing(Dwarf d)
 		{
 			ActionCardWindowContext acwc = new ActionCardWindowContext();
-			bool able = d.Level == 0 && d.player.Resources[Resource.Type.Ore].Amount > 0;
-			acwc.Options.Add(new ActionCardCheckBox() {Selected = able, Able = able, Text = "Forge a weapon"});
-			acwc.Options.Add(new ActionCardCheckBox(true){Selected = d.Level > 0, Able = d.Level > 0, Text = "Go on 3 expeditions"});
+			int numOre = d.player.Resources[Resource.Type.Ore].Amount;
+			bool isWarrior = d.Level > 0;
+			if(isWarrior)
+			{
+				acwc.Options.Add(new ActionCardCheckBox(true){Selected = true, Able = true, Text = "Go on 3 expeditions"});
+			}
+			else
+			{
+				acwc.Options.Add(new ActionCardTicker(0, Math.Min(numOre, 8) ) {Selected = !isWarrior && numOre > 0, Able = !isWarrior && numOre > 0, Text = "Forge weapon and go on 3 expeditions"});
+			}
 			//TODO: Warn player if he or she has no ores and his or her dwarf has no weapon
 			acwc.Control.ShowDialog();
 			
@@ -472,8 +480,18 @@ namespace CavernaWPF
 			{
 				if(acwc.Options[0].Selected)
 				{
-					d.player.Resources[Resource.Type.Wood].Amount-=2;
-					d.player.town.AddTile(new Tile(Tile.Type.Fence));
+					if(acwc.Options[0] is ActionCardCheckBox)
+					{
+						Expedition(d,3);
+					}
+					else if(acwc.Options[0] is ActionCardTicker)
+					{
+						ActionCardTicker act = acwc.Options[0] as ActionCardTicker;
+						int gainedLevel = act.Value;
+						d.player.Resources[Resource.Type.Ore].Amount-=gainedLevel;
+						d.Level = gainedLevel;
+						Expedition(d,3);
+					}
 				}
 				ActionBoardContext.Instance.readyForNextDwarf = true;
 			}
@@ -507,7 +525,7 @@ namespace CavernaWPF
 				if(acwc.Options[2].Selected)
 				{
 					d.player.Resources[Resource.Type.Stone].Amount-=1;
-					d.player.town.AddTile(new Stable());
+					d.player.town.AddTile(new Stable(d.player.Color));
 				}
 				if(acwc.Options[3].Selected)
 				{
@@ -642,7 +660,7 @@ namespace CavernaWPF
 				if(acwc.Options[2].Selected)
 				{
 					d.player.Resources[Resource.Type.Stone].Amount-=1;
-					d.player.town.AddTile(new Stable());
+					d.player.town.AddTile(new Stable(d.player.Color));
 				}
 				if(acwc.Options[3].Selected)
 				{

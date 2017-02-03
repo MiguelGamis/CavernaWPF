@@ -27,7 +27,7 @@ namespace CavernaWPF
 	public partial class Window1 : Window
 	{
 		public Window1()
-		{	
+		{
 			LayoutManager.Instance.appWindow = this;
 			
 			StackPanel rootPanel = new StackPanel() { Orientation = Orientation.Vertical };
@@ -46,15 +46,20 @@ namespace CavernaWPF
 			publicPanel.Children.Add(gameProgressBar);
 			rootPanel.Children.Add(publicPanel);
 			
+			this.Content = rootPanel;
+			InitializeComponent();
+			
+			PrepareGameContext pg = new PrepareGameContext();
+			pg.Control.ShowDialog();
+			
+			if((bool) pg.Control.DialogResult == false)
+				Environment.Exit(0);
+			
 			StackPanel playerPanels = new StackPanel() { Orientation = Orientation.Horizontal };
 			
-			List<string> colors = new List<string>() {"Blue","Yellow","Green","Purple"};
-			
-			int numPlayers = 2;
-			for(int i = 0; i < numPlayers; i++)
+			foreach(Player p in pg.GetPlayers())
 			{
-				Player p = new Player(); p.Color = colors[i];
-				ActionBoardContext.Instance.players.Add(p);
+				ActionBoardContext.Instance.Players.Add(p);
 				
 				Grid playerPanel = new Grid();//StackPanel playerPanel = new StackPanel() { Orientation = Orientation.Vertical };
 				playerPanel.RowDefinitions.Add(new RowDefinition());
@@ -100,16 +105,10 @@ namespace CavernaWPF
 			Grid.SetRow(playerPanels, 1);
 			rootPanel.Children.Add(playerPanels);
 			
-			this.Content = rootPanel;
-			InitializeComponent();
-			
-			ActionBoardContext.Instance.StartingPlayer = ActionBoardContext.Instance.players[1];
-//			ActionBoardContext.Instance.startButton.Click += new RoutedEventHandler(StartGame);
-//			Grid.SetRow(ActionBoardContext.Instance.startButton,2);
-//			rootPanel.Children.Add(ActionBoardContext.Instance.startButton);
+			ActionBoardContext.Instance.StartingPlayer = ActionBoardContext.Instance.Players[1];
 			ActionBoardContext.Instance.StartGame();
 			
-			this.Loaded += Test;
+//			this.Loaded += Test;
 		}
 		
 		private void StartGame(object sender, RoutedEventArgs e)
@@ -126,39 +125,39 @@ namespace CavernaWPF
 		private void Test(object sender, RoutedEventArgs e)
 		{
 			Tile test = new Tile(Tile.Type.BigFence){Locked = true, Rot = 90};
-			ActionBoardContext.Instance.players[1].town.PositionLayable(test, 1, 1);
+			ActionBoardContext.Instance.Players[1].town.PositionLayable(test, 1, 1);
 			FarmAnimal fa = new FarmAnimal(FarmAnimal.Type.Sheep){Locked = true};
-			ActionBoardContext.Instance.players[1].town.PositionLayable(fa, 1, 1);
+			ActionBoardContext.Instance.Players[1].town.PositionLayable(fa, 1, 1);
 			FarmAnimal fa2 = new FarmAnimal(FarmAnimal.Type.Sheep){Locked = true};
-			ActionBoardContext.Instance.players[1].town.PositionLayable(fa2, 1, 1);
-			
+			ActionBoardContext.Instance.Players[1].town.PositionLayable(fa2, 1, 1);
+		
 			Tile test2 = new Tile(Tile.Type.Fence){Locked = true};
-			ActionBoardContext.Instance.players[1].town.PositionLayable(test2, 2, 1);
+			ActionBoardContext.Instance.Players[1].town.PositionLayable(test2, 2, 1);
 			FarmAnimal fa3 = new FarmAnimal(FarmAnimal.Type.Donkey){Locked = true};
-			ActionBoardContext.Instance.players[1].town.PositionLayable(fa3, 2, 1);
+			ActionBoardContext.Instance.Players[1].town.PositionLayable(fa3, 2, 1);
 			FarmAnimal fa4 = new FarmAnimal(FarmAnimal.Type.Donkey){Locked = true};
-			ActionBoardContext.Instance.players[1].town.PositionLayable(fa4, 2, 1);
+			ActionBoardContext.Instance.Players[1].town.PositionLayable(fa4, 2, 1);
 			
 			Tile test3 = new Tile(Tile.Type.Fence){Locked = true};
-			ActionBoardContext.Instance.players[1].town.PositionLayable(test3, 2, 2);
-			Stable stable = new Stable(){Locked = true};
-			ActionBoardContext.Instance.players[1].town.PositionLayable(stable, 2, 2);
+			ActionBoardContext.Instance.Players[1].town.PositionLayable(test3, 2, 2);
+			Stable stable = new Stable(ActionBoardContext.Instance.Players[1].Color){Locked = true};
+			ActionBoardContext.Instance.Players[1].town.PositionLayable(stable, 2, 2);
 			FarmAnimal fa5 = new FarmAnimal(FarmAnimal.Type.Boar){Locked = true};
-			ActionBoardContext.Instance.players[1].town.PositionLayable(fa5, 2, 2);
+			ActionBoardContext.Instance.Players[1].town.PositionLayable(fa5, 2, 2);
 			FarmAnimal fa6 = new FarmAnimal(FarmAnimal.Type.Boar){Locked = true};
-			ActionBoardContext.Instance.players[1].town.PositionLayable(fa6, 2, 2);
+			ActionBoardContext.Instance.Players[1].town.PositionLayable(fa6, 2, 2);
 			
 			Tile test4 = new Tile(Tile.Type.Fence){Locked = true};
-			ActionBoardContext.Instance.players[1].town.PositionLayable(test4, 3, 1);
+			ActionBoardContext.Instance.Players[1].town.PositionLayable(test4, 3, 1);
 			FarmAnimal fa7 = new FarmAnimal(FarmAnimal.Type.Boar){Locked = true};
-			ActionBoardContext.Instance.players[1].town.PositionLayable(fa7, 3, 1);
+			ActionBoardContext.Instance.Players[1].town.PositionLayable(fa7, 3, 1);
 			FarmAnimal fa8 = new FarmAnimal(FarmAnimal.Type.Boar){Locked = true};
-			ActionBoardContext.Instance.players[1].town.PositionLayable(fa8, 3, 1);
+			ActionBoardContext.Instance.Players[1].town.PositionLayable(fa8, 3, 1);
 			
 			FurnishingTile ft = new FurnishingTile();
-			ft.Seam(ActionBoardContext.Instance.players[1]);
+			ft.Seam(ActionBoardContext.Instance.Players[1]);
 			
-			ActionBoardContext.Instance.FurnishingTiles["Seam"].player = ActionBoardContext.Instance.players[1];
+			ActionBoardContext.Instance.FurnishingTiles["Seam"].player = ActionBoardContext.Instance.Players[1];
 		}
 		
 	}

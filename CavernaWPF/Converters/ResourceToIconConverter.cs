@@ -24,34 +24,34 @@ namespace CavernaWPF.Converters
 			switch((Resource.Type) value)
 			{
 				case Resource.Type.Wood:
-					ImgSrc = "C:\\Users\\Miguel\\Desktop\\Caverna\\Wood.png";
+					ImgSrc = "pack://application:,,,/Images/Resources/Wood.png";
 					break;
 				case Resource.Type.Stone:
-					ImgSrc = "C:\\Users\\Miguel\\Desktop\\Caverna\\Stone.png";
+					ImgSrc = "pack://application:,,,/Images/Resources/Stone.png";
 					break;
 				case Resource.Type.Ore:
-					ImgSrc = "C:\\Users\\Miguel\\Desktop\\Caverna\\Ore.png";
+					ImgSrc = "pack://application:,,,/Images/Resources/Ore.png";
 					break;
 				case Resource.Type.Ruby:
-					ImgSrc = "C:\\Users\\Miguel\\Desktop\\Caverna\\Ruby.png";
+					ImgSrc = "pack://application:,,,/Images/Resources/Ruby.png";
 					break;
 				case Resource.Type.Gold:
-					ImgSrc = "C:\\Users\\Miguel\\Desktop\\Caverna\\Gold.png";
+					ImgSrc = "pack://application:,,,/Images/Resources/Gold.png";
 					break;
 				case Resource.Type.Food:
-					ImgSrc = "C:\\Users\\Miguel\\Desktop\\Caverna\\Food.png";
+					ImgSrc = "pack://application:,,,/Images/Resources/Food.png";
 					break;
 				case Resource.Type.Grain:
-					ImgSrc = "C:\\Users\\Miguel\\Desktop\\Caverna\\Grain.png";
+					ImgSrc = "pack://application:,,,/Images/Resources/Grain.png";
 					break;
 				case Resource.Type.Vegetable:
-					ImgSrc = "C:\\Users\\Miguel\\Desktop\\Caverna\\Vegetable.png";
+					ImgSrc = "pack://application:,,,/Images/Resources/Vegetable.png";
 					break;
 				case Resource.Type.Sheep:
-					ImgSrc = "C:\\Users\\Miguel\\Desktop\\Caverna\\Sheep.png";
+					ImgSrc = "pack://application:,,,/Images/Resources/Sheep.png";
 					break;
 				case Resource.Type.Donkey:
-					ImgSrc = "C:\\Users\\Miguel\\Desktop\\Caverna\\Donkey.png";
+					ImgSrc = "pack://application:,,,/Images/Resources/Donkey.png";
 					break;					
 			}
 			return ImgSrc;

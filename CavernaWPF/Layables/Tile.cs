@@ -37,55 +37,55 @@ namespace CavernaWPF.Layables
 			{
 				case Type.Field:
 					Z = 0;
-					Img = "C:\\Users\\Miguel\\Desktop\\Caverna\\Field.png";
+					Img = "pack://application:,,,/Images/Tiles/Field.png";
 					break;
 				case Type.Cave:
 					Z = 0;
-					Img = "C:\\Users\\Miguel\\Desktop\\Caverna\\Cave.png";
+					Img = "pack://application:,,,/Images/Tiles/Cave.png";
 					break;
 				case Type.Tunnel:
 					Z = 0;					
-					Img = "C:\\Users\\Miguel\\Desktop\\Caverna\\Tunnel.png";
+					Img = "pack://application:,,,/Images/Tiles/Tunnel.png";
 					break;
 				case Type.Meadow:
 					Z = 0;					
-					Img = "C:\\Users\\Miguel\\Desktop\\Caverna\\Meadow.png";
+					Img = "pack://application:,,,/Images/Tiles/Meadow.png";
 					break;								
 				case Type.Fence:
 					Z = 1;					
-					Img = "C:\\Users\\Miguel\\Desktop\\Caverna\\Fence.png";
+					Img = "pack://application:,,,/Images/Tiles/Fence.png";
 					break;
 				case Type.RubyMine:
 					Z = 2;
-					Img = "C:\\Users\\Miguel\\Desktop\\Caverna\\RubyMine.png";
+					Img = "pack://application:,,,/Images/Tiles/RubyMine.png";
 					break;
 				case Type.BigFence:
 					Z = 1;					
-					Img = "C:\\Users\\Miguel\\Desktop\\Caverna\\BigFence.png";
+					Img = "pack://application:,,,/Images/Tiles/BigFence.png";
 					twinTile = new Tile(Type.BigFenceDummy);
 					twinTile.twinTile = this;
 					break;
 				case Type.CaveTunnel:
 					Z = 0;
-					Img = "C:\\Users\\Miguel\\Desktop\\Caverna\\CaveTunnel.png";
+					Img = "pack://application:,,,/Images/Tiles/CaveTunnel.png";
 					twinTile = new Tile(Type.TunnelDummy);
 					twinTile.twinTile = this;
 					break;
 				case Type.CaveCave:
 					Z = 0;
-					Img = "C:\\Users\\Miguel\\Desktop\\Caverna\\CaveCave.png";
+					Img = "pack://application:,,,/Images/Tiles/CaveCave.png";
 					twinTile = new Tile(Type.CaveDummy);
 					twinTile.twinTile = this;
 					break;
 				case Type.MeadowField:
 					Z = 0;
-					Img = "C:\\Users\\Miguel\\Desktop\\Caverna\\MeadowField.png";
+					Img = "pack://application:,,,/Images/Tiles/MeadowField.png";
 					twinTile = new Tile(Type.FieldDummy);
 					twinTile.twinTile = this;
 					break;								
 				case Type.OreMine:
 					Z = 1;
-					Img = "C:\\Users\\Miguel\\Desktop\\Caverna\\OreMine.png";
+					Img = "pack://application:,,,/Images/Tiles/OreMine.png";
 					twinTile = new Tile(Type.DeepTunnelDummy);
 					twinTile.twinTile = this;
 					break;
@@ -154,7 +154,5 @@ namespace CavernaWPF.Layables
 		{
 			return twinTile;
 		}
-		
-		private int rank;
 	}
 }

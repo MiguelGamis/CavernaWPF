@@ -99,7 +99,7 @@ namespace CavernaWPF
 		
 		public void setImage()
 		{
-			Img = String.Format("C:\\Users\\Miguel\\Desktop\\Caverna\\ActionCards\\{0}.png", actionCard.Name);
+			Img = String.Format("pack://application:,,,/Images/ActionCards/{0}.png", actionCard.Name);
 		}
 		
 		public event PropertyChangedEventHandler PropertyChanged;

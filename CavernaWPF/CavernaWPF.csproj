@@ -31,6 +31,9 @@
     <DefineConstants>TRACE</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="NUnit.Framework">
+      <HintPath>$(SharpDevelopBinPath)\Tools\NUnit\NUnit.Framework.dll</HintPath>
+    </Reference>
     <Reference Include="PresentationCore">
       <RequiredTargetFramework>3.0</RequiredTargetFramework>
     </Reference>
@@ -79,6 +82,11 @@
     </Compile>
     <Compile Include="ActionCardControls\ActionCardText.xaml.cs">
       <DependentUpon>ActionCardText.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ActionCardControls\ActionCardTicker.cs" />
+    <Compile Include="ActionCardControls\ActionCardTickerControl.xaml.cs">
+      <DependentUpon>ActionCardTickerControl.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="ActionCardControls\ActionCardWindow.xaml.cs">
@@ -145,6 +153,12 @@
       <DependentUpon>PlayerBoard.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="PlayerSlot.cs" />
+    <Compile Include="PrepareGameContext.cs" />
+    <Compile Include="PrepareGameWindow.xaml.cs">
+      <DependentUpon>PrepareGameWindow.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\WPFAssemblyInfo.cs" />
     <Compile Include="Layables\Tile.cs" />
@@ -190,6 +204,7 @@
     <Page Include="ActionCardControls\ActionCardCheckBoxControl.xaml" />
     <Page Include="ActionCardControls\ActionCardRadioButtonControl.xaml" />
     <Page Include="ActionCardControls\ActionCardText.xaml" />
+    <Page Include="ActionCardControls\ActionCardTickerControl.xaml" />
     <Page Include="ActionCardControls\ActionCardWindow.xaml" />
     <Page Include="ActionCardControls\ExpeditionWindow.xaml" />
     <Page Include="ActionCardControls\WeaponForgingWindow.xaml" />
@@ -199,6 +214,7 @@
     <Page Include="GameStatusBar.xaml" />
     <Page Include="HarvestEventsCard.xaml" />
     <Page Include="PlayerBoard.xaml" />
+    <Page Include="PrepareGameWindow.xaml" />
     <Page Include="ResourcesTab.xaml" />
     <Page Include="SkipFieldOrBreedWindow.xaml" />
     <Page Include="Town.xaml" />
@@ -208,10 +224,184 @@
     <Page Include="Window2.xaml" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Images" />
+    <Folder Include="Images\ActionCards" />
+    <Folder Include="Images\ActionCards\Stages" />
+    <Folder Include="Images\Dwarfs" />
+    <Folder Include="Images\FurnishingTiles" />
+    <Folder Include="Images\HarvestMarkers" />
+    <Folder Include="Images\LayableBorder" />
+    <Folder Include="Images\RawActionCards" />
+    <Folder Include="Images\Resources" />
+    <Folder Include="Images\Stables" />
+    <Folder Include="Images\Tiles" />
+    <Folder Include="Images\Weapons" />
     <Folder Include="Layables" />
     <Folder Include="ActionCardControls" />
     <Folder Include="Converters" />
     <Folder Include="Resources" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Action Cards 2.jpg" />
+    <Resource Include="Images\Action Cards.jpg" />
+    <Resource Include="Images\ActionBoard.jpeg" />
+    <Resource Include="Images\ActionBoardFor4.png" />
+    <Resource Include="Images\ActionBoardForFour.png" />
+    <Resource Include="Images\ActionCards\Adventure.png" />
+    <Resource Include="Images\ActionCards\Blacksmithing.png" />
+    <Resource Include="Images\ActionCards\Clearing.png" />
+    <Resource Include="Images\ActionCards\Donkey farming.png" />
+    <Resource Include="Images\ActionCards\Drift mining.png" />
+    <Resource Include="Images\ActionCards\Drift mining2.png" />
+    <Resource Include="Images\ActionCards\Excavation.png" />
+    <Resource Include="Images\ActionCards\Excavation2.png" />
+    <Resource Include="Images\ActionCards\Exploration.png" />
+    <Resource Include="Images\ActionCards\Family life.png" />
+    <Resource Include="Images\ActionCards\Fence building.png" />
+    <Resource Include="Images\ActionCards\Growth.png" />
+    <Resource Include="Images\ActionCards\Housework.png" />
+    <Resource Include="Images\ActionCards\Logging.png" />
+    <Resource Include="Images\ActionCards\Ore delivery.png" />
+    <Resource Include="Images\ActionCards\Ore mine construction.png" />
+    <Resource Include="Images\ActionCards\Ore mining.png" />
+    <Resource Include="Images\ActionCards\Ore trading.png" />
+    <Resource Include="Images\ActionCards\Ruby delivery.png" />
+    <Resource Include="Images\ActionCards\Ruby mine construction.png" />
+    <Resource Include="Images\ActionCards\Ruby mining.png" />
+    <Resource Include="Images\ActionCards\Sheep farming.png" />
+    <Resource Include="Images\ActionCards\Slash-and-burn.png" />
+    <Resource Include="Images\ActionCards\Stages\Stage1.png" />
+    <Resource Include="Images\ActionCards\Stages\Stage2.png" />
+    <Resource Include="Images\ActionCards\Stages\Stage3.png" />
+    <Resource Include="Images\ActionCards\Stages\Stage4.png" />
+    <Resource Include="Images\ActionCards\Starting player.png" />
+    <Resource Include="Images\ActionCards\Supplies.png" />
+    <Resource Include="Images\ActionCards\Sustenance.png" />
+    <Resource Include="Images\ActionCards\Urgent wish for children.png" />
+    <Resource Include="Images\ActionCards\Wish for children.png" />
+    <Resource Include="Images\ActionCards\Wood gathering.png" />
+    <None Include="Images\Caverna2.png" />
+    <Resource Include="Images\Dwarfs\BlackDwarf.png" />
+    <Resource Include="Images\Dwarfs\BlueDwarf.png" />
+    <Resource Include="Images\Dwarfs\GreenDwarf.png" />
+    <Resource Include="Images\Dwarfs\PurpleDwarf.png" />
+    <Resource Include="Images\Dwarfs\RedDwarf.png" />
+    <Resource Include="Images\Dwarfs\YellowDwarf.png" />
+    <Resource Include="Images\ExpeditionLoot.png" />
+    <None Include="Images\FoodTrade.jpeg" />
+    <None Include="Images\FurnishingTiles1.png" />
+    <None Include="Images\FurnishingTiles2.png" />
+    <None Include="Images\FurnishingTiles3.png" />
+    <None Include="Images\FurnishingTiles4.png" />
+    <Resource Include="Images\FurnishingTilesBoard.png" />
+    <Resource Include="Images\FurnishingTiles\Breakfast room.png" />
+    <Resource Include="Images\FurnishingTiles\Cuddle room.png" />
+    <Resource Include="Images\FurnishingTiles\Dog school.png" />
+    <Resource Include="Images\FurnishingTiles\Guest room.png" />
+    <Resource Include="Images\FurnishingTiles\Milking parlor.png" />
+    <Resource Include="Images\FurnishingTiles\MixedDwelling.png" />
+    <Resource Include="Images\FurnishingTiles\Office room.png" />
+    <Resource Include="Images\FurnishingTiles\Quarry.png" />
+    <Resource Include="Images\FurnishingTiles\Ruby supplier.png" />
+    <Resource Include="Images\FurnishingTiles\Seam.png" />
+    <Resource Include="Images\FurnishingTiles\Stone supplier.png" />
+    <Resource Include="Images\FurnishingTiles\Stubble room.png" />
+    <Resource Include="Images\FurnishingTiles\Weaving parlor.png" />
+    <Resource Include="Images\FurnishingTiles\Wood supplier.png" />
+    <Resource Include="Images\FurnishingTiles\Work room.png" />
+    <Resource Include="Images\HarvestMarkers\GreenLeaf.png" />
+    <Resource Include="Images\HarvestMarkers\Harvest events.xcf" />
+    <Resource Include="Images\HarvestMarkers\Harvest.xcf" />
+    <Resource Include="Images\HarvestMarkers\HarvestEvents.png" />
+    <Resource Include="Images\HarvestMarkers\HarvestEvents.xcf" />
+    <Resource Include="Images\HarvestMarkers\HarvestEvents2.png" />
+    <Resource Include="Images\HarvestMarkers\HarvestMarker.png" />
+    <Resource Include="Images\HarvestMarkers\HarvestMarker.xcf" />
+    <None Include="Images\HarvestMarkers\HarvestMarker2.xcf" />
+    <None Include="Images\HarvestMarkers\HarvestMarkerBanner.xcf" />
+    <None Include="Images\HarvestMarkers\HarvestMarkerBanner_.xcf" />
+    <Resource Include="Images\HarvestMarkers\NoHarvest.png" />
+    <Resource Include="Images\HarvestMarkers\Pay1FoodPerDwarf.png" />
+    <Resource Include="Images\HarvestMarkers\RedQuestion.png" />
+    <None Include="Images\HarvestMarkers\RedQuestion.xcf" />
+    <None Include="Images\Instrukcja_Caverna_The_Cave_Farmers_EN.pdf" />
+    <None Include="Images\LayableBorder\Stable.png" />
+    <Resource Include="Images\RawActionCards\AC-Adventure.xcf" />
+    <Resource Include="Images\RawActionCards\AC-Blacksmithing.xcf" />
+    <Resource Include="Images\RawActionCards\AC-Clearing.xcf" />
+    <Resource Include="Images\RawActionCards\AC-Donkey farming.xcf" />
+    <Resource Include="Images\RawActionCards\AC-Drift Mining.xcf" />
+    <Resource Include="Images\RawActionCards\AC-Excavation.xcf" />
+    <Resource Include="Images\RawActionCards\AC-Family life.xcf" />
+    <Resource Include="Images\RawActionCards\AC-Fence building.xcf" />
+    <Resource Include="Images\RawActionCards\AC-Growth.xcf" />
+    <Resource Include="Images\RawActionCards\AC-Housework.xcf" />
+    <Resource Include="Images\RawActionCards\AC-Logging.xcf" />
+    <Resource Include="Images\RawActionCards\AC-Ore delivery.xcf" />
+    <Resource Include="Images\RawActionCards\AC-Ore mine construction.xcf" />
+    <Resource Include="Images\RawActionCards\AC-Ore mining.xcf" />
+    <Resource Include="Images\RawActionCards\AC-Ore Trading.xcf" />
+    <Resource Include="Images\RawActionCards\AC-Ruby delivery.xcf" />
+    <Resource Include="Images\RawActionCards\AC-Ruby Mine Construction.xcf" />
+    <Resource Include="Images\RawActionCards\AC-Ruby Mining.xcf" />
+    <Resource Include="Images\RawActionCards\AC-Sheep farming.xcf" />
+    <Resource Include="Images\RawActionCards\AC-Slash-and-burn.xcf" />
+    <Resource Include="Images\RawActionCards\AC-Sustenance.xcf" />
+    <Resource Include="Images\RawActionCards\AC-Urgent wish for children.xcf" />
+    <Resource Include="Images\RawActionCards\AC-Wish for children.xcf" />
+    <Resource Include="Images\Resources\Boar.png" />
+    <Resource Include="Images\Resources\Cow.png" />
+    <Resource Include="Images\Resources\Dog.png" />
+    <Resource Include="Images\Resources\Donkey.png" />
+    <Resource Include="Images\Resources\Food.png" />
+    <Resource Include="Images\Resources\Gold.png" />
+    <Resource Include="Images\Resources\Grain.png" />
+    <Resource Include="Images\Resources\Ore.png" />
+    <Resource Include="Images\Resources\Ruby.png" />
+    <Resource Include="Images\Resources\Sheep.png" />
+    <Resource Include="Images\Resources\Stone.png" />
+    <Resource Include="Images\Resources\Vegetable.png" />
+    <Resource Include="Images\Resources\Wood.png" />
+    <Resource Include="Images\Stables\BlackStable.png" />
+    <Resource Include="Images\Stables\BlueStable.png" />
+    <Resource Include="Images\Stables\GreenStable.png" />
+    <Resource Include="Images\Stables\PurpleStable.png" />
+    <Resource Include="Images\Stables\RedStable.png" />
+    <Resource Include="Images\Stables\YellowStable.png" />
+    <Resource Include="Images\StartingPlayer.png" />
+    <Resource Include="Images\Starvation.png" />
+    <Resource Include="Images\Tiles.jpg" />
+    <Resource Include="Images\Tiles\BigFence.png" />
+    <Resource Include="Images\Tiles\Cave.png" />
+    <Resource Include="Images\Tiles\CaveCave.png" />
+    <Resource Include="Images\Tiles\CaveTunnel.png" />
+    <Resource Include="Images\Tiles\Fence.png" />
+    <Resource Include="Images\Tiles\FenceField.png" />
+    <Resource Include="Images\Tiles\FenceField2.png" />
+    <Resource Include="Images\Tiles\Field.png" />
+    <Resource Include="Images\Tiles\Meadow.png" />
+    <Resource Include="Images\Tiles\MeadowField.png" />
+    <Resource Include="Images\Tiles\MeadowField2.png" />
+    <Resource Include="Images\Tiles\OreMine.png" />
+    <Resource Include="Images\Tiles\RubyMine.png" />
+    <Resource Include="Images\Tiles\Tunnel.png" />
+    <Resource Include="Images\Village.png" />
+    <Resource Include="Images\Weapons\Weapon1.png" />
+    <Resource Include="Images\Weapons\Weapon10.png" />
+    <Resource Include="Images\Weapons\Weapon11.png" />
+    <Resource Include="Images\Weapons\Weapon12.png" />
+    <Resource Include="Images\Weapons\Weapon13.png" />
+    <Resource Include="Images\Weapons\Weapon14.png" />
+    <Resource Include="Images\Weapons\Weapon2.png" />
+    <Resource Include="Images\Weapons\Weapon3.png" />
+    <Resource Include="Images\Weapons\Weapon4.png" />
+    <Resource Include="Images\Weapons\Weapon5.png" />
+    <Resource Include="Images\Weapons\Weapon6.png" />
+    <Resource Include="Images\Weapons\Weapon7.png" />
+    <Resource Include="Images\Weapons\Weapon8.png" />
+    <Resource Include="Images\Weapons\Weapon8.xcf" />
+    <None Include="Images\Weapons\Weapon9.png" />
+    <None Include="Images\Weapons\Weapon_.xcf" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

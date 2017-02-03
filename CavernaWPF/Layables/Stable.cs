@@ -15,9 +15,9 @@ namespace CavernaWPF.Layables
 	/// </summary>
 	public class Stable : Layable
 	{
-		public Stable()
+		public Stable(string color)
 		{
-			Img = "C:\\Users\\Miguel\\Desktop\\Caverna\\Stable.png";
+			Img = String.Format("pack://application:,,,/Images/Stables/{0}Stable.png",color);
 			Width=35;
 			Height=35;
 			Z = 4;

@@ -10,7 +10,7 @@
 			<RowDefinition Height="0.95*"></RowDefinition>
 			<RowDefinition Height="*"></RowDefinition>
 		</Grid.RowDefinitions>
-		<Image Grid.Row="0" Height="35" Margin="0,0,45,0" Source="C:\Users\Miguel\Desktop\Caverna\HarvestMarkers\RedQuestion.png">
+		<Image Grid.Row="0" Height="35" Margin="0,0,45,0" Source="pack://application:,,,/Images/HarvestMarker/RedQuestion.png">
 			<Image.Style>
 				<Style TargetType="Image">
 					<Setter Property="Visibility" Value="Hidden"/>
@@ -22,7 +22,7 @@
 				</Style>
 			</Image.Style>
 		</Image>
-		<Image Grid.Row="1" Height="35" Margin="0,0,45,0" Source="C:\Users\Miguel\Desktop\Caverna\HarvestMarkers\RedQuestion.png">
+		<Image Grid.Row="1" Height="35" Margin="0,0,45,0" Source="pack://application:,,,/Images/HarvestMarker/RedQuestion.png">
 			<Image.Style>
 				<Style TargetType="Image">
 					<Setter Property="Visibility" Value="Hidden"/>
@@ -34,7 +34,7 @@
 				</Style>
 			</Image.Style>
 		</Image>
-		<Image Grid.Row="2" Height="35" Margin="0,0,45,0" Source="C:\Users\Miguel\Desktop\Caverna\HarvestMarkers\RedQuestion.png">
+		<Image Grid.Row="2" Height="35" Margin="0,0,45,0" Source="pack://application:,,,/Images/HarvestMarker/RedQuestion.png">
 			<Image.Style>
 				<Style TargetType="Image">
 					<Setter Property="Visibility" Value="Hidden"/>

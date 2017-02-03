@@ -42,7 +42,7 @@ namespace CavernaWPF
 					Player p = abc.currentPlayer.Value;
 					FurnishingTile ft = ((KeyValuePair<string,FurnishingTile>) obj).Value;
 					
-					if(CanAfford(p,ft))
+					if(CanAfford(p,ft) && ft.player == null)
 					{
 						abc.FurnishingCavern = false;
 						

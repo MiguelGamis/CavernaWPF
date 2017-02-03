@@ -30,7 +30,7 @@
 		</Grid>
 		<Grid Margin="0,42,0,22" Height="356" Width="500">
 			<Grid.Background>
-				<ImageBrush ImageSource="C:\Users\Miguel\Desktop\Caverna\Village.png" />
+				<ImageBrush ImageSource="pack://application:,,,/Images/Village.png" />
 			</Grid.Background>
 		</Grid>
 		<ItemsControl ItemsSource="{Binding Tiles}">

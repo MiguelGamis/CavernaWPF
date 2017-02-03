@@ -28,6 +28,17 @@ namespace CavernaWPF.ActionCardControls
 				if (PropertyChanged != null) PropertyChanged(this, new PropertyChangedEventArgs("Selected"));
 			}
 		}
+		private int value_;
+		public int Value
+		{
+			get {return value_;}
+			set 
+			{
+				value_ = value;
+				if (PropertyChanged != null) PropertyChanged(this, new PropertyChangedEventArgs("Value"));
+			}
+		}
+		
 		public UserControl Control { get; set; }
 		public bool Able { get; set; }
 		

@@ -19,14 +19,7 @@ namespace CavernaWPF.Converters
 	{
 		public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
 		{
-			switch((string) value)
-			{
-				case "Blue": return "C:\\Users\\Miguel\\Desktop\\Caverna\\BlueDwarf.png";
-				case "Yellow": return "C:\\Users\\Miguel\\Desktop\\Caverna\\YellowDwarf.png";
-				case "Green": return "C:\\Users\\Miguel\\Desktop\\Caverna\\GreenDwarf.png";
-				case "Purple": return "C:\\Users\\Miguel\\Desktop\\Caverna\\PurpleDwarf.png";
-				default: return "C:\\Users\\Miguel\\Desktop\\Caverna\\Dwarf.png";
-			}
+			return String.Format("pack://application:,,,/Images/Dwarfs/{0}Dwarf.png", (string) value);
 		}
 		
 		public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

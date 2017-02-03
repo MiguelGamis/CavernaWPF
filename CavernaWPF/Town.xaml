@@ -9,7 +9,7 @@
 			<VisualBrush.Visual>
 				<Grid>
 					<Image
-						Source="C:\Users\Miguel\Desktop\Caverna\Village.png" />
+						Source="pack://application:,,,/Images/Village.png" />
 				</Grid>
 			</VisualBrush.Visual>
 		</VisualBrush>

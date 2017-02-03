@@ -145,8 +145,8 @@ namespace CavernaWPF
                          {
                           	ft.Quarry(p);
                          });
-					break;
 					ft.Cost.Add(new ResourceTab(Resource.Type.Wood, 1));
+					break;
 				case "Seam":
 					ft.Effect = new Action<Player>((p) =>
                          {
@@ -161,7 +161,7 @@ namespace CavernaWPF
 			if(found)
 			{
 				ft.Name = name;
-				ft.Img = String.Format("C:\\Users\\Miguel\\Desktop\\Caverna\\FurnishingTiles\\{0}.png", name);
+				ft.Img = String.Format("C:/Users/Miguel/Desktop/Caverna/FurnishingTiles/{0}.png", name);
 				int index = FurnishingTiles.Count;
 				int group = index / 24;
 				ft.Row = index / 3;
@@ -210,7 +210,17 @@ namespace CavernaWPF
 			readyForNextDwarf = false;
 	    }
 		
-		public List<Player> players = new List<Player>();
+		private List<Player> players = new List<Player>();
+		
+		public List<Player> Players
+		{
+			get { return players; }
+			set
+			{
+				players = value;
+			}
+		}
+		
 		public List<Player> nonfielders = new List<Player>();
 		public List<Player> nonbreeders = new List<Player>();
 		
@@ -651,12 +661,11 @@ namespace CavernaWPF
 			
 			AddActionCard(GetActionCard("Sustenance"));
 			
-			AddActionCard(GetActionCard("Ore delivery"));
-			//AddActionCard(GetActionCard("Ruby mining"));
+			AddActionCard(GetActionCard("Ruby mining"));
 			
 			AddActionCard(GetActionCard("Housework"));
 			
-			AddActionCard(GetActionCard("Sheep farming"));
+			AddActionCard(GetActionCard("Blacksmithing"));
 			//AddActionCard(GetActionCard("Slash-and-burn"));
 			
 			List<string> round1ActionCards = new List<string> { "Blacksmithing", "Sheep farming", "Ore mine construction" };

@@ -19,7 +19,7 @@ namespace CavernaWPF.Converters
 	{
 		public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
 		{
-			return String.Format("C:\\Users\\Miguel\\Desktop\\Caverna\\Weapons\\Weapon{0}.png", value);
+			return String.Format("pack://application:,,,/Images/Weapons/Weapon{0}.png", value);
 		}
 		
 		public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

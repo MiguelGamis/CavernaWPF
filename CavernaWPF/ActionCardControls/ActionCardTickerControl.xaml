@@ -1,0 +1,9 @@
+<UserControl x:Class="CavernaWPF.ActionCardControls.ActionCardTickerControl"
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+	<StackPanel Orientation="Horizontal">
+		<Slider Minimum="{Binding Minimum}" Maximum="{Binding Maximum}" Value="{Binding Value}" ValueChanged="ValueChanged" Width="50" IsSnapToTickEnabled="True" TickFrequency="1"></Slider>
+		<TextBlock  Text="{Binding Value, Mode=TwoWay}" Margin="0,0,15,0"></TextBlock>
+		<TextBlock Text="{Binding Text}"></TextBlock>
+	</StackPanel>
+</UserControl>

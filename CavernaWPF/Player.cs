@@ -52,7 +52,11 @@ namespace CavernaWPF
 			return null;
 	    }
 		
-		public string name;
+		public string Name
+		{
+			get;
+			set;
+		}
 		
 		public string Color
 		{
@@ -63,7 +67,7 @@ namespace CavernaWPF
 		private Dictionary<Resource.Type, ResourceTracker> resources = new Dictionary<Resource.Type, ResourceTracker>(){
 			{ Resource.Type.Wood, new ResourceTracker(Resource.Type.Wood, 0) },
 			{ Resource.Type.Stone,  new ResourceTracker(Resource.Type.Stone, 0) },
-			{ Resource.Type.Ore,  new ResourceTracker(Resource.Type.Ore, 0) },
+			{ Resource.Type.Ore,  new ResourceTracker(Resource.Type.Ore, 9) },
 			{ Resource.Type.Ruby,  new ResourceTracker(Resource.Type.Ruby, 3) },
 			{ Resource.Type.Gold,  new ResourceTracker(Resource.Type.Gold, 0) },
 			{ Resource.Type.Food,  new ResourceTracker(Resource.Type.Food, 1) },

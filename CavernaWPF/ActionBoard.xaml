@@ -9,7 +9,7 @@
 	<Grid>
 		<Grid x:Name="board">
 			<Grid.Background>
-				<ImageBrush ImageSource="C:\Users\Miguel\Desktop\Caverna\ActionBoardForFour.png" />
+				<ImageBrush ImageSource="pack://application:,,,/Images/ActionBoardForFour.png" />
 			</Grid.Background>
 			<Grid.ColumnDefinitions>
 				<ColumnDefinition Width="*"></ColumnDefinition>
@@ -145,7 +145,7 @@
 											<Setter Property="Source" Value="{Binding type, Converter={StaticResource harvestmarkerconverter}}"/>
 											<Style.Triggers>
 												<DataTrigger Binding="{Binding Hidden}" Value="True">
-													<Setter Property="Source" Value="C:\Users\Miguel\Desktop\Caverna\HarvestMarkers\HarvestMarker.png"/>
+													<Setter Property="Source" Value="pack://application:,,,/Images/HarvestMarkers/HarvestMarker.png"/>
 												</DataTrigger>
 											</Style.Triggers>
 										</Style>
@@ -167,8 +167,7 @@
 				</Style>
 			</ItemsControl.ItemContainerStyle>
 		</ItemsControl>
-		<ItemsControl ItemsSource="{Binding Dwarfs}"
-			xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:Converters="clr-namespace:CavernaWPF.Converters">
+		<ItemsControl ItemsSource="{Binding Dwarfs}">
 			<ItemsControl.Resources>
 				<Converters:ColorToDwarfConverter x:Key="colorconverter"/>
 				<Converters:LevelToWeaponConverter x:Key="levelconverter"/>

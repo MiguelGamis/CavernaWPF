@@ -3,7 +3,7 @@
 	Height="455"
 	Width="375">
 	<UserControl.Background>
-		<ImageBrush ImageSource="C:\\Users\\Miguel\\Desktop\\Caverna\\FurnishingTilesBoard.png" />
+		<ImageBrush ImageSource="pack://application:,,,/Images/FurnishingTilesBoard.png" />
 	</UserControl.Background>
 	<ItemsControl ItemsSource="{Binding FurnishingTiles}">
 		<ItemsControl.ItemsPanel>

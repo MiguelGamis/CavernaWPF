@@ -29,10 +29,10 @@ namespace CavernaWPF.Layables
 			switch(type)
 			{
 				case Type.Grain:
-					Img = "C:\\Users\\Miguel\\Desktop\\Caverna\\Grain.png"; 
+					Img = "pack://application:,,,/Images/Resources/Grain.png"; 
 					break;
 				case Type.Vegetable:
-					Img = "C:\\Users\\Miguel\\Desktop\\Caverna\\Vegetable.png"; 
+					Img = "pack://application:,,,/Images/Resources/Vegetable.png"; 
 					break;
 			}
 			Width=35;
