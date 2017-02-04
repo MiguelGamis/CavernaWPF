@@ -53,6 +53,18 @@ namespace CavernaWPF
 	        }
 		}
 		
+		private bool startingplayer;
+		
+		public bool StartingPlayer
+		{
+	        get { return startingplayer; }
+	        set
+	        {
+	            startingplayer = value;
+	            if (PropertyChanged != null) PropertyChanged(this, new PropertyChangedEventArgs("StartingPlayer"));
+	        }
+		}
+		
 		public string Name
 		{
 			get;

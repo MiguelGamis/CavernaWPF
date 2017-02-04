@@ -400,7 +400,7 @@
     <Resource Include="Images\Weapons\Weapon7.png" />
     <Resource Include="Images\Weapons\Weapon8.png" />
     <Resource Include="Images\Weapons\Weapon8.xcf" />
-    <None Include="Images\Weapons\Weapon9.png" />
+    <Resource Include="Images\Weapons\Weapon9.png" />
     <None Include="Images\Weapons\Weapon_.xcf" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

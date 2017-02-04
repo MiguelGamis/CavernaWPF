@@ -11,6 +11,8 @@
 		<ItemsControl Grid.Row="0" ItemsSource="{Binding PlayerSlots}">
 			<ItemsControl.Resources>
 				<Converters:ColorToDwarfConverter x:Key="colorconverter"/>
+<!--				<Converters:BoolToVisibilityConverter x:Key="booltovisconverter"/>-->
+				<Image x:Key="StartingPlayer" Height="20" Width="20" Source="pack://application:,,,/Images/StartingPlayer.png"></Image>
 			</ItemsControl.Resources>
 			<ItemsControl.ItemTemplate>
 				<DataTemplate>
@@ -45,6 +47,21 @@
 								</Style>
 							</ComboBox.Style>
 						</ComboBox>
+						<RadioButton GroupName="default" IsChecked="{Binding StartingPlayer}">
+							<RadioButton.Style>
+								<Style TargetType="RadioButton">
+									<Setter Property="Visibility" Value="Hidden"/>
+									<Style.Triggers>
+										<Trigger Property="IsChecked" Value="True">
+											<Setter Property="Content" Value="{StaticResource StartingPlayer}"/>
+										</Trigger>
+										<DataTrigger Binding="{Binding Selected}" Value="True">
+											<Setter Property="Visibility" Value="Visible"/>
+										</DataTrigger>
+									</Style.Triggers>
+								</Style>
+							</RadioButton.Style>
+						</RadioButton>
 					</StackPanel>
 				</DataTemplate>
 			</ItemsControl.ItemTemplate>

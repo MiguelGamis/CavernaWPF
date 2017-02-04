@@ -18,6 +18,7 @@ using System.Windows.Media;
 using System.Collections.ObjectModel;
 using CavernaWPF.Layables;
 using CavernaWPF.Resources;
+using System.Linq;
 
 namespace CavernaWPF
 {
@@ -57,8 +58,9 @@ namespace CavernaWPF
 			
 			StackPanel playerPanels = new StackPanel() { Orientation = Orientation.Horizontal };
 			
-			foreach(Player p in pg.GetPlayers())
+			foreach(PlayerSlot playerSlot in pg.PlayerSlots.Where(ps=>ps.Selected).ToList())
 			{
+				Player p = new Player(){Name = playerSlot.Name, Color = playerSlot.Color};
 				ActionBoardContext.Instance.Players.Add(p);
 				
 				Grid playerPanel = new Grid();//StackPanel playerPanel = new StackPanel() { Orientation = Orientation.Vertical };
@@ -69,7 +71,7 @@ namespace CavernaWPF
 				TownContext tc = new TownContext();
 				p.town = tc;
 				
-				Dwarf dwarf1 = new Dwarf() { player = p}; Dwarf dwarf2 = new Dwarf() { player = p };
+				Dwarf dwarf1 = new Dwarf() { player = p, Level = 8}; Dwarf dwarf2 = new Dwarf() { player = p };
 				p.Dwarfs.Add(dwarf1); p.Dwarfs.Add(dwarf2);
 				
 				Grid.SetRow(tc.control,0);
@@ -101,11 +103,12 @@ namespace CavernaWPF
 				LayoutManager.Instance.map.Add(p, playerPanel);
 				
 				playerPanels.Children.Add(playerPanel);
+				
+				if(playerSlot.StartingPlayer) ActionBoardContext.Instance.StartingPlayer = p;
 			}
 			Grid.SetRow(playerPanels, 1);
 			rootPanel.Children.Add(playerPanels);
 			
-			ActionBoardContext.Instance.StartingPlayer = ActionBoardContext.Instance.Players[1];
 			ActionBoardContext.Instance.StartGame();
 			
 //			this.Loaded += Test;

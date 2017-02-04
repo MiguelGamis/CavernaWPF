@@ -269,6 +269,8 @@ namespace CavernaWPF
 		
 		public LinkedListNode<Player> currentPlayer;
 		
+		public Dwarf currentDwarf;
+		
 		public enum Phase {ActionPhase, ConfirmPhase, NoHarvest, Pay1FoodPerDwarf, FieldPhase, FeedingPhase, BreedingPhase, SkipFieldOrBreed}
 		
 		public bool readyForNextDwarf = true;
@@ -306,22 +308,22 @@ namespace CavernaWPF
 				if(!readyForNextDwarf)
 					return;
 				
-				Dwarf d = null;
-				while(d == null)
+				currentDwarf = null;
+				while(currentDwarf == null)
 				{
 					if(currentPlayer == null)
 					{
 						ActionCards.ToList().ForEach(ac => ac.occupied = false);
 						
 						//TODO: Encapsulate -----------------
-						for(int i = ActionBoardContext.Instance.Dwarfs.Count - 1; i >= 0; i--)
+						List<Dwarf> orderedDwarfs = ActionBoardContext.Instance.Dwarfs.OrderBy(d => d.Level).Reverse().ToList();
+						foreach(Dwarf dw in orderedDwarfs)
 						{
-							Dwarf dw = ActionBoardContext.Instance.Dwarfs[i];
 							dw.X = 0;
 							dw.Y = 0;
 							dw.Locked = false;
 							dw.player.Dwarfs.Add(dw);
-							ActionBoardContext.Instance.Dwarfs.RemoveAt(i);
+							ActionBoardContext.Instance.Dwarfs.Remove(dw);
 						}
 						//------------------------------------
 						GetNextPhase();
@@ -329,8 +331,8 @@ namespace CavernaWPF
 					}
 					
 					Player p = currentPlayer.Value;
-					d = p.GetNextDwarf();
-					if(d == null)
+					currentDwarf = p.GetNextDwarf();
+					if(currentDwarf == null)
 					{
 						LinkedListNode<Player> tmp = currentPlayer;
 						playersPlaying.Remove(tmp);
@@ -344,7 +346,7 @@ namespace CavernaWPF
 						}
 					}
 				}
-				ActionBoardContext.Instance.AddDwarf(d);
+				ActionBoardContext.Instance.AddDwarf(currentDwarf);
 				CurrentPhase = Phase.ConfirmPhase;
 			}
 			else if(CurrentPhase == Phase.ConfirmPhase)

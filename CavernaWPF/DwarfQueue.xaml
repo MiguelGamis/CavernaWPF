@@ -13,7 +13,7 @@
 	</ItemsControl.ItemsPanel>
 	<ItemsControl.ItemTemplate>
 		<DataTemplate>
-			<Grid>
+			<Grid MouseDown="DwarfClick">
 				<Image Height="38" Width="48" Source="{Binding player.Color, Converter={StaticResource colorconverter}}"></Image>
 				<Image Margin="0,0,0,7" Height="32" Width="40" Source="{Binding Level, Converter={StaticResource levelconverter}}"></Image>
 			</Grid>

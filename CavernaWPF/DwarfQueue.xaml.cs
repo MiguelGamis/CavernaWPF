@@ -15,6 +15,7 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using CavernaWPF.Resources;
 
 namespace CavernaWPF
 {
@@ -26,6 +27,25 @@ namespace CavernaWPF
 		public DwarfQueue()
 		{
 			InitializeComponent();
+		}
+		
+		private void DwarfClick(object sender, RoutedEventArgs e)
+		{
+			Dwarf d = (sender as Grid).DataContext as Dwarf;
+			if(ActionBoardContext.Instance.currentPlayer == null || ActionBoardContext.Instance.currentDwarf == null)
+				return;
+			if(ActionBoardContext.Instance.currentPlayer.Value == d.player && d.player.Resources[Resource.Type.Ruby].Amount > 0 && d.Level > ActionBoardContext.Instance.currentDwarf.Level)
+			{
+				MessageBoxResult result = MessageBox.Show("Do want to play this dwarf out of order for 1 Ruby?", "Play dwarf out of order", MessageBoxButton.YesNo, MessageBoxImage.Question);
+				if (result == MessageBoxResult.Yes)
+				{
+					d.player.Resources[Resource.Type.Ruby].Amount--;
+					d.player.Dwarfs.Add(ActionBoardContext.Instance.currentDwarf);
+					d.player.Dwarfs.Remove(d);
+					ActionBoardContext.Instance.AddDwarf(d);
+					ActionBoardContext.Instance.Dwarfs.Remove(ActionBoardContext.Instance.currentDwarf);
+				}
+			}
 		}
 	}
 }
