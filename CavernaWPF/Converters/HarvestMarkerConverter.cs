@@ -23,16 +23,12 @@ namespace CavernaWPF.Converters
 			{
 				case HarvestMarker.Type.Pay1FoodPerDwarf:
 					return "C:\\Users\\Miguel\\Desktop\\Caverna\\HarvestMarkers\\Pay1FoodPerDwarf.png";
-					break;
 				case HarvestMarker.Type.Harvest:
 					return "C:\\Users\\Miguel\\Desktop\\Caverna\\HarvestMarkers\\GreenLeaf.png";
-					break;
 				case HarvestMarker.Type.QuestionMark:
 					return "C:\\Users\\Miguel\\Desktop\\Caverna\\HarvestMarkers\\RedQuestion.png";
-					break;
 				case HarvestMarker.Type.NoHarvest:
 					return "C:\\Users\\Miguel\\Desktop\\Caverna\\HarvestMarkers\\NoHarvest.png";
-					break;
 			}
 			return "";
 		}

@@ -91,17 +91,6 @@ namespace CavernaWPF
 			colorDecider.oldcolor = color;
 		}
 		
-//		public List<Player> GetPlayers()
-//		{
-//			List<Player> playersRegistered = new List<Player>();
-//			foreach(PlayerSlot ps in PlayerSlots)
-//			{
-//				Player p = new Player(){Name = ps.Name, Color = ps.Color};
-//				if(ps.Selected) playersRegistered.Add(p);
-//			}
-//			return playersRegistered;
-//		}
-		
 		public event PropertyChangedEventHandler PropertyChanged;
 	}
 }

@@ -36,15 +36,19 @@ namespace CavernaWPF
 			set;
 		}
 		
+		private Dictionary<string, FurnishingTile> furnishingtiles = new Dictionary<string, FurnishingTile>();
+		
 		public Dictionary<string, FurnishingTile> FurnishingTiles
 		{
-			get;
-			set;
+			get { return furnishingtiles; }
+			set {
+				furnishingtiles = value;
+				if (PropertyChanged != null) PropertyChanged(this, new PropertyChangedEventArgs("FurnishingTiles"));
+			}
 		}
 		
 		private void PrepareFurnishingTiles()
 		{
-			FurnishingTiles = new Dictionary<string, FurnishingTile>();
 			AddFurnishingTile("Cuddle room");
 			AddFurnishingTile("Breakfast room");
 			AddFurnishingTile("Stubble room");
@@ -303,6 +307,9 @@ namespace CavernaWPF
 		
 		public void NextTurn()
 		{
+			FeedingPhase();
+			return;
+			
 			if(CurrentPhase == Phase.ActionPhase)
 			{
 				if(!readyForNextDwarf)
@@ -384,6 +391,10 @@ namespace CavernaWPF
 					FeedingPhase();
 					CurrentPhase = Phase.BreedingPhase;
 					return;
+				}
+				else if(CurrentPhase == Phase.Pay1FoodPerDwarf)
+				{
+					
 				}
 				else if(CurrentPhase == Phase.BreedingPhase)
 				{
@@ -575,11 +586,13 @@ namespace CavernaWPF
 			}
 		}
 		
-		private void FeedingPhase()
+		public List<FeedingPhase> feedingPrompts = new List<FeedingPhase>();
+		
+		private void FeedingPhase(bool onePerDwarf = false)
 		{
-			foreach(Player p in players)
+			foreach(FeedingPhase fp in feedingPrompts)
 			{
-				
+				fp.PromptFeeding();
 			}
 		}
 		

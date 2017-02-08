@@ -127,6 +127,11 @@
       <DependentUpon>DwarfQueue.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="FeedingPhase.cs" />
+    <Compile Include="FeedingPhaseWindow.xaml.cs">
+      <DependentUpon>FeedingPhaseWindow.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="FurnishingTile.cs" />
     <Compile Include="FurnishingWindow.xaml.cs">
       <DependentUpon>FurnishingWindow.xaml</DependentUpon>
@@ -210,6 +215,7 @@
     <Page Include="ActionCardControls\WeaponForgingWindow.xaml" />
     <Page Include="Board_Tile.xaml" />
     <Page Include="DwarfQueue.xaml" />
+    <Page Include="FeedingPhaseWindow.xaml" />
     <Page Include="FurnishingWindow.xaml" />
     <Page Include="GameStatusBar.xaml" />
     <Page Include="HarvestEventsCard.xaml" />

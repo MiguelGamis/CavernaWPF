@@ -71,6 +71,8 @@ namespace CavernaWPF
 	    	set;
 	    }
 	    
+	    public bool isBaby = false;
+	    
 	    public event PropertyChangedEventHandler PropertyChanged;
 	}
 }

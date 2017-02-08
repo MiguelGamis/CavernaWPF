@@ -164,7 +164,7 @@ namespace CavernaWPF
 		
 		private void MakeBaby(Dwarf d)
 		{
-			Dwarf babyDwarf = new Dwarf() {X = d.X, Y = d.Y - 5, Locked = true }; babyDwarf.player = d.player;
+			Dwarf babyDwarf = new Dwarf() {X = d.X, Y = d.Y - 5, Locked = true, isBaby = true }; babyDwarf.player = d.player;
 			ActionBoardContext.Instance.Dwarfs.Add(babyDwarf);
 		}
 		

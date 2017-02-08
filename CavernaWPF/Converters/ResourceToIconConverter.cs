@@ -52,7 +52,10 @@ namespace CavernaWPF.Converters
 					break;
 				case Resource.Type.Donkey:
 					ImgSrc = "pack://application:,,,/Images/Resources/Donkey.png";
-					break;					
+					break;
+				case Resource.Type.Starvation:
+					ImgSrc = "pack://application:,,,/Images/Starvation.png";
+					break;						
 			}
 			return ImgSrc;
 		}

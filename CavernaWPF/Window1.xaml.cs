@@ -71,7 +71,7 @@ namespace CavernaWPF
 				TownContext tc = new TownContext();
 				p.town = tc;
 				
-				Dwarf dwarf1 = new Dwarf() { player = p, Level = 8}; Dwarf dwarf2 = new Dwarf() { player = p };
+				Dwarf dwarf1 = new Dwarf() { player = p}; Dwarf dwarf2 = new Dwarf() { player = p };
 				p.Dwarfs.Add(dwarf1); p.Dwarfs.Add(dwarf2);
 				
 				Grid.SetRow(tc.control,0);
@@ -87,6 +87,7 @@ namespace CavernaWPF
 				bottomBoard.Children.Add(piecesPool);
 				
 				StackPanel southEastPanel = new StackPanel();
+				LayoutManager.Instance.map2.Add(p, southEastPanel);
 				bottomBoard.Children.Add(southEastPanel);
 				
 				StackPanel resourcesPanel = new StackPanel() {Orientation = Orientation.Horizontal};
@@ -95,10 +96,13 @@ namespace CavernaWPF
 				resourcesPanel.Children.Add(tradeButton);
 				southEastPanel.Children.Add(resourcesPanel);
 				
-				DwarfQueue dwarfLineUp = new DwarfQueue();
-				dwarfLineUp.ItemsSource = p.Dwarfs;
-				Grid.SetRow(dwarfLineUp,2);
-				southEastPanel.Children.Add(dwarfLineUp);
+				DwarfQueue dwarfQueue = new DwarfQueue();
+				dwarfQueue.ItemsSource = p.Dwarfs;
+				Grid.SetRow(dwarfQueue,2);
+				southEastPanel.Children.Add(dwarfQueue);
+				FeedingPhase fp = new FeedingPhase(p);
+				ActionBoardContext.Instance.feedingPrompts.Add(fp);
+				southEastPanel.Children.Add(fp.feedingPrompt);
 				
 				LayoutManager.Instance.map.Add(p, playerPanel);
 				

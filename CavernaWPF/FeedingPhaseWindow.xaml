@@ -1,0 +1,42 @@
+﻿<UserControl x:Class="CavernaWPF.FeedingPhaseWindow"
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:local="clr-namespace:CavernaWPF"
+    xmlns:Converters="clr-namespace:CavernaWPF.Converters">
+	<UserControl.Resources>
+		<Converters:BoolToVisibilityConverter x:Key="boolToVisConverter"></Converters:BoolToVisibilityConverter>
+		<Converters:ResourceToIconConverter x:Key="resourceToIconConverter"></Converters:ResourceToIconConverter>
+	</UserControl.Resources>
+	<Grid Visibility="{Binding FeedingTime, Converter={StaticResource boolToVisConverter}}">
+		<ItemsControl ItemsSource="{Binding FoodAndStarvation}">
+			<ItemsControl.ItemsPanel>
+				<ItemsPanelTemplate>
+					<Canvas></Canvas>
+				</ItemsPanelTemplate>				
+			</ItemsControl.ItemsPanel>
+			<ItemsControl.ItemTemplate>
+				<DataTemplate>
+					<ComboBox SelectedValue="{Binding FeedingOptionChosen}" ItemsSource="{Binding DataContext.FeedingOptions,
+                                RelativeSource={RelativeSource Mode=FindAncestor,
+                                                               AncestorType={x:Type ItemsControl}}}" >
+						<ComboBox.ItemTemplate>
+							<DataTemplate>
+								<Image Height="30" Width="30" Source="{Binding Path=. , Converter={StaticResource resourceToIconConverter}}"></Image>
+							</DataTemplate>
+						</ComboBox.ItemTemplate>
+					</ComboBox>
+				</DataTemplate>
+			</ItemsControl.ItemTemplate>
+			<ItemsControl.ItemContainerStyle>
+				<Style>
+					<Setter
+						Property="Canvas.Left"
+						Value="{Binding X}" />
+					<Setter
+						Property="Canvas.Top"
+						Value="{Binding Y}" />
+				</Style>
+			</ItemsControl.ItemContainerStyle>
+		</ItemsControl>
+	</Grid>
+</UserControl>

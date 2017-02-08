@@ -46,6 +46,9 @@ namespace CavernaWPF.Layables
 				case Resource.Type.Donkey:
 					Img = "pack://application:,,,/Images/Resources/Donkey.png"; 
 					break;
+				case Resource.Type.Starvation:
+					Img = "pack://application:,,,/Images/Starvation.png";
+					break;
 			}
 			Width=35;
 			Height=35;

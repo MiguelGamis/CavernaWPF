@@ -29,7 +29,6 @@ namespace CavernaWPF
 		
 		private LayoutManager()
 		{
-			map = new Dictionary<Player, Grid>();
 			BitmapImage startingPlayerPieceSource = new BitmapImage();
 			startingPlayerPieceSource.BeginInit();
 			startingPlayerPieceSource.UriSource = new Uri("pack://application:,,,/Images/StartingPlayer.png", UriKind.RelativeOrAbsolute);
@@ -38,7 +37,9 @@ namespace CavernaWPF
 			Grid.SetRow(startingPlayerPiece, 3);
 		}
 		
-		public Dictionary<Player, Grid> map;
+		public Dictionary<Player, Grid> map = new Dictionary<Player, Grid>();
+		
+		public Dictionary<Player, StackPanel> map2 = new Dictionary<Player, StackPanel>();
 		
 		public Window appWindow;
 		
