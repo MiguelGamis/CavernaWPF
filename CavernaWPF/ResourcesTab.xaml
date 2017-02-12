@@ -18,7 +18,7 @@
 					<StackPanel>
 						<!--<TextBlock Text="{Binding Value.ResourceType}"/>-->
 						<Image Height="35" Width="35" Source="{Binding Value.type, Converter={StaticResource resourceToIconConverter}}"></Image>
-						<TextBlock Text="{Binding Value.Amount}"/>
+						<TextBlock Height="20" Text="{Binding Value.Amount}"/>
 					</StackPanel>
 				</DataTemplate>
 			</ItemsControl.ItemTemplate>

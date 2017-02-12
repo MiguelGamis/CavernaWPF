@@ -18,7 +18,11 @@ namespace CavernaWPF.Layables
 	{
 		//TODO: Might Want to put FarmAnimal and Sowable together with this class because there's really no difference
 		
-		public Resource.Type type;
+		public Resource.Type type
+		{
+			get;
+			set;
+		}
 		
 		public ResourceItem(Resource.Type resourcetype)
 		{

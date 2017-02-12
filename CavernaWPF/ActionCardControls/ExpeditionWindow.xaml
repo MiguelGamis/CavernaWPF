@@ -209,7 +209,7 @@
 			VerticalAlignment="Stretch"
 			Margin="149,200,0,0">
 			<ToggleButton
-				x:Name="Go"
+				x:Name="Gold"
 				Opacity="0"
 				Cursor="Hand"
 				Checked="Check_Event"

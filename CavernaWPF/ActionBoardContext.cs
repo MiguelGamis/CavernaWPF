@@ -49,18 +49,54 @@ namespace CavernaWPF
 		
 		private void PrepareFurnishingTiles()
 		{
+			AddFurnishingTile("Carpenter");
+			AddFurnishingTile("Stone carver");
+			AddFurnishingTile("Blacksmith");
+			AddFurnishingTile("Miner");
+			AddFurnishingTile("Builder");
+			AddFurnishingTile("Trader");
+			
+			AddFurnishingTile("Slaughtering cave");
+			AddFurnishingTile("Cooking cave");
+			AddFurnishingTile("Working cave");
+			AddFurnishingTile("Mining cave");
+			AddFurnishingTile("Breeding cave");
+			AddFurnishingTile("Peaceful cave");
+			
+			AddFurnishingTile("Stone storage");
+			AddFurnishingTile("Ore storage");
+			AddFurnishingTile("Spare part storage");
+			AddFurnishingTile("Main storage");
+			AddFurnishingTile("Weapon storage");
+			AddFurnishingTile("Supplies storage");
+			
 			AddFurnishingTile("Cuddle room");
 			AddFurnishingTile("Breakfast room");
 			AddFurnishingTile("Stubble room");
 			AddFurnishingTile("Work room");
 			AddFurnishingTile("Guest room");
 			AddFurnishingTile("Office room");
+			
 			AddFurnishingTile("Wood supplier");
 			AddFurnishingTile("Stone supplier");
 			AddFurnishingTile("Ruby supplier");
 			AddFurnishingTile("Dog school");
 			AddFurnishingTile("Quarry");
 			AddFurnishingTile("Seam");
+			
+			AddFurnishingTile("Weaving parlor");
+			AddFurnishingTile("Milking parlor");
+			AddFurnishingTile("State parlor");
+			AddFurnishingTile("Hunting parlor");
+			AddFurnishingTile("Beer parlor");
+			AddFurnishingTile("Blacksmithing parlor");
+			
+			AddFurnishingTile("Broom chamber");
+			AddFurnishingTile("Treasure chamber");
+			AddFurnishingTile("Food chamber");
+			AddFurnishingTile("Prayer chamber");
+			AddFurnishingTile("Writing chamber");
+			AddFurnishingTile("Fodder chamber");
 		}
 		
 		private void AddFurnishingTile(string name)
@@ -69,6 +105,144 @@ namespace CavernaWPF
 			bool found = true;
 			switch(name)
 			{
+				case "Carpenter":
+					ft.Effect = new Action<Player>((p) =>
+                         {
+					     	ft.Carpenter(p);
+                         });
+					ft.Cost.Add(new ResourceTab(Resource.Type.Stone, 1));
+					break;
+				case "Stone carver":
+					ft.Effect = new Action<Player>((p) =>
+                         {
+					     	ft.Stonecarver(p);
+                         });
+					ft.Cost.Add(new ResourceTab(Resource.Type.Wood, 1));
+					break;
+				case "Blacksmith":
+					ft.Effect = new Action<Player>((p) =>
+                         {
+					     	ft.Blacksmith(p);
+                         });
+					ft.Cost.Add(new ResourceTab(Resource.Type.Wood, 1));
+					ft.Cost.Add(new ResourceTab(Resource.Type.Stone, 2));
+					break;
+				case "Miner":
+					ft.Effect = new Action<Player>((p) =>
+                         {
+					     	ft.Miner(p);
+                         });
+					ft.Cost.Add(new ResourceTab(Resource.Type.Wood, 1));
+					ft.Cost.Add(new ResourceTab(Resource.Type.Stone, 1));
+					break;
+				case "Builder":
+					ft.Effect = new Action<Player>((p) =>
+                         {
+					     	ft.Builder(p);
+                         });
+					ft.Cost.Add(new ResourceTab(Resource.Type.Stone, 1));
+					break;
+				case "Trader":
+					ft.Effect = new Action<Player>((p) =>
+                         {
+					     	ft.Trader(p);
+                         });
+					ft.Cost.Add(new ResourceTab(Resource.Type.Wood, 1));
+					break;
+				case "Slaughtering cave":
+					ft.Effect = new Action<Player>((p) =>
+                         {
+					     	ft.Slaughteringcave(p);
+                         });
+					ft.Cost.Add(new ResourceTab(Resource.Type.Wood, 2));
+					ft.Cost.Add(new ResourceTab(Resource.Type.Stone, 2));
+					break;
+				case "Cooking cave":
+					ft.Effect = new Action<Player>((p) =>
+                         {
+					     	ft.Cookingcave(p);
+                         });
+					ft.Cost.Add(new ResourceTab(Resource.Type.Stone, 2));
+					break;
+				case "Working cave":
+					ft.Effect = new Action<Player>((p) =>
+                         {
+					     	ft.Workingcave(p);
+                         });
+					ft.Cost.Add(new ResourceTab(Resource.Type.Wood, 1));
+					ft.Cost.Add(new ResourceTab(Resource.Type.Stone, 1));
+					break;
+				case "Mining cave":
+					ft.Effect = new Action<Player>((p) =>
+                         {
+					     	ft.Miningcave(p);
+                         });
+					ft.Cost.Add(new ResourceTab(Resource.Type.Wood, 3));
+					ft.Cost.Add(new ResourceTab(Resource.Type.Stone, 2));
+					break;
+				case "Breeding cave":
+					ft.Effect = new Action<Player>((p) =>
+                         {
+					     	ft.Breedingcave(p);
+                         });
+					ft.Cost.Add(new ResourceTab(Resource.Type.Grain, 1));
+					ft.Cost.Add(new ResourceTab(Resource.Type.Stone, 1));
+					break;
+				case "Peaceful cave":
+					ft.Effect = new Action<Player>((p) =>
+                         {
+					     	ft.Peacefulcave(p);
+                         });
+					ft.Cost.Add(new ResourceTab(Resource.Type.Wood, 2));
+					ft.Cost.Add(new ResourceTab(Resource.Type.Stone, 2));
+					break;
+				case "Stone storage":
+					ft.Effect = new Action<Player>((p) =>
+                         {
+                          	ft.Stonestorage(p);
+                         });
+					ft.Cost.Add(new ResourceTab(Resource.Type.Wood, 3));
+					ft.Cost.Add(new ResourceTab(Resource.Type.Ore, 1));
+					break;
+				case "Ore storage":
+					ft.Effect = new Action<Player>((p) =>
+                         {
+                          	ft.Orestorage(p);
+                         });
+					ft.Cost.Add(new ResourceTab(Resource.Type.Wood, 1));
+					ft.Cost.Add(new ResourceTab(Resource.Type.Stone, 1));
+					break;	
+				case "Spare part storage":
+					ft.Effect = new Action<Player>((p) =>
+                         {
+                          	ft.Sparepartstorage(p);
+                         });
+					ft.Cost.Add(new ResourceTab(Resource.Type.Wood, 2));
+					break;	
+				case "Main storage":
+					ft.Effect = new Action<Player>((p) =>
+                         {
+                          	ft.Mainstorage(p);
+                         });
+					ft.Cost.Add(new ResourceTab(Resource.Type.Wood, 2));
+					ft.Cost.Add(new ResourceTab(Resource.Type.Stone, 1));
+					break;	
+				case "Weapon storage":
+					ft.Effect = new Action<Player>((p) =>
+                         {
+                          	ft.Weaponstorage(p);
+                         });
+					ft.Cost.Add(new ResourceTab(Resource.Type.Wood, 3));
+					ft.Cost.Add(new ResourceTab(Resource.Type.Stone, 2));
+					break;	
+				case "Supplies storage":
+					ft.Effect = new Action<Player>((p) =>
+                         {
+                          	ft.Suppliesstorage(p);
+                         });
+					ft.Cost.Add(new ResourceTab(Resource.Type.Food, 3));
+					ft.Cost.Add(new ResourceTab(Resource.Type.Wood, 1));
+					break;	
 				case "Cuddle room":
 					ft.Effect = new Action<Player>((p) =>
                          {
@@ -158,6 +332,96 @@ namespace CavernaWPF
                          });
 					ft.Cost.Add(new ResourceTab(Resource.Type.Wood, 2));
 					break;
+				case "Weaving parlor":
+					ft.Effect = new Action<Player>((p) =>
+                         {
+                          	ft.Weavingparlor(p);
+                         });
+					ft.Cost.Add(new ResourceTab(Resource.Type.Wood, 2));
+					ft.Cost.Add(new ResourceTab(Resource.Type.Stone, 1));
+					break;	
+				case "Milking parlor":
+					ft.Effect = new Action<Player>((p) =>
+                         {
+					     	ft.Milkingparlor(p);
+                         });
+					ft.Cost.Add(new ResourceTab(Resource.Type.Wood, 2));
+					ft.Cost.Add(new ResourceTab(Resource.Type.Stone, 2));
+					break;
+				case "State parlor":
+					ft.Effect = new Action<Player>((p) =>
+                         {
+					     	ft.Stateparlor(p);
+                         });
+					ft.Cost.Add(new ResourceTab(Resource.Type.Stone, 3));
+					ft.Cost.Add(new ResourceTab(Resource.Type.Gold, 5));
+					break;
+				case "Hunting parlor":
+					ft.Effect = new Action<Player>((p) =>
+                         {
+					     	ft.Huntingparlor(p);
+                         });
+					ft.Cost.Add(new ResourceTab(Resource.Type.Wood, 2));
+					break;
+				case "Beer parlor":
+					ft.Effect = new Action<Player>((p) =>
+                         {
+					     	ft.Huntingparlor(p);
+                         });
+					ft.Cost.Add(new ResourceTab(Resource.Type.Wood, 2));
+					break;
+				case "Blacksmithing parlor":
+					ft.Effect = new Action<Player>((p) =>
+                         {
+					     	ft.Blacksmithingparlor(p);
+                         });
+					ft.Cost.Add(new ResourceTab(Resource.Type.Ore, 3));
+					break;
+				case "Broom chamber":
+					ft.Effect = new Action<Player>((p) =>
+                         {
+					     	ft.Broomchamber(p);
+                         });
+					ft.Cost.Add(new ResourceTab(Resource.Type.Wood, 1));
+					break;
+				case "Treasure chamber":
+					ft.Effect = new Action<Player>((p) =>
+                         {
+					     	ft.Treasurechamber(p);
+                         });
+					ft.Cost.Add(new ResourceTab(Resource.Type.Wood, 1));
+					ft.Cost.Add(new ResourceTab(Resource.Type.Stone, 1));
+					break;
+				case "Food chamber":
+					ft.Effect = new Action<Player>((p) =>
+                         {
+					     	ft.Foodchamber(p);
+                         });
+					ft.Cost.Add(new ResourceTab(Resource.Type.Wood, 2));
+					ft.Cost.Add(new ResourceTab(Resource.Type.Vegetable, 2));
+					break;
+				case "Prayer chamber":
+					ft.Effect = new Action<Player>((p) =>
+                         {
+					     	ft.Prayerchamber(p);
+                         });
+					ft.Cost.Add(new ResourceTab(Resource.Type.Wood, 2));
+					break;	
+				case "Writing chamber":
+					ft.Effect = new Action<Player>((p) =>
+                         {
+					     	ft.Writingchamber(p);
+                         });
+					ft.Cost.Add(new ResourceTab(Resource.Type.Stone, 2));
+					break;
+				case "Fodder chamber":
+					ft.Effect = new Action<Player>((p) =>
+                         {
+					     	ft.Fodderchamber(p);
+                         });
+					ft.Cost.Add(new ResourceTab(Resource.Type.Grain, 2));
+					ft.Cost.Add(new ResourceTab(Resource.Type.Stone, 1));
+					break;
 				default:
 					found = false;
 					break;
@@ -168,7 +432,7 @@ namespace CavernaWPF
 				ft.Img = String.Format("C:/Users/Miguel/Desktop/Caverna/FurnishingTiles/{0}.png", name);
 				int index = FurnishingTiles.Count;
 				int group = index / 24;
-				ft.Row = index / 3;
+				ft.Row = (index % 24) / 3;
 				ft.Column = (index % 3) + 4 * group;
 				FurnishingTiles.Add(name, ft);
 			}
@@ -189,6 +453,7 @@ namespace CavernaWPF
 		public ActionBoard control;
 		public HarvestEventsCard harvesteventscard;
 		public FurnishingWindow furnishingWindow;
+		public TradeManager tradeManager;
 		public GameStatusBar statusControl;
 		
 		public List<ActionCardWrapper> ActionCards
@@ -246,6 +511,7 @@ namespace CavernaWPF
 			hec.DataContext = this;
 			FurnishingWindow fw = new FurnishingWindow();
 			furnishingWindow = fw;
+			tradeManager = new TradeManager();
 			fw.DataContext = this;
 			GameStatusBar gsb = new GameStatusBar();
 			statusControl = gsb;
@@ -279,6 +545,8 @@ namespace CavernaWPF
 		
 		public bool readyForNextDwarf = true;
 		
+		public bool feedingPrompted = false;
+		
 		private Phase currentPhase;
 		
 		public Phase CurrentPhase
@@ -303,13 +571,12 @@ namespace CavernaWPF
 			Replenish();
 			
 			QueuePlayers();
+			
+			CurrentPhase = Phase.ActionPhase;
 		}
 		
 		public void NextTurn()
-		{
-			FeedingPhase();
-			return;
-			
+		{			
 			if(CurrentPhase == Phase.ActionPhase)
 			{
 				if(!readyForNextDwarf)
@@ -388,13 +655,37 @@ namespace CavernaWPF
 				}
 				else if(CurrentPhase == Phase.FeedingPhase)
 				{
-					FeedingPhase();
-					CurrentPhase = Phase.BreedingPhase;
+					if(feedingPrompted)
+					{
+						if(feedingPrompts.All(fp => !fp.FeedingTime))
+						{
+							CurrentPhase = Phase.BreedingPhase;
+							feedingPrompted = false;
+						}
+					}
+					else
+					{
+						FeedingPhase();
+						feedingPrompted = true;
+					}
 					return;
 				}
 				else if(CurrentPhase == Phase.Pay1FoodPerDwarf)
 				{
-					
+					if(feedingPrompted)
+					{
+						if(feedingPrompts.All(fp => !fp.FeedingTime))
+						{
+							CurrentPhase = Phase.ActionPhase;
+							feedingPrompted = false;
+						}
+					}
+					else
+					{
+						FeedingPhase(true);
+						feedingPrompted = true;
+					}
+					return;
 				}
 				else if(CurrentPhase == Phase.BreedingPhase)
 				{
@@ -495,6 +786,15 @@ namespace CavernaWPF
 			}
 			
 			var unlockedTiles = currentPlayer.Value.town.Tiles.OfType<Tile>().Where(t => !t.Locked).ToList();
+			
+			if(ActionBoardContext.Instance.FurnishingTiles["Office room"].player == currentPlayer.Value)
+			{
+				int overhangingtiles = unlockedTiles.Count(t => t.column == 0 || t.column == 7 || t.row == 0 || t.row == 5);
+				currentPlayer.Value.Resources[Resource.Type.Gold].Amount += 2 * overhangingtiles;
+			}
+			
+			//TODO: use a Group By instead 
+			//delete covered tiles
 			foreach(var unlockedTile in unlockedTiles)
 			{
 				List<Tile> tiles = currentPlayer.Value.town.Tiles.OfType<Tile>().Where(t => t.column == unlockedTile.column && t.row == unlockedTile.row).OrderBy(t => t.Z).ToList();

@@ -5,16 +5,25 @@
 	<UserControl.Resources>
 		<Converters:PhaseToGameStatusConverter x:Key="phaseToGameStatusConverter"/>
 	</UserControl.Resources>
-	<TextBlock>
-		<TextBlock.Style>
-			<Style TargetType="TextBlock">
-				<Setter Property="Text" Value="{Binding CurrentPhase}"/>
-				<Style.Triggers>
-					<DataTrigger Binding="{Binding CurrentPhase, Converter={StaticResource phaseToGameStatusConverter}}" Value="Action Phase">
-						<Setter Property="Text" Value="Action Phase"/>
-					</DataTrigger>
-				</Style.Triggers>
-			</Style>
-		</TextBlock.Style>
-	</TextBlock>
+	<StackPanel>
+		<TextBlock>
+			<TextBlock.Style>
+				<Style TargetType="TextBlock">
+					<Setter Property="Text" Value="{Binding CurrentPhase}"/>
+					<Style.Triggers>
+						<DataTrigger Binding="{Binding CurrentPhase, Converter={StaticResource phaseToGameStatusConverter}}" Value="Action Phase">
+							<Setter Property="Text" Value="Action Phase"/>
+						</DataTrigger>
+					</Style.Triggers>
+				</Style>
+			</TextBlock.Style>
+		</TextBlock>
+		<TextBlock>
+			<TextBlock.Style>
+				<Style TargetType="TextBlock">
+					<Setter Property="Text" Value="{Binding currentPlayer.Value}"/>
+				</Style>
+			</TextBlock.Style>
+		</TextBlock>
+	</StackPanel>
 </UserControl>

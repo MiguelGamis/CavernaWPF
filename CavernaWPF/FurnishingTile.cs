@@ -8,6 +8,8 @@
  */
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using CavernaWPF.Layables;
 using CavernaWPF.Resources;
 
 namespace CavernaWPF
@@ -51,7 +53,86 @@ namespace CavernaWPF
 			set;
 		}
 		
-		public FurnishingTile()
+		public void Carpenter(Player p)
+		{
+		}
+		
+		public void Stonecarver(Player p)
+		{
+			p.Resources[Resource.Type.Stone].Increment(2);
+		}
+		
+		public void Blacksmith(Player p)
+		{
+			p.Resources[Resource.Type.Ore].Increment(2);
+		}
+		
+		public void Miner(Player p)
+		{
+			ActionBoardContext.Instance.NewRound += delegate 
+			{
+				int numDonkey = p.town.Tiles.OfType<FarmAnimal>().Count(fa => fa.type == FarmAnimal.Type.Donkey);
+				p.Resources[Resource.Type.Ore].Amount += numDonkey;
+			};
+		}
+		
+		public void Builder(Player p)
+		{
+		}
+		
+		public void Trader(Player p)
+		{
+		}
+		
+		public void Slaughteringcave(Player p)
+		{
+			ActionBoardContext.Instance.tradeManager.AnimalSlaughtered += delegate 
+			{
+				p.Resources[Resource.Type.Food].Amount += 1;
+			};
+		}
+		
+		public void Cookingcave(Player p)
+		{
+		}
+		
+		public void Workingcave(Player p)
+		{
+		}
+		
+		public void Miningcave(Player p)
+		{
+		}
+		
+		public void Breedingcave(Player p)
+		{
+		}
+		
+		public void Peacefulcave(Player p)
+		{
+		}
+		
+		public void Stonestorage(Player p)
+		{
+		}
+		
+		public void Orestorage(Player p)
+		{
+		}
+		
+		public void Sparepartstorage(Player p)
+		{
+		}
+		
+		public void Mainstorage(Player p)
+		{
+		}
+		
+		public void Weaponstorage(Player p)
+		{
+		}
+		
+		public void Suppliesstorage(Player p)
 		{
 		}
 		
@@ -85,16 +166,12 @@ namespace CavernaWPF
 		
 		public void Guestroom(Player p)
 		{
-			ActionBoardContext.Instance.NewRound += delegate(object sender, EventArgs args) 
-			{
-			};
+			//No effect
 		}
 		
 		public void Officeroom(Player p)
 		{
-			ActionBoardContext.Instance.NewRound += delegate(object sender, EventArgs args) 
-			{
-			};
+			//No effect
 		}
 		
 		public void Woodsupplier(Player p)
@@ -163,6 +240,68 @@ namespace CavernaWPF
 		public void Quarry(Player p)
 		{
 			p.town.BabyDonkeyAdded += delegate(object sender, EventArgs args) { p.Resources[Resource.Type.Ore].Amount++; };
+		}
+		
+		public void Weavingparlor(Player p)
+		{
+			var numSheep = p.town.Tiles.OfType<FarmAnimal>().Count(fa => fa.type == FarmAnimal.Type.Sheep);
+			p.Resources[Resource.Type.Food].Amount += numSheep;
+		}
+		
+		public void Milkingparlor(Player p)
+		{
+			var numCow = p.town.Tiles.OfType<FarmAnimal>().Count(fa => fa.type == FarmAnimal.Type.Cow);
+			p.Resources[Resource.Type.Food].Amount += numCow;
+		}
+		
+		public void Stateparlor(Player p)
+		{
+			p.Resources[Resource.Type.Food].Amount += 0;
+		}
+		
+		public void Huntingparlor(Player p)
+		{
+			//No effect
+		}
+		
+		public void Beerparlor(Player p)
+		{
+			//No effect
+		}
+		
+		public void Blacksmithingparlor(Player p)
+		{
+			//No effect
+		}
+		
+		public void Broomchamber(Player p)
+		{
+			//No effect
+		}
+		
+		public void Treasurechamber(Player p)
+		{
+			//No effect
+		}
+		
+		public void Foodchamber(Player p)
+		{
+			//No effect
+		}
+		
+		public void Prayerchamber(Player p)
+		{
+			//No effect
+		}
+		
+		public void Writingchamber(Player p)
+		{
+			//No effect
+		}
+		
+		public void Fodderchamber(Player p)
+		{
+			//No effect
 		}
 	}
 }

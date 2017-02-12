@@ -125,8 +125,7 @@ namespace CavernaWPF
 		
 		private void Trade(object sender, RoutedEventArgs e)
 		{
-			TradeManager tm = new TradeManager();
-			tm.PlayerTrading((sender as Button).Tag as Player);
+			ActionBoardContext.Instance.tradeManager.PlayerTrading((sender as Button).Tag as Player);
 		}
 		
 		private void Test(object sender, RoutedEventArgs e)

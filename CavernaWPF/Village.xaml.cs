@@ -137,7 +137,10 @@ namespace CavernaWPF
 	 	       			}
 					}
 					
-					if(1 <= col && col <= 6 && 1 <= row && row <= 4 && (t.Twin ? (1 <= twincol && twincol <= 6 && 1 <= twinrow && twinrow <= 4) : true))
+					bool isInBounds = ActionBoardContext.Instance.FurnishingTiles["Office room"].player == ActionBoardContext.Instance.currentPlayer.Value ?
+						1 <= col && col <= 6 && 1 <= row && row <= 4 || (t.Twin ? (1 <= twincol && twincol <= 6 && 1 <= twinrow && twinrow <= 4) : true) :
+						1 <= col && col <= 6 && 1 <= row && row <= 4 && (t.Twin ? (1 <= twincol && twincol <= 6 && 1 <= twinrow && twinrow <= 4) : true);
+					if(isInBounds)
 					{
 						//if changing positions remove farm animals and stables 
 						if(col != t.column || row != t.row)

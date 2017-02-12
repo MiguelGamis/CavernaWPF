@@ -30,9 +30,9 @@ namespace CavernaWPF
 		private LayoutManager()
 		{
 			BitmapImage startingPlayerPieceSource = new BitmapImage();
-			startingPlayerPieceSource.BeginInit();
-			startingPlayerPieceSource.UriSource = new Uri("pack://application:,,,/Images/StartingPlayer.png", UriKind.RelativeOrAbsolute);
-			startingPlayerPieceSource.EndInit();
+//			startingPlayerPieceSource.BeginInit();
+//			startingPlayerPieceSource.UriSource = new Uri("pack://application:,,,/Images/StartingPlayer.png", UriKind.RelativeOrAbsolute);
+//			startingPlayerPieceSource.EndInit();
 			startingPlayerPiece.Source = startingPlayerPieceSource;
 			Grid.SetRow(startingPlayerPiece, 3);
 		}

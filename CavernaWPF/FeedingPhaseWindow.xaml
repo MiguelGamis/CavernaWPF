@@ -8,7 +8,11 @@
 		<Converters:ResourceToIconConverter x:Key="resourceToIconConverter"></Converters:ResourceToIconConverter>
 	</UserControl.Resources>
 	<Grid Visibility="{Binding FeedingTime, Converter={StaticResource boolToVisConverter}}">
-		<ItemsControl ItemsSource="{Binding FoodAndStarvation}">
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="{Binding Width}"></ColumnDefinition>
+			<ColumnDefinition Width="50"></ColumnDefinition>
+		</Grid.ColumnDefinitions>
+		<ItemsControl Grid.Column="0" ItemsSource="{Binding FoodAndStarvation}">
 			<ItemsControl.ItemsPanel>
 				<ItemsPanelTemplate>
 					<Canvas></Canvas>
@@ -16,15 +20,15 @@
 			</ItemsControl.ItemsPanel>
 			<ItemsControl.ItemTemplate>
 				<DataTemplate>
-					<ComboBox SelectedValue="{Binding FeedingOptionChosen}" ItemsSource="{Binding DataContext.FeedingOptions,
-                                RelativeSource={RelativeSource Mode=FindAncestor,
-                                                               AncestorType={x:Type ItemsControl}}}" >
-						<ComboBox.ItemTemplate>
-							<DataTemplate>
-								<Image Height="30" Width="30" Source="{Binding Path=. , Converter={StaticResource resourceToIconConverter}}"></Image>
-							</DataTemplate>
-						</ComboBox.ItemTemplate>
-					</ComboBox>
+					<Thumb
+						DragCompleted="Thumb_DragCompleted"
+						DragDelta="Thumb_DragDelta">
+						<Thumb.Template>
+							<ControlTemplate>
+								<Image Height="35" Width="35" Source="{Binding type, Converter={StaticResource resourceToIconConverter}}"></Image>
+							</ControlTemplate>
+						</Thumb.Template>
+					</Thumb>
 				</DataTemplate>
 			</ItemsControl.ItemTemplate>
 			<ItemsControl.ItemContainerStyle>
@@ -38,5 +42,6 @@
 				</Style>
 			</ItemsControl.ItemContainerStyle>
 		</ItemsControl>
+		<Button Grid.Column="1" Content="Confirm feeding" Click="Confirm"></Button>
 	</Grid>
 </UserControl>

@@ -22,7 +22,9 @@ namespace CavernaWPF
 	{
 		public Player player;
 		
-		private Dictionary<List<ResourceTab>,List<ResourceTab>> exchanges = new Dictionary<List<ResourceTab>,List<ResourceTab>>()
+		private Dictionary<List<ResourceTab>,List<ResourceTab>> exchanges;
+
+		private Dictionary<List<ResourceTab>,List<ResourceTab>> defaultExchanges = new Dictionary<List<ResourceTab>,List<ResourceTab>>()
 		{
 			{ new List<ResourceTab>() { new ResourceTab(Resource.Type.Ruby, 1) },
 				new List<ResourceTab>() { new ResourceTab(Resource.Type.Wood, 1) }
@@ -144,17 +146,53 @@ namespace CavernaWPF
 		
 		public TradeWindow control;
 		
-		public TradeManager()
-		{
-			TradeWindow tw = new TradeWindow();
-			control = tw;
-			tw.DataContext = this;
-		}
-		
 		public void PlayerTrading(Player p)
 		{
 			player = p;
+			Exchanges = defaultExchanges;
+			if(ActionBoardContext.Instance.FurnishingTiles["Trader"].player == p)
+			{
+				exchanges.Add(new List<ResourceTab>() { new ResourceTab(Resource.Type.Gold, 2) },
+				              new List<ResourceTab>() { new ResourceTab(Resource.Type.Wood, 1), new ResourceTab(Resource.Type.Stone, 1), new ResourceTab(Resource.Type.Ore, 1)});
+			}
+			if(ActionBoardContext.Instance.FurnishingTiles["Spare part storage"].player == p)
+			{
+				exchanges.Add(new List<ResourceTab>() { new ResourceTab(Resource.Type.Wood, 1), new ResourceTab(Resource.Type.Stone, 1), new ResourceTab(Resource.Type.Ore, 1)},
+				              new List<ResourceTab>() { new ResourceTab(Resource.Type.Gold, 2) });
+			}
+			if(ActionBoardContext.Instance.FurnishingTiles["Hunting parlor"].player == p)
+			{
+				exchanges.Add(new List<ResourceTab>() { new ResourceTab(Resource.Type.Boar, 2) },
+				              new List<ResourceTab>() { new ResourceTab(Resource.Type.Food, 2), new ResourceTab(Resource.Type.Gold, 2) });
+			}
+			if(ActionBoardContext.Instance.FurnishingTiles["Beer parlor"].player == p)
+			{
+				exchanges.Add(new List<ResourceTab>() { new ResourceTab(Resource.Type.Grain, 2) },
+				              new List<ResourceTab>() { new ResourceTab(Resource.Type.Gold, 3) });
+				exchanges.Add(new List<ResourceTab>() { new ResourceTab(Resource.Type.Grain, 2) },
+				              new List<ResourceTab>() { new ResourceTab(Resource.Type.Food, 4) });
+			}
+			if(ActionBoardContext.Instance.FurnishingTiles["Blacksmithing parlor"].player == p)
+			{
+				exchanges.Add(new List<ResourceTab>() { new ResourceTab(Resource.Type.Ore, 1), new ResourceTab(Resource.Type.Ruby, 1) },
+				              new List<ResourceTab>() { new ResourceTab(Resource.Type.Gold, 2), new ResourceTab(Resource.Type.Food, 1) });
+			}
+			
+			TradeWindow tw = new TradeWindow();
+			control = tw;
+			tw.DataContext = this;
+			
 			control.ShowDialog();
+		}
+		
+		public delegate void AnimalSlaughteredEventHandler(object sender, EventArgs args);
+		
+		public event AnimalSlaughteredEventHandler AnimalSlaughtered;
+		
+		private void OnAnimalSlaughtered()
+		{
+			if (AnimalSlaughtered != null)
+				AnimalSlaughtered(this, EventArgs.Empty);
 		}
 		
 		public void Trade(List<ResourceTab> input, List<ResourceTab> output)
@@ -192,6 +230,7 @@ namespace CavernaWPF
 						{
 							player.town.Tiles.Add(new FarmAnimal(farmAnimalTypes[outputcomponent.type]));
 						}
+						OnAnimalSlaughtered();
 					}
 					else if(tileTypes.ContainsKey(outputcomponent.type))
 					{
