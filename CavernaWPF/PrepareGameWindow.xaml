@@ -30,10 +30,12 @@
 								</Style>
 							</TextBox.Style>
 						</TextBox>
-						<ComboBox Width="80" ItemsSource="{Binding ColorOptions}" SelectedItem="{Binding Color}" SelectionChanged="ColorChanged">
+						<ComboBox Width="80" ItemsSource="{Binding DataContext.ColorOptions,
+                                							RelativeSource={RelativeSource Mode=FindAncestor,
+                                                               AncestorType={x:Type ComboBox}}}" SelectedItem="{Binding Color}" SelectionChanged="ColorChanged">
 							<ComboBox.ItemTemplate>
 								<DataTemplate>
-									<Image Height="38" Width="48" Source="{Binding Path=. , Converter={StaticResource colorconverter}}"></Image>
+									<Image Height="38" Width="48" Source="{Binding Value.Color, Converter={StaticResource colorconverter}}"></Image>
 								</DataTemplate>
 							</ComboBox.ItemTemplate>
 							<ComboBox.Style>

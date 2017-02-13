@@ -84,17 +84,6 @@ namespace CavernaWPF
 		
 		public string oldcolor;
 		
-		private ObservableCollection<string> colorOptions = new ObservableCollection<string>() {"Red","Blue","Yellow","Green","Purple","Black"};
-		
-		public ObservableCollection<string> ColorOptions
-		{
-			get{ return colorOptions; }
-			set{
-				colorOptions = value;
-				if (PropertyChanged != null) PropertyChanged(this, new PropertyChangedEventArgs("ColorOptions"));
-			}
-		}
-		
 		public event PropertyChangedEventHandler PropertyChanged;
 	}
 }

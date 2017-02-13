@@ -59,36 +59,76 @@ namespace CavernaWPF
 			}
 		}
 		
+		private Dictionary<string, ColorOption> colorOptions = new Dictionary<string, ColorOption>() {
+			{"Red", new ColorOption("Red")},
+			{"Blue", new ColorOption("Blue")},
+			{"Yellow", new ColorOption("Yellow")},
+			{"Green", new ColorOption("Green")},
+			{"Purple", new ColorOption("Purple")},
+			{"Black", new ColorOption("Black")}
+		};
+		
+		public Dictionary<string, ColorOption> ColorOptions
+		{
+			get{ return colorOptions; }
+			set{
+				colorOptions = value;
+				if (PropertyChanged != null) PropertyChanged(this, new PropertyChangedEventArgs("ColorOptions"));
+			}
+		}
+		
+		public class ColorOption : INotifyPropertyChanged
+		{
+			private PlayerSlot selector;
+			
+			public PlayerSlot Selector
+			{
+				get { return selector; }
+				set {
+					selector = value;
+					if (PropertyChanged != null) PropertyChanged(this, new PropertyChangedEventArgs("Selector"));
+				}
+			}
+			
+			private string color;
+			
+			public string Color
+			{
+				get { return color; }
+				set {
+					color = value;
+					if (PropertyChanged != null) PropertyChanged(this, new PropertyChangedEventArgs("Color"));
+				}
+			}
+			
+			public ColorOption(string color)
+			{
+				Color = color;
+			}
+			
+			public event PropertyChangedEventHandler PropertyChanged;
+		}
+		
 		public void PlayerSlotSelectionChange(object sender, EventArgs args)
 		{
 			PlayerSlot ps = sender as PlayerSlot;
 			if(ps.Selected)
 			{
-				ps.Color = ps.ColorOptions[0];
+				ps.Color = ColorOptions.First().Value.Color;
 				if(!PlayerSlots.Any(p => p.StartingPlayer))
 					PlayerSlots.Find(p => p.Selected).StartingPlayer = true;
 			}
 			else 
 			{
+				ColorOptions[ps.Color].Selector = null;
 				ps.Color = null; 
-				ps.oldcolor = null;
-				if(ps.StartingPlayer)
-				{
-					ps.StartingPlayer = false;
-					PlayerSlots.Find(p => p.Selected).StartingPlayer = true;
-				}
+
 			}
 		}
 		
-		public void UpdateColor(PlayerSlot colorDecider, string color)
+		public void UpdateColor(string color)
 		{
-			foreach(PlayerSlot ps in PlayerSlots)
-			{
-				if(colorDecider == ps) continue;
-				ps.ColorOptions.Remove(color);
-				if(colorDecider.oldcolor != null) ps.ColorOptions.Add(colorDecider.oldcolor);
-			}
-			colorDecider.oldcolor = color;
+
 		}
 		
 		public event PropertyChangedEventHandler PropertyChanged;
