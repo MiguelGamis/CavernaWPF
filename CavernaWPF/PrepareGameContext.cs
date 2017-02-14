@@ -82,7 +82,7 @@ namespace CavernaWPF
 			}
 			else 
 			{
-				//ps.Color = null;
+				ps.Color = null;
 				colorSelections.Remove(ps);
 				var otherps = PlayerSlots.Where(p => p.Selected).First();
 				if(otherps != null) otherps.StartingPlayer = true;
