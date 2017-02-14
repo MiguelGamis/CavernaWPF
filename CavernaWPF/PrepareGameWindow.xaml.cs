@@ -30,7 +30,12 @@ namespace CavernaWPF
 		
 		private void ColorChanged(object sender, RoutedEventArgs e)
 		{
-			(DataContext as PrepareGameContext).UpdateColor((sender as ComboBox).SelectedValue as string);
+			(DataContext as PrepareGameContext).UpdateColor(((sender as ComboBox).Parent as FrameworkElement).DataContext as PlayerSlot, (sender as ComboBox).SelectedValue as string);
+		}
+		
+		private void UpdateColorOptions(object sender, EventArgs e)
+		{
+			(DataContext as PrepareGameContext).UpdateColorOptions(((sender as ComboBox).Parent as FrameworkElement).DataContext as PlayerSlot);
 		}
 		
 		private void OKButtonClick(object sender, RoutedEventArgs e)

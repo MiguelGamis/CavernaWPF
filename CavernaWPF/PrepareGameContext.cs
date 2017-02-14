@@ -53,82 +53,59 @@ namespace CavernaWPF
 			foreach(PlayerSlot ps in PlayerSlots)
 			{
 				if(i == 3) break;
-				ps.SelectedTrue += PlayerSlotSelectionChange;
+				ps.SelectedTrue += PlayerSlotSelectionChange; 
 				ps.Enabled = true;
 				i++;
 			}
 		}
 		
-		private Dictionary<string, ColorOption> colorOptions = new Dictionary<string, ColorOption>() {
-			{"Red", new ColorOption("Red")},
-			{"Blue", new ColorOption("Blue")},
-			{"Yellow", new ColorOption("Yellow")},
-			{"Green", new ColorOption("Green")},
-			{"Purple", new ColorOption("Purple")},
-			{"Black", new ColorOption("Black")}
+		private ObservableCollection<string> colorOptions = new ObservableCollection<string>() {
+			"Red",
+			"Blue",
+			"Yellow",
+			"Green",
+			"Purple",
+			"Black"
 		};
 		
-		public Dictionary<string, ColorOption> ColorOptions
-		{
-			get{ return colorOptions; }
-			set{
-				colorOptions = value;
-				if (PropertyChanged != null) PropertyChanged(this, new PropertyChangedEventArgs("ColorOptions"));
-			}
-		}
-		
-		public class ColorOption : INotifyPropertyChanged
-		{
-			private PlayerSlot selector;
-			
-			public PlayerSlot Selector
-			{
-				get { return selector; }
-				set {
-					selector = value;
-					if (PropertyChanged != null) PropertyChanged(this, new PropertyChangedEventArgs("Selector"));
-				}
-			}
-			
-			private string color;
-			
-			public string Color
-			{
-				get { return color; }
-				set {
-					color = value;
-					if (PropertyChanged != null) PropertyChanged(this, new PropertyChangedEventArgs("Color"));
-				}
-			}
-			
-			public ColorOption(string color)
-			{
-				Color = color;
-			}
-			
-			public event PropertyChangedEventHandler PropertyChanged;
-		}
+		private Dictionary<PlayerSlot, string> colorSelections = new Dictionary<PlayerSlot, string>();
 		
 		public void PlayerSlotSelectionChange(object sender, EventArgs args)
 		{
 			PlayerSlot ps = sender as PlayerSlot;
 			if(ps.Selected)
 			{
-				ps.Color = ColorOptions.First().Value.Color;
+				UpdateColorOptions(ps);
+				ps.Color = ps.ColorOptions.First();
 				if(!PlayerSlots.Any(p => p.StartingPlayer))
 					PlayerSlots.Find(p => p.Selected).StartingPlayer = true;
 			}
 			else 
 			{
-				ColorOptions[ps.Color].Selector = null;
-				ps.Color = null; 
-
+				//ps.Color = null;
+				colorSelections.Remove(ps);
+				var otherps = PlayerSlots.Where(p => p.Selected).First();
+				if(otherps != null) otherps.StartingPlayer = true;
 			}
 		}
 		
-		public void UpdateColor(string color)
+		public void UpdateColor(PlayerSlot playerslot, string color)
 		{
-
+			if(colorSelections.ContainsKey(playerslot))
+				colorSelections[playerslot] = color;
+			else
+				colorSelections.Add(playerslot, color);
+		}
+		
+		public void UpdateColorOptions(PlayerSlot playerslot)
+		{
+			ObservableCollection<string> updatedColorOptions = new ObservableCollection<string>(colorOptions);
+			foreach(var colorSelection in colorSelections)
+			{
+				if(colorSelection.Key != playerslot)
+					updatedColorOptions.Remove(colorSelection.Value);
+			}
+			playerslot.ColorOptions = updatedColorOptions;
 		}
 		
 		public event PropertyChangedEventHandler PropertyChanged;

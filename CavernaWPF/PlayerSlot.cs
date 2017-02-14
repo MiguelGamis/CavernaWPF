@@ -48,6 +48,7 @@ namespace CavernaWPF
 	        set
 	        {
 	            selected = value;
+	            StartingPlayer = false;
 	            OnSelectedTrue();
 	            if (PropertyChanged != null) PropertyChanged(this, new PropertyChangedEventArgs("Selected"));
 	        }
@@ -79,6 +80,17 @@ namespace CavernaWPF
 			set {
 				color = value;
 				if (PropertyChanged != null) PropertyChanged(this, new PropertyChangedEventArgs("Color"));
+			}
+		}
+		
+		private ObservableCollection<string> colorOptions;
+		
+		public ObservableCollection<string> ColorOptions
+		{
+			get { return colorOptions; }
+			set {
+				colorOptions = value;
+				if (PropertyChanged != null) PropertyChanged(this, new PropertyChangedEventArgs("ColorOptions"));
 			}
 		}
 		
