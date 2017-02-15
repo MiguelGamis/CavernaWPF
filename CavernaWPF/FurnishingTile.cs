@@ -33,7 +33,7 @@ namespace CavernaWPF
 		
 		public int roundsOfEffect;
 		
-		public Action VictoryPoints;
+		public int VictoryPoints;
 		
 		public int Row
 		{

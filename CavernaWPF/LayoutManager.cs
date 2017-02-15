@@ -30,11 +30,12 @@ namespace CavernaWPF
 		private LayoutManager()
 		{
 			BitmapImage startingPlayerPieceSource = new BitmapImage();
-//			startingPlayerPieceSource.BeginInit();
-//			startingPlayerPieceSource.UriSource = new Uri("pack://application:,,,/Images/StartingPlayer.png", UriKind.RelativeOrAbsolute);
-//			startingPlayerPieceSource.EndInit();
+			startingPlayerPieceSource.BeginInit();
+			startingPlayerPieceSource.UriSource = new Uri("pack://application:,,,/Images/StartingPlayer.png", UriKind.RelativeOrAbsolute);
+			startingPlayerPieceSource.EndInit();
 			startingPlayerPiece.Source = startingPlayerPieceSource;
-			Grid.SetRow(startingPlayerPiece, 3);
+			Grid.SetRow(startingPlayerPiece, 5);
+			Grid.SetColumn(startingPlayerPiece, 0);
 		}
 		
 		public Dictionary<Player, Grid> map = new Dictionary<Player, Grid>();
@@ -43,6 +44,6 @@ namespace CavernaWPF
 		
 		public Window appWindow;
 		
-		public Image startingPlayerPiece = new Image(){Height = 40, Width = 28};
+		public Image startingPlayerPiece = new Image(){Height = 60, Width = 40};
 	}
 }

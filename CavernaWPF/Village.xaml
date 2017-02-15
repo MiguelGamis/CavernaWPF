@@ -7,6 +7,11 @@
 		<Converters:ImageSizeConverter x:Key="imagesizeconverter" />
 	</UserControl.Resources>
 	<Grid Height="420" Width="590">
+		<Grid Margin="0,42,0,22" Height="356" Width="500">
+			<Grid.Background>
+				<ImageBrush ImageSource="pack://application:,,,/Images/Village.png" />
+			</Grid.Background>
+		</Grid>
 		<Grid x:Name="board">
 			<Grid.ColumnDefinitions>
 				<ColumnDefinition Width="*"></ColumnDefinition>
@@ -27,11 +32,6 @@
 				<RowDefinition Height="*"></RowDefinition>
 				<RowDefinition Height="*"></RowDefinition>
 			</Grid.RowDefinitions>
-		</Grid>
-		<Grid Margin="0,42,0,22" Height="356" Width="500">
-			<Grid.Background>
-				<ImageBrush ImageSource="pack://application:,,,/Images/Village.png" />
-			</Grid.Background>
 		</Grid>
 		<ItemsControl ItemsSource="{Binding Tiles}">
 			<ItemsControl.ItemsPanel>

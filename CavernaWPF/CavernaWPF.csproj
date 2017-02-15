@@ -148,6 +148,7 @@
     <Compile Include="HarvestMarker.cs" />
     <Compile Include="Layables\Dog.cs" />
     <Compile Include="Layables\FarmAnimal.cs" />
+    <Compile Include="Layables\FurnishingTileLayable.cs" />
     <Compile Include="Layables\Layable.cs" />
     <Compile Include="Layables\ResourceItem.cs" />
     <Compile Include="Layables\Sowable.cs" />
@@ -234,9 +235,9 @@
     <Folder Include="Images\ActionCards" />
     <Folder Include="Images\ActionCards\Stages" />
     <Folder Include="Images\Dwarfs" />
+    <Folder Include="Images\FurnishingTiles" />
     <Folder Include="Images\HarvestMarkers" />
     <Folder Include="Images\LayableBorder" />
-    <Folder Include="Images\FurnishingTiles" />
     <Folder Include="Images\RawActionCards" />
     <Folder Include="Images\Resources" />
     <Folder Include="Images\Stables" />
@@ -286,6 +287,7 @@
     <Resource Include="Images\ActionCards\Urgent wish for children.png" />
     <Resource Include="Images\ActionCards\Wish for children.png" />
     <Resource Include="Images\ActionCards\Wood gathering.png" />
+    <Resource Include="Images\ActionBoardBackground.png" />
     <None Include="Images\Caverna2.png" />
     <Resource Include="Images\Dwarfs\BlackDwarf.png" />
     <Resource Include="Images\Dwarfs\BlueDwarf.png" />
@@ -299,7 +301,6 @@
     <None Include="Images\FurnishingTiles2.png" />
     <None Include="Images\FurnishingTiles3.png" />
     <None Include="Images\FurnishingTiles4.png" />
-    <Resource Include="Images\FurnishingTilesBoard.png" />
     <Resource Include="Images\HarvestMarkers\GreenLeaf.png" />
     <Resource Include="Images\HarvestMarkers\Harvest events.xcf" />
     <Resource Include="Images\HarvestMarkers\Harvest.xcf" />
@@ -308,6 +309,7 @@
     <Resource Include="Images\HarvestMarkers\HarvestEvents2.png" />
     <Resource Include="Images\HarvestMarkers\HarvestMarker.png" />
     <Resource Include="Images\HarvestMarkers\HarvestMarker.xcf" />
+    <Resource Include="Images\FurnishingTilesBoard.png" />
     <None Include="Images\FurnishingTiles\Additional dwelling.png" />
     <None Include="Images\FurnishingTiles\Beer parlor.png" />
     <None Include="Images\FurnishingTiles\Blacksmith.png" />

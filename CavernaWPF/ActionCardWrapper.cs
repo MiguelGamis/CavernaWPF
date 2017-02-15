@@ -55,14 +55,14 @@ namespace CavernaWPF
 			}
 		}
 		
-		private ObservableCollection<Layable> stuff = new ObservableCollection<Layable>();
+		private ObservableCollection<Layable> accumulatedResources = new ObservableCollection<Layable>();
 		
-		public ObservableCollection<Layable> Stuff
+		public ObservableCollection<Layable> AccumulatedResources
 		{
-			get { return stuff; }
+			get { return accumulatedResources; }
 			set { 
-				stuff = value;
-				if (PropertyChanged != null) PropertyChanged(this, new PropertyChangedEventArgs("Stuff"));
+				accumulatedResources = value;
+				if (PropertyChanged != null) PropertyChanged(this, new PropertyChangedEventArgs("AccumulatedResources"));
 			}
 		}
 		
@@ -71,7 +71,7 @@ namespace CavernaWPF
 			foreach(ResourceAccumulator ra in actionCard.Accumulators)
 			{
 				int amountAdded = 0;
-				if(stuff.Count == 0)
+				if(AccumulatedResources.Count == 0)
 				{
 					amountAdded = ra.StartingAmount;
 				}
@@ -86,7 +86,7 @@ namespace CavernaWPF
 					rX += ra.leftXLimit;
 					double rY = r.NextDouble() * (ra.bottomYLimit - ra.topYLimit - 35);
 					rY += ra.topYLimit;
-					Stuff.Add(new ResourceItem(ra.ResourceType) {X = rX, Y = rY});
+					AccumulatedResources.Add(new ResourceItem(ra.ResourceType) {X = rX, Y = rY});
 				}
 			}
 		}

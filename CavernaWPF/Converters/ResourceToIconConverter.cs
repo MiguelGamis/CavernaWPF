@@ -53,6 +53,24 @@ namespace CavernaWPF.Converters
 				case Resource.Type.Donkey:
 					ImgSrc = "pack://application:,,,/Images/Resources/Donkey.png";
 					break;
+				case Resource.Type.Boar:
+					ImgSrc = "pack://application:,,,/Images/Resources/Boar.png";
+					break;
+				case Resource.Type.Cow:
+					ImgSrc = "pack://application:,,,/Images/Resources/Cow.png";
+					break;
+				case Resource.Type.Field:
+					ImgSrc = "pack://application:,,,/Images/Tiles/Field.png";
+					break;
+				case Resource.Type.Meadow:
+					ImgSrc = "pack://application:,,,/Images/Tiles/Meadow.png";
+					break;
+				case Resource.Type.Cave:
+					ImgSrc = "pack://application:,,,/Images/Tiles/Cave.png";
+					break;	
+				case Resource.Type.Tunnel:
+					ImgSrc = "pack://application:,,,/Images/Tiles/Tunnel.png";
+					break;
 				case Resource.Type.Starvation:
 					ImgSrc = "pack://application:,,,/Images/Starvation.png";
 					break;						

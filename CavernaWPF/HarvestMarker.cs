@@ -26,6 +26,30 @@ namespace CavernaWPF
 		public HarvestMarker(Type t)
 		{
 			_type = t;
+			switch(t)
+			{
+				case Type.Harvest:
+				case Type.QuestionMark:
+					Width = 32;
+					break;
+				case Type.NoHarvest:
+				case Type.Pay1FoodPerDwarf:
+					Width = 64;
+					break;
+			}
+			Height = 32;
+		}
+		
+		public double Height
+		{
+			get;
+			set;
+		}
+		
+		public double Width
+		{
+			get;
+			set;
 		}
 		
 		//TODO: Some of these properties don't need to notify if they are changed. Only Hidden needs it

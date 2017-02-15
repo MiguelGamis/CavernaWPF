@@ -163,12 +163,6 @@ namespace CavernaWPF
 		 	        		return;
 			        	}
 						
-//						if(!isAdjacent(t, col, row) && (twinTile != null && !isAdjacent(twinTile, twincol, twinrow)))
-//				        {
-//		 	       			ReleaseLayable(n);
-//		 	        		return;
-//				        }
-						
 						PlaceLayable(t, row, col, _x, _y);
 						if(twinTile != null) PlaceLayable(twinTile, twinrow, twincol, 0, 0);
 						

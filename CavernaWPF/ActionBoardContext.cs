@@ -48,28 +48,7 @@ namespace CavernaWPF
 		}
 		
 		private void PrepareFurnishingTiles()
-		{
-			AddFurnishingTile("Carpenter");
-			AddFurnishingTile("Stone carver");
-			AddFurnishingTile("Blacksmith");
-			AddFurnishingTile("Miner");
-			AddFurnishingTile("Builder");
-			AddFurnishingTile("Trader");
-			
-			AddFurnishingTile("Slaughtering cave");
-			AddFurnishingTile("Cooking cave");
-			AddFurnishingTile("Working cave");
-			AddFurnishingTile("Mining cave");
-			AddFurnishingTile("Breeding cave");
-			AddFurnishingTile("Peaceful cave");
-			
-			AddFurnishingTile("Stone storage");
-			AddFurnishingTile("Ore storage");
-			AddFurnishingTile("Spare part storage");
-			AddFurnishingTile("Main storage");
-			AddFurnishingTile("Weapon storage");
-			AddFurnishingTile("Supplies storage");
-			
+		{			
 			AddFurnishingTile("Cuddle room");
 			AddFurnishingTile("Breakfast room");
 			AddFurnishingTile("Stubble room");
@@ -97,6 +76,34 @@ namespace CavernaWPF
 			AddFurnishingTile("Prayer chamber");
 			AddFurnishingTile("Writing chamber");
 			AddFurnishingTile("Fodder chamber");
+			
+			AddFurnishingTile("Dwelling");
+			AddFurnishingTile("Simple dwelling");
+			AddFurnishingTile("Simple dwelling2");
+			AddFurnishingTile("Mixed dwelling");
+			AddFurnishingTile("Couple dwelling");
+			AddFurnishingTile("Additional dwelling");
+			
+			AddFurnishingTile("Carpenter");
+			AddFurnishingTile("Stone carver");
+			AddFurnishingTile("Blacksmith");
+			AddFurnishingTile("Miner");
+			AddFurnishingTile("Builder");
+			AddFurnishingTile("Trader");
+			
+			AddFurnishingTile("Slaughtering cave");
+			AddFurnishingTile("Cooking cave");
+			AddFurnishingTile("Working cave");
+			AddFurnishingTile("Mining cave");
+			AddFurnishingTile("Breeding cave");
+			AddFurnishingTile("Peaceful cave");
+			
+			AddFurnishingTile("Stone storage");
+			AddFurnishingTile("Ore storage");
+			AddFurnishingTile("Spare part storage");
+			AddFurnishingTile("Main storage");
+			AddFurnishingTile("Weapon storage");
+			AddFurnishingTile("Supplies storage");
 		}
 		
 		private void AddFurnishingTile(string name)
@@ -105,6 +112,30 @@ namespace CavernaWPF
 			bool found = true;
 			switch(name)
 			{
+				case "Dwelling":
+					ft.Cost.Add(new ResourceTab(Resource.Type.Wood, 4));
+					ft.Cost.Add(new ResourceTab(Resource.Type.Stone, 3));
+					break;
+				case "Simple dwelling":
+					ft.Cost.Add(new ResourceTab(Resource.Type.Wood, 4));
+					ft.Cost.Add(new ResourceTab(Resource.Type.Stone, 2));
+					break;
+				case "Simple dwelling2":
+					ft.Cost.Add(new ResourceTab(Resource.Type.Wood, 3));
+					ft.Cost.Add(new ResourceTab(Resource.Type.Stone, 3));
+					break;
+				case "Mixed dwelling":
+					ft.Cost.Add(new ResourceTab(Resource.Type.Wood, 5));
+					ft.Cost.Add(new ResourceTab(Resource.Type.Stone, 4));
+					break;
+				case "Couple dwelling":
+					ft.Cost.Add(new ResourceTab(Resource.Type.Wood, 8));
+					ft.Cost.Add(new ResourceTab(Resource.Type.Stone, 6));
+					break;
+				case "Additional dwelling":
+					ft.Cost.Add(new ResourceTab(Resource.Type.Wood, 4));
+					ft.Cost.Add(new ResourceTab(Resource.Type.Stone, 3));
+					break;
 				case "Carpenter":
 					ft.Effect = new Action<Player>((p) =>
                          {
@@ -432,8 +463,8 @@ namespace CavernaWPF
 				ft.Img = String.Format("C:/Users/Miguel/Desktop/Caverna/FurnishingTiles/{0}.png", name);
 				int index = FurnishingTiles.Count;
 				int group = index / 24;
-				ft.Row = (index % 24) / 3;
-				ft.Column = (index % 3) + 4 * group;
+				ft.Column = (index % 24) / 3;
+				ft.Row = (index % 3) + 4 * group;
 				FurnishingTiles.Add(name, ft);
 			}
 		}
@@ -804,6 +835,9 @@ namespace CavernaWPF
 				}
 			}
 			
+			unlockedTiles.OfType<FurnishingTileLayable>().ToList().ForEach(ftl => ftl.furnishingtile.Effect.Invoke(currentPlayer.Value));
+			unlockedTiles.OfType<FurnishingTileLayable>().ToList().ForEach(ftl => ftl.furnishingtile.player = currentPlayer.Value);
+			
 			currentPlayer.Value.town.Tiles.ToList().ForEach(t => t.Locked = true);
 			
 			return true;
@@ -1084,7 +1118,7 @@ namespace CavernaWPF
 			                          });
 					break;
 				case "Excavation":
-					ac.Accumulators.Add(new ResourceAccumulator(){ResourceType = Resource.Type.Stone, StartingAmount = 1, Accumulation = 1});
+					ac.Accumulators.Add(new ResourceAccumulator(){ResourceType = Resource.Type.Stone, StartingAmount = 1, Accumulation = 1, topYLimit = 10, bottomYLimit = 70, leftXLimit = 35, rightXLimit=101});
 					ac.PlayerAction = new Action<Dwarf>((d) =>
 					                          {
 					                          	ac.Excavation(d);
@@ -1097,14 +1131,14 @@ namespace CavernaWPF
 			                          });
 					break;
 				case "Clearing":
-					ac.Accumulators.Add(new ResourceAccumulator(){ResourceType = Resource.Type.Wood, StartingAmount = 1, Accumulation = 1});
+					ac.Accumulators.Add(new ResourceAccumulator(){ResourceType = Resource.Type.Wood, StartingAmount = 1, Accumulation = 1, topYLimit = 10, bottomYLimit = 70, leftXLimit = 35, rightXLimit=101});
 					ac.PlayerAction = new Action<Dwarf>((d) =>
 			                          {
 			                          	ac.Clearing(d);
 			                          });
 					break;
 				case "Starting player":
-					ac.Accumulators.Add(new ResourceAccumulator(){ResourceType = Resource.Type.Food, StartingAmount = 1, Accumulation = 1});
+					ac.Accumulators.Add(new ResourceAccumulator(){ResourceType = Resource.Type.Food, StartingAmount = 1, Accumulation = 1, topYLimit = 10, bottomYLimit = 90, leftXLimit = 35, rightXLimit=101});
 					ac.PlayerAction = new Action<Dwarf>((d) =>
 			                          {
 			                          	ac.Startingplayer(d);

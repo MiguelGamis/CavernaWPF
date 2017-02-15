@@ -38,13 +38,16 @@ namespace CavernaWPF
 			Grid.SetRow(ActionBoardContext.Instance.control, 0);
 			StackPanel publicPanel = new StackPanel() { Orientation = Orientation.Horizontal };
 			publicPanel.Children.Add(ActionBoardContext.Instance.control);
-			publicPanel.Children.Add(ActionBoardContext.Instance.harvesteventscard);
-			publicPanel.Children.Add(ActionBoardContext.Instance.furnishingWindow);
+			
+			StackPanel gameStatusBar = new StackPanel();
+			gameStatusBar.Children.Add(ActionBoardContext.Instance.harvesteventscard);
+			gameStatusBar.Children.Add(ActionBoardContext.Instance.startButton);
 			ActionBoardContext.Instance.startButton.Click += new RoutedEventHandler(StartGame);
-			StackPanel gameProgressBar = new StackPanel();
-			gameProgressBar.Children.Add(ActionBoardContext.Instance.startButton);
-			gameProgressBar.Children.Add(ActionBoardContext.Instance.statusControl);
-			publicPanel.Children.Add(gameProgressBar);
+			gameStatusBar.Children.Add(ActionBoardContext.Instance.statusControl);
+			publicPanel.Children.Add(gameStatusBar);
+			
+			publicPanel.Children.Add(ActionBoardContext.Instance.furnishingWindow);
+			
 			rootPanel.Children.Add(publicPanel);
 			
 			this.Content = rootPanel;
@@ -83,8 +86,12 @@ namespace CavernaWPF
 				Grid.SetZIndex(bottomBoard,0);
 				playerPanel.Children.Add(bottomBoard);
 				
-				Grid piecesPool = new Grid() { Width = 220, Height = 100 };
-				bottomBoard.Children.Add(piecesPool);
+				TextBlock playerNameBlock = new TextBlock(){ Text = p.Name };
+				Grid piecesPool = new Grid() { Width = 210, Height = 100 };
+				StackPanel southWestPanel = new StackPanel();
+				southWestPanel.Children.Add(playerNameBlock);
+				southWestPanel.Children.Add(piecesPool);
+				bottomBoard.Children.Add(southWestPanel);
 				
 				StackPanel southEastPanel = new StackPanel();
 				LayoutManager.Instance.map2.Add(p, southEastPanel);
@@ -104,7 +111,7 @@ namespace CavernaWPF
 				ActionBoardContext.Instance.feedingPrompts.Add(fp);
 				southEastPanel.Children.Add(fp.feedingPrompt);
 				
-				LayoutManager.Instance.map.Add(p, playerPanel);
+				LayoutManager.Instance.map.Add(p, tc.control.board);
 				
 				playerPanels.Children.Add(playerPanel);
 				

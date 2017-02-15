@@ -1,8 +1,11 @@
 <Window x:Class="CavernaWPF.TradeWindow"
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-	Title="CavernaWPF" Height="300" Width="300"
+	Title="CavernaWPF" MinHeight="300" Width="300"
 	xmlns:Converters="clr-namespace:CavernaWPF.Converters">
+	<Window.Resources>
+		<Converters:ResourceToIconConverter x:Key="resourceToIconConverter"></Converters:ResourceToIconConverter>
+	</Window.Resources>
 	<Grid>
 		<Grid.RowDefinitions>
 			<RowDefinition Height="*"></RowDefinition>
@@ -22,7 +25,10 @@
 								</ItemsControl.ItemsPanel>
 								<ItemsControl.ItemTemplate>
 									<DataTemplate>
-										<StackPanel Orientation="Horizontal"><TextBlock Text="{Binding Amount}"></TextBlock><TextBlock Text="{Binding type}"></TextBlock></StackPanel>
+										<StackPanel Orientation="Horizontal">
+											<TextBlock Text="{Binding Amount}"></TextBlock>
+											<Image Height="25" Width="25" Source="{Binding type, Converter={StaticResource resourceToIconConverter}}"/>
+										</StackPanel>
 									</DataTemplate>
 								</ItemsControl.ItemTemplate>
 							</ItemsControl>
@@ -35,7 +41,10 @@
 								</ItemsControl.ItemsPanel>
 								<ItemsControl.ItemTemplate>
 									<DataTemplate>
-										<StackPanel Orientation="Horizontal"><TextBlock Text="{Binding Amount}"></TextBlock><TextBlock Text="{Binding type}"></TextBlock></StackPanel>
+										<StackPanel Orientation="Horizontal">
+											<TextBlock Text="{Binding Amount}"></TextBlock>
+											<Image Height="25" Width="25" Source="{Binding type, Converter={StaticResource resourceToIconConverter}}"/>
+										</StackPanel>
 									</DataTemplate>
 								</ItemsControl.ItemTemplate>
 							</ItemsControl>

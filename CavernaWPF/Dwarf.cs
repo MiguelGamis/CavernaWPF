@@ -27,7 +27,8 @@ namespace CavernaWPF
     	
 		public Dwarf()
 		{
-			
+			Height = 38;
+			Width = 48;
 		}
 		
 		public void levelUp(int exp = 1)
@@ -44,6 +45,18 @@ namespace CavernaWPF
 	            if (PropertyChanged != null) PropertyChanged(this, new PropertyChangedEventArgs("Level"));
 	        }
 	    }
+		
+		public double Height
+		{
+			get;
+			set;
+		}
+		
+		public double Width
+		{
+			get;
+			set;
+		}
 		
 		public double Y
 	    {

@@ -57,8 +57,8 @@ namespace CavernaWPF
 			}
 			
 			//Snap dwarf to closest action card location
-			double w = ((FrameworkElement)sender).Width;
-			double h = ((FrameworkElement)sender).Height;
+			double w = n.Width/2;
+			double h = n.Height/2;
 			double x = w + n.X;
 			double y = h + n.Y;
 			int row = 0; int col = 0;
@@ -72,7 +72,7 @@ namespace CavernaWPF
 				}
 				else
 				{	
-					n.X = _x;
+					n.X = _x + rd.ActualWidth/2 - w;
 					break;
 				}
 			}
@@ -85,7 +85,7 @@ namespace CavernaWPF
 				}
 				else
 				{
-					n.Y = _y;
+					n.Y = _y + rd.ActualHeight/2 - w;
 					break;
 				}
 			}
@@ -108,7 +108,7 @@ namespace CavernaWPF
 						if(ActionBoardContext.Instance.readyForNextDwarf)
 						{
 							acw.occupied = true;
-							if(!ac.Accumulators.Any(a => a.Amount > 0 )) acw.Stuff.Clear();
+							if(!ac.Accumulators.Any(a => a.Amount > 0 )) acw.AccumulatedResources.Clear();
 							(sender as Thumb).DragDelta -= Thumb_DragDelta;
 							(sender as Thumb).DragCompleted -= Thumb_DragCompleted;
 							return;
