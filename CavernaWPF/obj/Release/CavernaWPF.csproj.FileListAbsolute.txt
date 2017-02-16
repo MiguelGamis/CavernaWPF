@@ -1,5 +1,4 @@
 C:\Users\Miguel\Documents\SharpDevelop Projects\CavernaWPF\CavernaWPF\bin\Release\CavernaWPF.exe
-C:\Users\Miguel\Documents\SharpDevelop Projects\CavernaWPF\CavernaWPF\bin\Release\NUnit.Framework.dll
 C:\Users\Miguel\Documents\SharpDevelop Projects\CavernaWPF\CavernaWPF\obj\Release\CavernaWPF.csprojResolveAssemblyReference.cache
 C:\Users\Miguel\Documents\SharpDevelop Projects\CavernaWPF\CavernaWPF\obj\Release\ActionCardControls\ActionCardCheckBoxControl.baml
 C:\Users\Miguel\Documents\SharpDevelop Projects\CavernaWPF\CavernaWPF\obj\Release\ActionCardControls\ActionCardText.baml

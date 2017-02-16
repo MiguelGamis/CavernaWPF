@@ -70,6 +70,11 @@ namespace CavernaWPF
 		
 		private Dictionary<PlayerSlot, string> colorSelections = new Dictionary<PlayerSlot, string>();
 		
+		private void RefreshSelectedPlayers()
+		{
+			SelectedPlayers = PlayerSlots.Count(ps => ps.Selected);
+		}
+		
 		public void PlayerSlotSelectionChange(object sender, EventArgs args)
 		{
 			PlayerSlot ps = sender as PlayerSlot;
@@ -84,9 +89,10 @@ namespace CavernaWPF
 			{
 				ps.Color = null;
 				colorSelections.Remove(ps);
-				var otherps = PlayerSlots.Where(p => p.Selected).First();
-				if(otherps != null) otherps.StartingPlayer = true;
+				var otherps = PlayerSlots.Where(p => p.Selected).ToList();
+				if(otherps.Count > 0) otherps.First().StartingPlayer = true;
 			}
+			RefreshSelectedPlayers();
 		}
 		
 		public void UpdateColor(PlayerSlot playerslot, string color)
@@ -106,6 +112,17 @@ namespace CavernaWPF
 					updatedColorOptions.Remove(colorSelection.Value);
 			}
 			playerslot.ColorOptions = updatedColorOptions;
+		}
+		
+		private int selectedPlayers;
+		
+		public int SelectedPlayers
+		{
+			get { return selectedPlayers; }
+			set {
+				selectedPlayers = value;
+				if (PropertyChanged != null) PropertyChanged(this, new PropertyChangedEventArgs("SelectedPlayers"));
+			}
 		}
 		
 		public event PropertyChangedEventHandler PropertyChanged;

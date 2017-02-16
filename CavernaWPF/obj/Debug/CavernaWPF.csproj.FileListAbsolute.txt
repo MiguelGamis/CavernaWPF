@@ -38,7 +38,6 @@ C:\Users\Miguel\Documents\SharpDevelop Projects\CavernaWPF\CavernaWPF\obj\Debug\
 C:\Users\Miguel\Documents\SharpDevelop Projects\CavernaWPF\CavernaWPF\obj\Debug\CavernaWPF_MarkupCompile.lref
 C:\Users\Miguel\Documents\SharpDevelop Projects\CavernaWPF\CavernaWPF\bin\Debug\CavernaWPF.exe
 C:\Users\Miguel\Documents\SharpDevelop Projects\CavernaWPF\CavernaWPF\bin\Debug\CavernaWPF.pdb
-C:\Users\Miguel\Documents\SharpDevelop Projects\CavernaWPF\CavernaWPF\bin\Debug\NUnit.Framework.dll
 C:\Users\Miguel\Documents\SharpDevelop Projects\CavernaWPF\CavernaWPF\obj\Debug\ActionBoard.baml
 C:\Users\Miguel\Documents\SharpDevelop Projects\CavernaWPF\CavernaWPF\obj\Debug\ActionCardControls\ActionCardRadioButtonControl.baml
 C:\Users\Miguel\Documents\SharpDevelop Projects\CavernaWPF\CavernaWPF\obj\Debug\DwarfQueue.baml

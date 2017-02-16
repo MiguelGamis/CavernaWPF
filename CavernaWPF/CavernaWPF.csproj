@@ -10,6 +10,8 @@
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile>Client</TargetFrameworkProfile>
     <AppDesignerFolder>Properties</AppDesignerFolder>
+    <ApplicationIcon>Images\CavernaIcon.ico</ApplicationIcon>
+    <NoWin32Manifest>False</NoWin32Manifest>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Platform)' == 'AnyCPU' ">
     <PlatformTarget>x86</PlatformTarget>
@@ -31,9 +33,6 @@
     <DefineConstants>TRACE</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="NUnit.Framework">
-      <HintPath>$(SharpDevelopBinPath)\Tools\NUnit\NUnit.Framework.dll</HintPath>
-    </Reference>
     <Reference Include="PresentationCore">
       <RequiredTargetFramework>3.0</RequiredTargetFramework>
     </Reference>
@@ -288,7 +287,7 @@
     <Resource Include="Images\ActionCards\Wish for children.png" />
     <Resource Include="Images\ActionCards\Wood gathering.png" />
     <Resource Include="Images\ActionBoardBackground.png" />
-    <None Include="Images\Caverna2.png" />
+    <Resource Include="Images\Caverna2.png" />
     <Resource Include="Images\Dwarfs\BlackDwarf.png" />
     <Resource Include="Images\Dwarfs\BlueDwarf.png" />
     <Resource Include="Images\Dwarfs\GreenDwarf.png" />
@@ -296,11 +295,11 @@
     <Resource Include="Images\Dwarfs\RedDwarf.png" />
     <Resource Include="Images\Dwarfs\YellowDwarf.png" />
     <Resource Include="Images\ExpeditionLoot.png" />
-    <None Include="Images\FoodTrade.jpeg" />
-    <None Include="Images\FurnishingTiles1.png" />
-    <None Include="Images\FurnishingTiles2.png" />
-    <None Include="Images\FurnishingTiles3.png" />
-    <None Include="Images\FurnishingTiles4.png" />
+    <Resource Include="Images\FoodTrade.jpeg" />
+    <Resource Include="Images\FurnishingTiles1.png" />
+    <Resource Include="Images\FurnishingTiles2.png" />
+    <Resource Include="Images\FurnishingTiles3.png" />
+    <Resource Include="Images\FurnishingTiles4.png" />
     <Resource Include="Images\HarvestMarkers\GreenLeaf.png" />
     <Resource Include="Images\HarvestMarkers\Harvest events.xcf" />
     <Resource Include="Images\HarvestMarkers\Harvest.xcf" />
@@ -310,64 +309,64 @@
     <Resource Include="Images\HarvestMarkers\HarvestMarker.png" />
     <Resource Include="Images\HarvestMarkers\HarvestMarker.xcf" />
     <Resource Include="Images\FurnishingTilesBoard.png" />
-    <None Include="Images\FurnishingTiles\Additional dwelling.png" />
-    <None Include="Images\FurnishingTiles\Beer parlor.png" />
-    <None Include="Images\FurnishingTiles\Blacksmith.png" />
-    <None Include="Images\FurnishingTiles\Blacksmithing parlor.png" />
-    <None Include="Images\FurnishingTiles\Breakfast room.png" />
-    <None Include="Images\FurnishingTiles\Breeding cave.png" />
-    <None Include="Images\FurnishingTiles\Broom chamber.png" />
-    <None Include="Images\FurnishingTiles\Builder.png" />
-    <None Include="Images\FurnishingTiles\Carpenter.png" />
-    <None Include="Images\FurnishingTiles\Cooking cave.png" />
-    <None Include="Images\FurnishingTiles\Couple dwelling.png" />
-    <None Include="Images\FurnishingTiles\Cuddle room.png" />
-    <None Include="Images\FurnishingTiles\Dog school.png" />
-    <None Include="Images\FurnishingTiles\Dwelling.png" />
-    <None Include="Images\FurnishingTiles\Fodder chamber.png" />
-    <None Include="Images\FurnishingTiles\Food chamber.png" />
-    <None Include="Images\FurnishingTiles\Guest room.png" />
-    <None Include="Images\FurnishingTiles\Hunting parlor.png" />
-    <None Include="Images\FurnishingTiles\Main storage.png" />
-    <None Include="Images\FurnishingTiles\Milking parlor.png" />
-    <None Include="Images\FurnishingTiles\Miner.png" />
-    <None Include="Images\FurnishingTiles\Mining cave.png" />
-    <None Include="Images\FurnishingTiles\Mixed dwelling.png" />
-    <None Include="Images\FurnishingTiles\MixedDwelling.png" />
-    <None Include="Images\FurnishingTiles\Office room.png" />
-    <None Include="Images\FurnishingTiles\Ore storage.png" />
-    <None Include="Images\FurnishingTiles\Peaceful cave.png" />
-    <None Include="Images\FurnishingTiles\Prayer chamber.png" />
-    <None Include="Images\FurnishingTiles\Quarry.png" />
-    <None Include="Images\FurnishingTiles\Ruby supplier.png" />
-    <None Include="Images\FurnishingTiles\Seam.png" />
-    <None Include="Images\FurnishingTiles\Simple dwelling.png" />
-    <None Include="Images\FurnishingTiles\Simple dwelling2.png" />
-    <None Include="Images\FurnishingTiles\Slaughtering cave.png" />
-    <None Include="Images\FurnishingTiles\Spare part storage.png" />
-    <None Include="Images\FurnishingTiles\State parlor.png" />
-    <None Include="Images\FurnishingTiles\Stone carver.png" />
-    <None Include="Images\FurnishingTiles\Stone storage.png" />
-    <None Include="Images\FurnishingTiles\Stone supplier.png" />
-    <None Include="Images\FurnishingTiles\Stubble room.png" />
-    <None Include="Images\FurnishingTiles\Supplies storage.png" />
-    <None Include="Images\FurnishingTiles\Trader.png" />
-    <None Include="Images\FurnishingTiles\Treasure chamber.png" />
-    <None Include="Images\FurnishingTiles\Weapon storage.png" />
-    <None Include="Images\FurnishingTiles\Weaving parlor.png" />
-    <None Include="Images\FurnishingTiles\Wood supplier.png" />
-    <None Include="Images\FurnishingTiles\Work room.png" />
-    <None Include="Images\FurnishingTiles\Working cave.png" />
-    <None Include="Images\FurnishingTiles\Writing chamber.png" />
-    <None Include="Images\HarvestMarkers\HarvestMarker2.xcf" />
-    <None Include="Images\HarvestMarkers\HarvestMarkerBanner.xcf" />
-    <None Include="Images\HarvestMarkers\HarvestMarkerBanner_.xcf" />
+    <Resource Include="Images\FurnishingTiles\Additional dwelling.png" />
+    <Resource Include="Images\FurnishingTiles\Beer parlor.png" />
+    <Resource Include="Images\FurnishingTiles\Blacksmith.png" />
+    <Resource Include="Images\FurnishingTiles\Blacksmithing parlor.png" />
+    <Resource Include="Images\FurnishingTiles\Breakfast room.png" />
+    <Resource Include="Images\FurnishingTiles\Breeding cave.png" />
+    <Resource Include="Images\FurnishingTiles\Broom chamber.png" />
+    <Resource Include="Images\FurnishingTiles\Builder.png" />
+    <Resource Include="Images\FurnishingTiles\Carpenter.png" />
+    <Resource Include="Images\FurnishingTiles\Cooking cave.png" />
+    <Resource Include="Images\FurnishingTiles\Couple dwelling.png" />
+    <Resource Include="Images\FurnishingTiles\Cuddle room.png" />
+    <Resource Include="Images\FurnishingTiles\Dog school.png" />
+    <Resource Include="Images\FurnishingTiles\Dwelling.png" />
+    <Resource Include="Images\FurnishingTiles\Fodder chamber.png" />
+    <Resource Include="Images\FurnishingTiles\Food chamber.png" />
+    <Resource Include="Images\FurnishingTiles\Guest room.png" />
+    <Resource Include="Images\FurnishingTiles\Hunting parlor.png" />
+    <Resource Include="Images\FurnishingTiles\Main storage.png" />
+    <Resource Include="Images\FurnishingTiles\Milking parlor.png" />
+    <Resource Include="Images\FurnishingTiles\Miner.png" />
+    <Resource Include="Images\FurnishingTiles\Mining cave.png" />
+    <Resource Include="Images\FurnishingTiles\Mixed dwelling.png" />
+    <Resource Include="Images\FurnishingTiles\MixedDwelling.png" />
+    <Resource Include="Images\FurnishingTiles\Office room.png" />
+    <Resource Include="Images\FurnishingTiles\Ore storage.png" />
+    <Resource Include="Images\FurnishingTiles\Peaceful cave.png" />
+    <Resource Include="Images\FurnishingTiles\Prayer chamber.png" />
+    <Resource Include="Images\FurnishingTiles\Quarry.png" />
+    <Resource Include="Images\FurnishingTiles\Ruby supplier.png" />
+    <Resource Include="Images\FurnishingTiles\Seam.png" />
+    <Resource Include="Images\FurnishingTiles\Simple dwelling.png" />
+    <Resource Include="Images\FurnishingTiles\Simple dwelling2.png" />
+    <Resource Include="Images\FurnishingTiles\Slaughtering cave.png" />
+    <Resource Include="Images\FurnishingTiles\Spare part storage.png" />
+    <Resource Include="Images\FurnishingTiles\State parlor.png" />
+    <Resource Include="Images\FurnishingTiles\Stone carver.png" />
+    <Resource Include="Images\FurnishingTiles\Stone storage.png" />
+    <Resource Include="Images\FurnishingTiles\Stone supplier.png" />
+    <Resource Include="Images\FurnishingTiles\Stubble room.png" />
+    <Resource Include="Images\FurnishingTiles\Supplies storage.png" />
+    <Resource Include="Images\FurnishingTiles\Trader.png" />
+    <Resource Include="Images\FurnishingTiles\Treasure chamber.png" />
+    <Resource Include="Images\FurnishingTiles\Weapon storage.png" />
+    <Resource Include="Images\FurnishingTiles\Weaving parlor.png" />
+    <Resource Include="Images\FurnishingTiles\Wood supplier.png" />
+    <Resource Include="Images\FurnishingTiles\Work room.png" />
+    <Resource Include="Images\FurnishingTiles\Working cave.png" />
+    <Resource Include="Images\FurnishingTiles\Writing chamber.png" />
+    <Resource Include="Images\HarvestMarkers\HarvestMarker2.xcf" />
+    <Resource Include="Images\HarvestMarkers\HarvestMarkerBanner.xcf" />
+    <Resource Include="Images\HarvestMarkers\HarvestMarkerBanner_.xcf" />
     <Resource Include="Images\HarvestMarkers\NoHarvest.png" />
     <Resource Include="Images\HarvestMarkers\Pay1FoodPerDwarf.png" />
     <Resource Include="Images\HarvestMarkers\RedQuestion.png" />
-    <None Include="Images\HarvestMarkers\RedQuestion.xcf" />
-    <None Include="Images\Instrukcja_Caverna_The_Cave_Farmers_EN.pdf" />
-    <None Include="Images\LayableBorder\Stable.png" />
+    <Resource Include="Images\HarvestMarkers\RedQuestion.xcf" />
+    <Resource Include="Images\Instrukcja_Caverna_The_Cave_Farmers_EN.pdf" />
+    <Resource Include="Images\LayableBorder\Stable.png" />
     <Resource Include="Images\RawActionCards\AC-Adventure.xcf" />
     <Resource Include="Images\RawActionCards\AC-Blacksmithing.xcf" />
     <Resource Include="Images\RawActionCards\AC-Clearing.xcf" />
@@ -443,7 +442,13 @@
     <Resource Include="Images\Weapons\Weapon8.png" />
     <Resource Include="Images\Weapons\Weapon8.xcf" />
     <Resource Include="Images\Weapons\Weapon9.png" />
-    <None Include="Images\Weapons\Weapon_.xcf" />
+    <Resource Include="Images\Weapons\Weapon_.xcf" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\CavernaLogo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\CavernaIcon.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

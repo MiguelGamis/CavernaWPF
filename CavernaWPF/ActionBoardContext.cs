@@ -460,7 +460,7 @@ namespace CavernaWPF
 			if(found)
 			{
 				ft.Name = name;
-				ft.Img = String.Format("C:/Users/Miguel/Desktop/Caverna/FurnishingTiles/{0}.png", name);
+				ft.Img = String.Format("pack://application:,,,/Images/FurnishingTiles/{0}.png", name);
 				int index = FurnishingTiles.Count;
 				int group = index / 24;
 				ft.Column = (index % 24) / 3;
@@ -1014,8 +1014,7 @@ namespace CavernaWPF
 			
 			AddActionCard(GetActionCard("Housework"));
 			
-			AddActionCard(GetActionCard("Blacksmithing"));
-			//AddActionCard(GetActionCard("Slash-and-burn"));
+			AddActionCard(GetActionCard("Slash-and-burn"));
 			
 			List<string> round1ActionCards = new List<string> { "Blacksmithing", "Sheep farming", "Ore mine construction" };
 			ShuffleList(round1ActionCards);
@@ -1092,7 +1091,7 @@ namespace CavernaWPF
 		
 		private ActionCard GetActionCard(string Name)
 		{
-			ActionCard ac = new ActionCard();
+			ActionCard ac = new ActionCard(Name);
 			ac.Name = Name;
 			switch(Name)
 			{

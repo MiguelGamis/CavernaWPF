@@ -18,6 +18,7 @@ namespace CavernaWPF.ActionCardControls
 	{
 		public ActionCardWindow Control = new ActionCardWindow();
 		public List<ActionCardOption> Options {get; set;}
+		public string Name {get; set;}
 		
 		public ActionCardWindowContext()
 		{
